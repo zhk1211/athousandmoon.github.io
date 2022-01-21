@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"athousandmoon.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"enable","style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="设空间曲线 $l$ 在 $(x_0,y_0,z_0)$ 处的切向量为 $\boldsymbol\tau&#x3D;(\tau_x,\tau_y,\tau_z)$，则曲线 $l$ 在点 $(x_0,y_0,z_0)$ 的切线方程为：$$\dfrac{x-x_0}{\tau_x}&#x3D;\dfrac{y-y_0}{\tau_y}&#x3D;\dfrac{z-z_0}{\tau_z}.$$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「数学分析习题课讲义」第 21 章学习笔记">
+<meta property="og:url" content="https://athousandmoon.github.io/2022/01/21/analysis-21/index.html">
+<meta property="og:site_name" content="猫猫的游乐场">
+<meta property="og:description" content="设空间曲线 $l$ 在 $(x_0,y_0,z_0)$ 处的切向量为 $\boldsymbol\tau&#x3D;(\tau_x,\tau_y,\tau_z)$，则曲线 $l$ 在点 $(x_0,y_0,z_0)$ 的切线方程为：$$\dfrac{x-x_0}{\tau_x}&#x3D;\dfrac{y-y_0}{\tau_y}&#x3D;\dfrac{z-z_0}{\tau_z}.$$">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-21T12:09:30.000Z">
+<meta property="article:modified_time" content="2022-01-21T12:10:22.863Z">
+<meta property="article:author" content="Catcats555">
+<meta property="article:tag" content="数学分析">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://athousandmoon.github.io/2022/01/21/analysis-21/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>「数学分析习题课讲义」第 21 章学习笔记 | 猫猫的游乐场</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">猫猫的游乐场</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">退役 OIer / 喜欢但不会数学</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://athousandmoon.github.io/2022/01/21/analysis-21/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.jpg">
+      <meta itemprop="name" content="Catcats555">
+      <meta itemprop="description" content="遇到困难睡大觉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="猫猫的游乐场">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「数学分析习题课讲义」第 21 章学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-21 20:09:30 / 修改时间：20:10:22" itemprop="dateCreated datePublished" datetime="2022-01-21T20:09:30+08:00">2022-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="far fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>设空间曲线 $l$ 在 $(x_0,y_0,z_0)$ 处的切向量为 $\boldsymbol\tau=(\tau_x,\tau_y,\tau_z)$，则曲线 $l$ 在点 $(x_0,y_0,z_0)$ 的切线方程为：<br>$$<br>\dfrac{x-x_0}{\tau_x}=\dfrac{y-y_0}{\tau_y}=\dfrac{z-z_0}{\tau_z}.<br>$$</p>
+<span id="more"></span>
+
+<p>法平面方程为：<br>$$<br>\tau_x(x-x_0)+\tau_y(y-y_0)+\tau_z(z-z_0)=0.<br>$$<br>设空间曲线 $l$ 的参数方程是：<br>$$<br>x=x(t),\ y=y(t),\ z=z(t),\ a\le t\le b,<br>$$<br>其中 $t$ 是参数，若 $x’(t),y’(t),z’(t)$ 都在 $[a,b]$ 上连续，并且不同时为 $0$，这样的曲线称为<strong>光滑曲线</strong>，这时曲线上点 $(x_0,y_0,z_0)=(x’(t_0),y’(t_0),z’(t_0))$ 的切向量为 $\boldsymbol\tau=(x’(t_0),y’(t_0),z’(t_0))$。</p>
+<p>设空间曲线 $l$ 是用两个曲面 $F(x,y,z)=G(x,y,z)=0$ 的交线来表示的，又设 $F,G$ 关于 $x,y,z$ 有连续的偏导数，点 $\boldsymbol{p_0}(x_0,y_0,z_0)$ 满足这一方程组，且 $F,G$ 的 Jacobi 矩阵在点 $\boldsymbol{p_0}$ 的秩为 $2$，则曲线 $l$ 在点 $\boldsymbol{p_0}$ 的切向量为 $\boldsymbol\tau=\left(\dfrac{\partial(F,G)}{\partial(y,z)},\dfrac{\partial(F,G)}{\partial(z,x)},\dfrac{\partial(F,G)}{\partial(x,y)}\right)\bigg|_{\boldsymbol{p_0}}$。</p>
+<p>由 $F(x,y,z)=0$ 确定的光滑曲面在 $(x,y,z)$ 处的法向量为 $\boldsymbol n=(F_x(x,y,z),F_y(x,y,z),F_z(x,y,z))$。</p>
+<p>由参数方程 $x=x(u,v),\ y=y(u,v),\ z=z(u,v)$ 决定的光滑曲面在点 $(x,y,z)$ 的法向量为 $\boldsymbol n=\left(\dfrac{\partial(y,z)}{\partial(u,v)},\dfrac{\partial(z,x)}{\partial(u,v)},\dfrac{\partial(x,y)}{\partial(u,v)}\right)$。</p>
+<p>设 $D$ 是 $\mathbb R^n$ 中的一个区域，$f$ 是定义在 $D$ 上的函数，$\boldsymbol{p_0}\in D$，$\boldsymbol l$ 是 $\mathbb R^n$ 中的一个单位向量，若极限 $\lim\limits_{t\to 0^+}\dfrac{f(\boldsymbol{p_0}+t\boldsymbol l)-f(\boldsymbol{p_0})}t$ 存在，则称此极限是函数 $f$ 在点 $\boldsymbol{p_0}$ 处沿方向 $\boldsymbol l$ 的<strong>方向导数</strong>，记为 $\dfrac{\partial f}{\partial\boldsymbol l}(\boldsymbol{p_0})$。</p>
+<p>设函数 $f$ 定义于某个区域 $D\subset\mathbb R^n$ 上，又设 $f$ 具有各个变元的偏导数，称向量 $\nabla f(\boldsymbol x)=\left(\dfrac{\partial f}{\partial x_i}(\boldsymbol x)\right)$ 是 $f$ 在点 $\boldsymbol x$ 的<strong>梯度</strong>，则方向导数 $\dfrac{\partial f}{\partial\boldsymbol l}(\boldsymbol x)=\nabla f(\boldsymbol x)\cdot\boldsymbol l=|\nabla f(\boldsymbol x)|\cos\theta$，其中 $\theta$ 是向量 $\nabla f(\boldsymbol x)$ 与 $\boldsymbol l$ 之间的夹角，从而梯度的方向即为函数在该点增加最快的方向。</p>
+<p><strong>Taylor 公式.</strong> 设函数 $f(\boldsymbol x)$ 在凸区域 $D$ 上有各个变元的 $m+1$ 阶连续偏导数，则对任意 $\boldsymbol{x_0},\boldsymbol x\subset D$，记 $\Delta\boldsymbol x=\boldsymbol x-\boldsymbol{x_0}$，则存在 $\theta\in(0,1)$ 使得<br>$$<br>f(\boldsymbol x)=\sum_{k=0}^m\frac{(\Delta\boldsymbol x\cdot\nabla)^k}{k!}f(\boldsymbol{x_0})+\frac{(\Delta\boldsymbol x\cdot\nabla)^{m+1}}{(m+1)!}f(\boldsymbol{x_0}+\theta\Delta\boldsymbol x).<br>$$<br>二阶项形如 $\dfrac 12\Delta\boldsymbol x\boldsymbol Q\Delta\boldsymbol x^\top$，其中 $\boldsymbol Q=\left(\dfrac{\partial^2 f}{\partial x_i\partial x_j}\right)\bigg|_{\boldsymbol{x_0}}$ 称为 <strong>Hesse 矩阵</strong>。</p>
+<p>当 $\boldsymbol{x_0}$ 是可微函数 $f$ 的一个极值点时，必有 $\nabla f(\boldsymbol{x_0})=\boldsymbol 0$。</p>
+<p>当 $\nabla f(\boldsymbol{x_0})=\boldsymbol 0$ 且 $\boldsymbol Q\ne \boldsymbol 0$ 时，$f$ 增长最快的可能方向在 $\boldsymbol Q$ 的最大特征值对应的特征子空间内。</p>
+<p>设函数 $f$ 在驻点 $\boldsymbol{x_0}$ 的某邻域上有二阶连续偏导数，则</p>
+<ul>
+<li>若 $\boldsymbol Q$ 是正定的，则 $f(\boldsymbol{x_0})$ 是极小值；</li>
+<li>若 $\boldsymbol Q$ 是负定的，则 $f(\boldsymbol{x_0})$ 是极大值；</li>
+<li>若 $\boldsymbol Q$ 是不定的（即既有正的特征值，又有负的特征值），则 $\boldsymbol{x_0}$ 不是极值点；</li>
+<li>若 $\boldsymbol Q$ 是半定的（即所有特征值同号，但有零特征值），则需进一步判别。</li>
+</ul>
+<p><strong>定理 4.1 (Lagrange 乘数法).</strong> 设开集 $D\subset\mathbb R^{n+m}$，函数 $f:D\to\mathbb R$ 和映射 $\boldsymbol\Phi:D\to\mathbb R^m$ 满足以下条件：</p>
+<ul>
+<li>$f,\boldsymbol\Phi\in C^1(D)$；</li>
+<li>存在 $\boldsymbol{z_0}=(\boldsymbol{x_0},\boldsymbol{y_0})\in D$，满足 $\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$；</li>
+<li>$\det J_y\boldsymbol\Phi(\boldsymbol{z_0})\ne 0$。</li>
+</ul>
+<p>若 $f$ 在 $(2)$ 的约束下在 $\boldsymbol{z_0}$ 处取得极值，则存在 $\boldsymbol\lambda\in\mathbb R^m$，使得 $Jf(\boldsymbol{z_0})+\boldsymbol\lambda J\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$。</p>
+<p><strong>证明.</strong> 根据隐映射定理，存在 $\boldsymbol{z_0}=(\boldsymbol{x_0},\boldsymbol{y_0})$ 的邻域 $G\times H$ 满足 $\boldsymbol\Phi(\boldsymbol x,\boldsymbol y)=0$ 对任意 $\boldsymbol x\in G$ 在 $H$ 中存在唯一的解 $\boldsymbol\varphi(\boldsymbol x)$ 满足 $\boldsymbol{y_0}=\boldsymbol \varphi(\boldsymbol{x_0})$ 且 $J\boldsymbol\varphi(\boldsymbol{x_0})=-(J_y\boldsymbol\Phi(\boldsymbol{z_0}))^{-1}J_x\boldsymbol\Phi(\boldsymbol{z_0})$，因为 $\boldsymbol{z_0}$ 是约束条件下的极值，所以 $\boldsymbol{x_0}$ 是 $f(\boldsymbol{x_0},\boldsymbol\varphi(\boldsymbol{x_0}))$ 的驻点，由链式法则知 $J_xf(\boldsymbol{z_0})+J_yf(\boldsymbol{z_0})J\boldsymbol\varphi(\boldsymbol{x_0})=\boldsymbol 0$，代入得 $J_xf(\boldsymbol{z_0})-J_yf(\boldsymbol{z_0})(J_y\boldsymbol\Phi(\boldsymbol{z_0}))^{-1}J_x\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$。</p>
+<p>取 $\boldsymbol\lambda=-J_y(\boldsymbol{z_0})(J_y\boldsymbol\Phi(\boldsymbol{z_0}))^{-1}$，则 $J_yf(\boldsymbol{z_0})+\boldsymbol\lambda J_y\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$，又因为 $J_xf(\boldsymbol{z_0})+\boldsymbol\lambda J_x\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol0$，合并即得证。$\square$</p>
+<p><strong>定理 4.2</strong> 设 $\boldsymbol{z_0}$ 是辅助函数 $F(\boldsymbol z)=f(\boldsymbol z)+\sum_{i=1}^m\lambda_i\Phi_i(\boldsymbol z)$ 的一个驻点。设 Hesse 矩阵为 $\boldsymbol H(\boldsymbol{z_0})$，</p>
+<ul>
+<li>若 $\boldsymbol H(\boldsymbol{z_0})$ 严格正定，则 $\boldsymbol{z_0}$ 为条件极小值点；</li>
+<li>若 $\boldsymbol H(\boldsymbol{z_0})$ 严格负定，则 $\boldsymbol{z_0}$ 为条件极大值点。</li>
+</ul>
+<p><strong>定理 5.1</strong> 设函数 $f$ 在 $\mathbb R^n$ 中的闭球 $\overline B(0;r)$ 上连续，在它的边界上等于常值，并且在开球 $B(0;r)$ 上可微，则在球内至少有一个点是函数的驻点。</p>
+<p><strong>定理 5.2</strong> 设 $\boldsymbol F:B(0,r)\to\mathbb R^m$ 可微，在闭球 $\overline B(0;r)$ 上连续，且存在非零向量 $\boldsymbol v\in\mathbb R^m$ 使得 $\forall\boldsymbol x\in\partial B(0,r)$，$\boldsymbol v\cdot\boldsymbol F(\boldsymbol x)=0$。则存在 $\boldsymbol\xi\in B(0;r)$ 使得对任意 $\boldsymbol u\in\mathbb R^n$ 都有 $\boldsymbol v\cdot J\boldsymbol F(\boldsymbol\xi)\boldsymbol u=0.$</p>
+<p><strong>证明.</strong> 定义 $f(\boldsymbol x)=\boldsymbol v\cdot\boldsymbol F(\boldsymbol x)$ 然后运用定理 5.1 即可。$\square$</p>
+<p><strong>参考题 1.</strong> 曲面 $z=z(x,y)$ 由方程 $F\left(\dfrac{x-a}{z-c},\dfrac{y-b}{z-c}\right)=0$ 确定，其中 $a,b,c$ 为常数，证明：</p>
+<ul>
+<li>曲面的切平面经过定点 $(a,b,c)$；</li>
+<li>函数 $z=z(x,y)$ 满足方程 $\dfrac{\partial^2 z}{\partial x^2}\cdot\dfrac{\partial^2 z}{\partial y^2}=\left(\dfrac{\partial^2 z}{\partial x\partial y}\right)^2.$</li>
+</ul>
+<p>$(1)$：曲面在 $(x_0,y_0,z_0)$ 处的法向量为 $\left(\dfrac{F_1}{z_0-c},\dfrac{F_2}{z_0-c},\dfrac{(a-x_0)F_1+(b-y_0)F_2}{(z_0-c)^2}\right)$，而 $(x_0-a,y_0-b,z_0-c)$ 与其正交。</p>
+<p>$(2)$：将方程对 $x$ 求导得到 $\dfrac{z_x(F_1(x-a)+F_2(y-b))-F_1(z-c)}{(z-c)^2}=0$，所以 $z_x=\dfrac{F_1(z-c)}{F_1(x-a)+F_2(y-b)}.$</p>
+<p><strong>【留坑待填】</strong><del>不想算了 /fn</del></p>
+<p><strong>参考题 2.</strong> 在平面上给定一个边长为 $a,b,c$ 的三角形，在它上面可作无数个等体积的给定高 $h$ 的三棱锥，求侧面积的最小值。</p>
+<p>设锥顶在地面的投影到三边的距离分别为 $x,y,z$，三角形面积的两倍为 $S$，则所求为 $ax+by+cz=S$ 条件下 $a\sqrt{h^2+x^2}+b\sqrt{h^2+y^2}+c\sqrt{h^2+z^2}$ 的最小值。由 Lagrange 乘数法知 $x=y=z$，所以该点即为外心。</p>
+<p><strong>参考题 3.</strong> 设 $u=f(x,y,z)$ 为二次可微函数，$\cos\alpha,\cos\beta,\cos\gamma$ 为方向 $\boldsymbol l$ 的方向余弦，求 $\dfrac{\partial^2 u}{\partial\boldsymbol l^2}$ 的值。</p>
+<p>$u_{xx}\cos^2\alpha+u_{yy}\cos^2\beta+u_{zz}\cos^2\gamma+2u_{xy}\cos\alpha\cos\beta+2u_{xz}\cos\alpha\cos\gamma+2u_{yz}\cos\beta\cos\gamma.$</p>
+<p><strong>参考题 4.</strong> 设 $u=f(x,y,z)$ 为二次可微函数，$\boldsymbol{l_i}=(\cos\alpha_i,\cos\beta_i,\cos\gamma_i),\ i=1,2,3$ 为三个互相垂直的单位向量，证明：</p>
+<ul>
+<li>$\left(\dfrac{\partial u}{\partial\boldsymbol{l_1}}\right)^2+\left(\dfrac{\partial u}{\partial\boldsymbol{l_2}}\right)^2+\left(\dfrac{\partial u}{\partial\boldsymbol{l_3}}\right)^2=\left(\dfrac{\partial u}{\partial x}\right)^2+\left(\dfrac{\partial u}{\partial y}\right)^2+\left(\dfrac{\partial u}{\partial z}\right)^2$；</li>
+</ul>
+<p>$u_x^2$ 的系数为 $\sum \cos^2\alpha_i=1$。</p>
+<ul>
+<li>$\dfrac{\partial^2 u}{\partial\boldsymbol{l_1}^2}+\dfrac{\partial^2 u}{\partial\boldsymbol{l_2}^2}+\dfrac{\partial^2 u}{\partial\boldsymbol{l_3}^2}=\dfrac{\partial^2 u}{\partial x^2}+\dfrac{\partial^2 u}{\partial y^2}+\dfrac{\partial^2 u}{\partial z^2}$。</li>
+</ul>
+<p>$u_{xx}$ 的系数为 $\sum\cos^2\alpha_i=1$，$u_{xy}$ 的系数为 $2\sum\cos\alpha_i\cos\beta_i=0$。</p>
+<ul>
+<li>若 $\dfrac{\partial f}{\partial\boldsymbol{l_i}}=0,\ i=1,2,3$，则 $f(x,y,z)$ 在 $\mathbb R^3$ 中恒为常数。</li>
+</ul>
+<p>直接应用 $(1)$ 即可。</p>
+<p><strong>参考题 5.</strong> 设 $f$ 在 $O_\delta(\boldsymbol{x_0})\subset\mathbb R^n$ 上连续，在 $O_\delta(\boldsymbol{x_0})\backslash{\boldsymbol{x_0}}$ 可微，证明：若 $\forall\boldsymbol x\in O_\delta(\boldsymbol{x_0})\backslash{\boldsymbol{x_0}}$，有 $(\boldsymbol x-\boldsymbol{x_0})\cdot\nabla f(\boldsymbol x)&lt;0$，则 $\boldsymbol{x_0}$ 是 $f$ 的一个极大值点。</p>
+<p>设 $F(t)=f(\boldsymbol{x_0}+t(\boldsymbol x-\boldsymbol{x_0}))$，则 $F’(t)&lt;0$，所以 $\boldsymbol{x_0}$ 在 $\boldsymbol x-\boldsymbol{x_0}$ 方向上是极大值点，由 $\boldsymbol x$ 的任意性得证。</p>
+<p><strong>参考题 6.</strong> 设 $f$ 在 $O_{\delta_0}(\boldsymbol{x_0})\subset\mathbb R^n$ 上二次连续可微，Hesse 矩阵 $\left(\dfrac{\partial^2 f}{\partial x_i\partial x_j}(\boldsymbol{x_0})\right)$ 为正定阵，$\nabla f(\boldsymbol{x_0})=\boldsymbol 0$，证明：存在 $\delta\in(0,\delta_0)$，使得 $\forall\boldsymbol x\in O_\delta(\boldsymbol{x_0})\backslash{\boldsymbol{x_0}}$，$(\boldsymbol x-\boldsymbol{x_0})\cdot\nabla f(\boldsymbol x)&gt;0$。</p>
+<p>设 $Q(\boldsymbol\alpha,\boldsymbol{x_0})=\boldsymbol\alpha^\top\left(\dfrac{\partial^2 f}{\partial x_i\partial x_j}(\boldsymbol{x_0})\right)\boldsymbol\alpha$，由紧集上连续函数的最值定理知 $|\boldsymbol\alpha|=1$ 时有最小值 $m$，由连续性知存在 $\delta\in(0,\delta_0)$ 使得 $Q(\boldsymbol\alpha,\boldsymbol x)\ge m/2$，设 $F(t)=f(\boldsymbol{x_0}+t(\boldsymbol x-\boldsymbol{x_0}))$，则 $t\in(0,1)$ 时 $F’’(t)&gt;0$，由 $\boldsymbol x$ 的任意性得证。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90/" rel="tag"># 数学分析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/06/XVIII-Open-Cup-GP-of-Khamovniki/" rel="prev" title="XVIII Open Cup, GP of Khamovniki">
+      <i class="fa fa-chevron-left"></i> XVIII Open Cup, GP of Khamovniki
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/21/ai-jabr-1-1/" rel="next" title="「代数学方法：第一卷」第 1 章学习笔记">
+      「代数学方法：第一卷」第 1 章学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Catcats555"
+      src="/images/favicon.jpg">
+  <p class="site-author-name" itemprop="name">Catcats555</p>
+  <div class="site-description" itemprop="description">遇到困难睡大觉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.luogu.com.cn/user/68148" title="洛谷 → https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;68148" rel="noopener" target="_blank">洛谷</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/AThousandMoon" title="Codeforces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;AThousandMoon" rel="noopener" target="_blank">Codeforces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://atcoder.jp/users/yyybbbb" title="AtCoder → https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;yyybbbb" rel="noopener" target="_blank">AtCoder</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/AThousandMoon" title="Github → https:&#x2F;&#x2F;github.com&#x2F;AThousandMoon" rel="noopener" target="_blank">Github</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/yyybbbb-9" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yyybbbb-9" rel="noopener" target="_blank">知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:woshijuruo@gmail.com" title="E-Mail → mailto:woshijuruo@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/1000Suns/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;1000Suns&#x2F;" rel="noopener" target="_blank">1000Suns</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://okazakiyumemi.github.io/" title="https:&#x2F;&#x2F;okazakiyumemi.github.io&#x2F;" rel="noopener" target="_blank">deque</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/p-b-p-b" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;p-b-p-b" rel="noopener" target="_blank">p_b_p_b</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/your-alpha1022/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;your-alpha1022&#x2F;" rel="noopener" target="_blank">alpha1022</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://memset0.cn/" title="https:&#x2F;&#x2F;memset0.cn&#x2F;" rel="noopener" target="_blank">memset0</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/NaCly-Fish-blog/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;NaCly-Fish-blog&#x2F;" rel="noopener" target="_blank">NaCly_Fish</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/EntropyIncreaser/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;EntropyIncreaser&#x2F;" rel="noopener" target="_blank">Elegia</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mrsrz.github.io/" title="https:&#x2F;&#x2F;mrsrz.github.io&#x2F;" rel="noopener" target="_blank">mrsrz</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/dysyn1314/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;dysyn1314&#x2F;" rel="noopener" target="_blank">duyi</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://studyingfather.com/" title="https:&#x2F;&#x2F;studyingfather.com&#x2F;" rel="noopener" target="_blank">studyingfather</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/Ynoi/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;Ynoi&#x2F;" rel="noopener" target="_blank">树剖酱</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/ix-35/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;ix-35&#x2F;" rel="noopener" target="_blank">ix35</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/jiangly/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;jiangly&#x2F;" rel="noopener" target="_blank">jiangly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://m-sea-blog.com/" title="https:&#x2F;&#x2F;m-sea-blog.com&#x2F;" rel="noopener" target="_blank">M_sea</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://azusacat1111.github.io/" title="https:&#x2F;&#x2F;azusacat1111.github.io&#x2F;" rel="noopener" target="_blank">AzusaCat</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/command-block/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;command-block&#x2F;" rel="noopener" target="_blank">command_block</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://xyix.github.io/" title="https:&#x2F;&#x2F;xyix.github.io&#x2F;" rel="noopener" target="_blank">x_Yi_x</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/qiuly/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;qiuly&#x2F;" rel="noopener" target="_blank">qiuly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/imakf/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;imakf&#x2F;" rel="noopener" target="_blank">Imakf</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/Mr-Spade/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Mr-Spade&#x2F;" rel="noopener" target="_blank">Mr_Spade</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.moyujiang.com/" title="https:&#x2F;&#x2F;www.moyujiang.com&#x2F;" rel="noopener" target="_blank">摸鱼酱</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://t.me/TwilightParliament" title="https:&#x2F;&#x2F;t.me&#x2F;TwilightParliament" rel="noopener" target="_blank">xiaodao</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://macesuted.cn/" title="https:&#x2F;&#x2F;macesuted.cn&#x2F;" rel="noopener" target="_blank">macesuted</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/wlzhouzhuan/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;wlzhouzhuan&#x2F;" rel="noopener" target="_blank">wlzhouzhuan</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Catcats555</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+  <script type="text/javascript" src="/js/userbj.js">    </script>
+</body>
+</html>

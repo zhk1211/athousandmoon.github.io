@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"athousandmoon.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"enable","style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Zermelo-Fraenkel Set Theory (ZFC) 构筑于：  一阶逻辑：$\land,\neg,\implies,\forall,\exists$ 等逻辑连词和量词，括号 $(\ )$，变元 $x,y,z,\cdots$ 和等号 $&#x3D;$，以及判定公式是否合法的规则。 集合论所需的二元谓词 $\in$ 及下述的九条公理。ZFC 处理的所有对象均为集合。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「代数学方法：第一卷」第 1 章学习笔记">
+<meta property="og:url" content="https://athousandmoon.github.io/2022/01/21/ai-jabr-1-1/index.html">
+<meta property="og:site_name" content="猫猫的游乐场">
+<meta property="og:description" content="Zermelo-Fraenkel Set Theory (ZFC) 构筑于：  一阶逻辑：$\land,\neg,\implies,\forall,\exists$ 等逻辑连词和量词，括号 $(\ )$，变元 $x,y,z,\cdots$ 和等号 $&#x3D;$，以及判定公式是否合法的规则。 集合论所需的二元谓词 $\in$ 及下述的九条公理。ZFC 处理的所有对象均为集合。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-21T12:21:30.000Z">
+<meta property="article:modified_time" content="2022-01-21T12:24:49.855Z">
+<meta property="article:author" content="Catcats555">
+<meta property="article:tag" content="抽象代数">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://athousandmoon.github.io/2022/01/21/ai-jabr-1-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>「代数学方法：第一卷」第 1 章学习笔记 | 猫猫的游乐场</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">猫猫的游乐场</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">退役 OIer / 喜欢但不会数学</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://athousandmoon.github.io/2022/01/21/ai-jabr-1-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.jpg">
+      <meta itemprop="name" content="Catcats555">
+      <meta itemprop="description" content="遇到困难睡大觉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="猫猫的游乐场">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「代数学方法：第一卷」第 1 章学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-21 20:21:30 / 修改时间：20:24:49" itemprop="dateCreated datePublished" datetime="2022-01-21T20:21:30+08:00">2022-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="far fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>Zermelo-Fraenkel Set Theory (ZFC)</strong> 构筑于：</p>
+<ul>
+<li>一阶逻辑：$\land,\neg,\implies,\forall,\exists$ 等逻辑连词和量词，括号 $(\ )$，变元 $x,y,z,\cdots$ 和等号 $=$，以及判定公式是否合法的规则。</li>
+<li>集合论所需的二元谓词 $\in$ 及下述的九条公理。ZFC 处理的所有对象均为集合。</li>
+</ul>
+<span id="more"></span>
+
+<p><strong>外延公理 (<em>Extensionality</em>).</strong> 若两集合有相同元素，则两者相等。</p>
+<p><strong>配对公理 (<em>Pair</em>).</strong> 对任意 $x,y$，存在 ${x,y}$。</p>
+<p><strong>分离公理模式 (<em>Separation</em>).</strong> 设 $P$ 为关于集合的一个性质，以 $P(u)$ 表示集合 $u$ 满足性质 $P$，则对任意集合 $X$ 存在 ${u\in X:P(u)}$。</p>
+<p><strong>并集公理 (<em>Union</em>).</strong> 对任意集合 $X$，存在相应的并集 $\bigcup X:={u:\exists x\in X,u\in x}$。</p>
+<p><strong>幂集公理 (<em>Power Set</em>).</strong> 对任意集合 $X$，其子集构成集合 $\mathcal P(X):={u:u\subset X}$。</p>
+<p><strong>无穷公理 (<em>Infinity</em>).</strong> 存在集合 $X$ 使得 $\varnothing\in X$ 且 $x\in X\implies x\cup{x}\in X$。</p>
+<p><strong>替换公理模式 (<em>Replacement</em>).</strong> 设 $F$ 为以一个集合 $X$ 为定义域的函数，则存在集合 $F(X):={F(x):x\in X}$。</p>
+<p><strong>正则公理 (<em>Foundation</em>).</strong> 对任意非空集 $X$，存在 $x\in X$ 使得对所有 $y\in X$ 都有 $y\notin x$。</p>
+<p><strong>选择公理 (<em>Choice</em>).</strong> 对任意集合 $X$，若 $\forall x\in X$ 都有 $x\ne\varnothing$，则存在函数 $g:X\to\bigcup X$ 使得 $\forall x\in X$ 都有 $g(x)\in X$。</p>
+<p>由此定义集合的并、交、差、积和子集等运算，以及元组、函数、$n$ 元关系等概念。</p>
+<p><strong>偏序集</strong>是指集合及其二元关系 $(P,\le)$ 满足：</p>
+<ul>
+<li>反身性：$\forall x\in P,x\le x$；</li>
+<li>传递性：$(x\le y)\land(y\le z)\implies x\le z$；</li>
+<li>反对称性：$(x\le y)\land(y\le x)\implies x=y$。</li>
+</ul>
+<p>仅满足反身性和传递性则称为<strong>预序集</strong>。预序集间满足 $x\le y\implies f(x)\le f(y)$ 的映射称为<strong>保序映射</strong>。</p>
+<p>设 $P,Q$ 为偏序集，若映射 $\varphi:P\to Q$ 满足 $x&lt;x’\implies\varphi(x)&lt;\varphi(x’)$ 则称 $\varphi$ 是<strong>严格增</strong>的。</p>
+<p>若 $\varphi:P\to Q$ 是双射且 $\varphi,\varphi^{-1}$ 都严格增，则称 $\varphi$ 为偏序集 $P,Q$ 间的<strong>同构</strong>。偏序集的同构类称为<strong>序型</strong>。</p>
+<p>设 $P’\subset P$ 而 $P$ 为预序集，对于 $x\in P$，</p>
+<ul>
+<li>若不存在 $y\in P$ 使得 $x&lt;y$，则称 $x$ 是 $P$ 的<strong>极大元</strong>；</li>
+<li>若 $\forall x’\in P’$ 都有 $x’\le x$，则称 $x$ 是 $P’$ 的<strong>上界</strong>；</li>
+<li>若 $x$ 是 $P’$ 的上界且对每个上界 $y$ 都有 $x\le y$，则称 $x$ 是 $P’$ 的<strong>上确界</strong>。</li>
+</ul>
+<p>同理可以定义<strong>极小元</strong>、<strong>下界</strong>和<strong>下确界</strong>。若 $P$ 是偏序集则上/下确界存在则唯一，记为 $\sup P’$ 和 $\inf P’$。</p>
+<p>若偏序集 $P$ 非空且任意 ${x,y}$ 都有上界，则称 $P$ 是<strong>滤过</strong>的。</p>
+<p>若偏序集 $P$ 满足 $x\le y\lor y\le x$，则称为<strong>全序集</strong>。</p>
+<p>若全序集 $P$ 满足每个非空子集都有极小元则称为<strong>良序集</strong>。</p>
+<p><strong>例 1.</strong> 对任意集合 $X$，则幂集 $\mathcal P(X)$ 对包含关系 $\subset$ 构成滤过偏序集。</p>
+<p><strong>引理 1.</strong> 设 $P$ 为良序集，映射 $\varphi:P\to P$ 严格增，则 $\forall x\in P$ 都有 $\varphi(x)\ge x$。</p>
+<p><strong>证明.</strong> 反证法，不妨设 $P_0={x\in P:\varphi(x)&lt;x}$ 非空，极小元为 $z$，则 $\varphi(z)\in P_0$ 而 $\varphi(z)&lt;z$，矛盾。$\square$</p>
+<p><strong>推论 1.</strong> $P$ 没有非平凡的自同构。</p>
+<p><strong>推论 2.</strong> 对任意 $x\in P$，不存在从 $P$ 到 $P_{&lt;x}$ 的同构。</p>
+<p>若集合 $\alpha$ 的每个元素都是它的子集，则称 $\alpha$ 是<strong>传递</strong>的。</p>
+<p>若传递集 $\alpha$ 对 $\in$ 构成良序集，则称 $\alpha$ 为<strong>序数</strong>。</p>
+<p><strong>引理 2-1.</strong> 若 $\alpha$ 是序数，$\beta\in\alpha$，则 $\beta$ 是序数。</p>
+<p><strong>证明.</strong> 由 $\alpha$ 的传递性知 $\beta\subset\alpha$，则 $(\beta,\in)$ 是良序集。</p>
+<p>若 $\tau\in\beta\subset\alpha$，因为 $(\alpha,\in)$ 是序结构所以 $x\in\tau\in\beta\implies x\in\beta$，也即 $\tau\subset\beta$，所以 $\beta$ 是序数。$\square$</p>
+<p><strong>引理 2-2.</strong> 对任意两个序数 $\alpha,\beta$，若 $\alpha\subsetneq\beta$，则 $\alpha\in\beta$。</p>
+<p><strong>证明.</strong> 设 $\gamma$ 为 $(\beta\backslash\alpha,\in)$ 的极小元，则 $\gamma={x\in\beta:x\in\gamma}$，显然 $\gamma\subset\alpha$。</p>
+<p>对所有 $y\in\alpha\subset\beta$，显然 $\gamma\ne y$，若 $\gamma\in y$，又因为 $y\subset\alpha$ 所以 $\gamma\in\alpha$，矛盾；所以 $y\in\gamma$，即 $\alpha\subset\gamma$，所以 $\alpha=\gamma\in\beta$。$\square$</p>
+<p><strong>引理 2-3.</strong> 对任意两个序数 $\alpha,\beta$，必有 $\alpha\subset\beta$ 或 $\beta\subset\alpha$。</p>
+<p><strong>证明.</strong> 设 $\gamma=\alpha\cap\beta$，则 $\gamma$ 也是序数，由引理 2-2 得证。$\square$</p>
+<p><strong>定理 3.</strong> 定义 $\mathbf{On}$ 为全体序数构成的真类，则：</p>
+<ul>
+<li>$(\mathbf{On},\in)$ 构成全序，且对任意序数 $\alpha$ 都有 $\alpha={\beta:\beta&lt;\alpha}$；</li>
+<li>设 $C$ 是由序数构成的非空类，则 $\inf C:=\bigcap C$ 也是序数，且 $\inf C\in C$，且 $\alpha\sqcup{\alpha}=\inf{\beta:\alpha&lt;\beta}$。</li>
+<li>设 $S$ 是由序数构成的集合，则 $\sup S:=\bigcup S$ 也是序数。</li>
+</ul>
+<p>给定序数 $\alpha$，定义 $\alpha+1:=\alpha\sqcup{\alpha}$，称为 $\alpha$ 的<strong>后继</strong>。若 $\alpha$ 不是任何序数的后继，则称为<strong>极限序数</strong>。</p>
+<p>定义无穷序数 $\omega=\mathbb Z_{\ge 0}$，则 $\omega$ 也是极限序数。</p>
+<p><strong>定理 4 (超穷归纳法).</strong> 设 $C$ 是由序数构成的类，若</p>
+<ul>
+<li>$0\in C$；</li>
+<li>$\alpha\in C\implies\alpha+1\in C$；</li>
+<li>设 $\alpha$ 为极限序数，若对每个 $\beta&lt;\alpha$ 皆有 $\beta\in C$，则 $\alpha\in C$。</li>
+</ul>
+<p>则 $C=\mathbf{On}$。若仅考虑小于 $\theta$ 的序数则仍然成立。</p>
+<p><strong>定理 5 (超穷递归原理).</strong> 设 $\mathbf{V}$ 表示所有集合构成的类，$G:\mathbf V\to\mathbf V$，则：</p>
+<ul>
+<li>对任意序数 $\theta$，称函数 $a:\theta\to V$ 为 $\theta$-列，则存在唯一的 $\theta$-列 $a$ 使得 $a&lt;\theta\implies a(\alpha)=G(a|_\alpha)$，其中 $a|_\alpha$ 表示函数限制 ${(\beta,a(\beta)):\beta&lt;\alpha}$。</li>
+<li>存在唯一的函数 $a:\mathbf{On}\to V$ 使得对每个序数 $\alpha$ 都有 $a(\alpha)=G(a|_\alpha)$。</li>
+</ul>
+<p>利用超穷递归原理可以对序数定义加法、乘法和指数。</p>
+<p><strong>定理 6.</strong> 对任意良序集 $P$，存在唯一的序数 $\alpha$ 和良序集之间的同构 $\varphi:P\xrightarrow{\sim}\alpha$。</p>
+<p><strong>证明.</strong> 不妨设 $P\ne\varnothing$，并选取 $\mho\notin P$，设 $a_0:=\min(P)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}\min(P\backslash{a_\beta:\beta&lt;\alpha}),&amp;{a_\beta:\beta&lt;\alpha}\subsetneq P, \ \mho,&amp;{a_\beta:\beta&lt;\alpha}=P.\end{cases}<br>$$<br>因为 $P$ 是集合，所以存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了偏序集的同构 $P\to\theta$。$\square$</p>
+<p><strong>定理 7 (良序公理).</strong> 任意集合 $S$ 都能被赋予良序。</p>
+<p><strong>证明.</strong> 选取 $\mho\notin S$ 如上。根据选择公理，对 $S$ 的每个子集 $S’$ 选择其元素 $g(S’)$。设 $a_0=g(S)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}g(S\backslash{a_\beta:\beta&lt;\alpha}),&amp; S\ne{a_\beta:\beta&lt;\alpha}, \<br>\mho,&amp;S={a_\beta:\beta&lt;\alpha}.\end{cases}<br>$$<br>同理可得存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了 $S$ 与 $\theta$ 的同构，于是导出 $S$ 上的良序。$\square$</p>
+<p><strong>定理 8 (Zorn 引理).</strong> 设 $P$ 为非空偏序集，并且 $P$ 中每个链都有上界，则 $P$ 含有极大元。</p>
+<p><strong>证明.</strong> 反证法，假设没有极大元，根据选择公理，对 $P$ 的每个链 $P’$ 选择比它的上界大的元素 $g(P’)$。任取 $a_0\in P$，利用超穷递归定义 $a_\alpha:=g({a_\beta:\beta&lt;\alpha})$，得出 $\mathbf{On}$ 到 $P$ 的单射，矛盾。$\square$</p>
+<hr>
+<p>若两集合 $X,Y$ 之间存在双射 $\varphi:X\to Y$，则称 $X,Y$ <strong>等势</strong>。集合 $X$ 的等势类记作 $|X|$，若存在单射 $\varphi:X\to Y$ 则记作 $|X|\le|Y|$。</p>
+<p><strong>定理 9 (Schröder–Bernstein).</strong> 若两集合 $X,Y$ 满足 $|X|\le |Y|$ 且 $|Y|\le |X|$，则 $|X|=|Y|$。</p>
+<p><strong>证明.</strong> 考虑单射 $f:X\to Y$ 和 $g:Y\to X$，则以 $g(Y)$ 代替 $Y$ 即得 $f(X)\subset Y\subset X$，定义 $X_0:=X$，$Y_0:=Y$，$X_{n+1}:=f(X_n)$，$Y_{n+1}:=f(Y_n)$。定义映射 $\varphi:X\to Y$ 如下<br>$$<br>\varphi(x)=\begin{cases}f(x),&amp;\exists n\in\mathbb N,x\in X_n\backslash Y_n, \ x,&amp;\text{otherwise.}\end{cases}<br>$$<br>则 $\varphi$ 是 $X$ 和 $Y$ 之间的双射。$\square$</p>
+<p><strong>定理 10 (Cantor).</strong> 对任意集合 $X$ 都有 $|\mathcal P(X)|&gt;X$。</p>
+<p><strong>证明.</strong> 对于映射 $\varphi:X\to\mathcal P(X)$，必有 ${x:x\notin\varphi(x)}\notin\varphi(X)$。$\square$</p>
+<p>若序数 $\kappa$ 满足对任意序数 $\lambda&lt;\kappa$ 都有 $|\lambda|&lt;|\kappa|$，则称 $\kappa$ 为<strong>基数</strong>。</p>
+<p><strong>定理 11.</strong> 对任意集合 $X$ 可取最小的序数 $\alpha(X)$ 使得 $|X|=|\alpha(X)|$，则 $X\mapsto\alpha(X)$ 给出等势类与基数的双射。</p>
+<p><strong>证明.</strong> 良序公理说明了 $\alpha(X)$ 的存在性，由序数的良序性得证。$\square$</p>
+<p>基数为有限序数的集合称为<strong>有限集</strong>，基数为 $\omega$ 的集合称为<strong>可数集</strong>，其余称为<strong>不可数集</strong>。</p>
+<p><strong>引理 12-1.</strong> 对任意序数 $\alpha$ 存在基数 $\kappa&gt;\alpha$。</p>
+<p><strong>证明.</strong> 反证法，若对所有序数 $\theta$ 都有 $|\theta|\le|\alpha|$，则有 $\mathbf{On}\to\alpha$，矛盾。$\square$</p>
+<p><strong>引理 12-2.</strong> 设 $S$ 是基数构成的集合，则 $\sup S$ 是基数。</p>
+<p><strong>证明.</strong> 反证法，若存在序数 $\beta&lt;\alpha:=\sup S$ 满足 $|\beta|=|\alpha|$，由上确界性质知存在 $\kappa\in S$ 使得 $|\beta|\le|\kappa|\le|\alpha|$，则 $|\beta|=|\kappa|$，矛盾。$\square$</p>
+<p>任意无穷集 $\alpha$ 都满足 $|\alpha\sqcup{\alpha}|=|\alpha|$，所以无穷基数必为极限序数。</p>
+<p>由上述引理可以用序数枚举无穷基数：$\aleph_0:=\omega$，$\aleph_{\alpha+1}:=$ 大于 $\aleph_\alpha$ 的最小基数，若 $\alpha$ 为极限序数则 $\aleph_\alpha:=\sup{\aleph_\beta:\beta&lt;\alpha}$。</p>
+<p><strong>例 2.</strong> 因为 Dedekind 分割 $x\mapsto{r\in\mathbb Q:r&lt;x}$ 给出 $\mathbb R\hookrightarrow\mathcal P(\mathbb Q)$，所以 $|\mathbb R|\le|\mathcal P(\mathbb Q)|=2^{\aleph_0}$，而区间 $[0,1]$ 包含<br>$$<br>C=\left\{\sum_{n\ge 0}a_n3^{-n}:\forall n,a_n=0\ 或\ 2\right\},<br>$$<br>所以 $|\mathbb R|\ge |C|=2^{\aleph_0}$，所以 $|\mathbb R|=2^{\aleph_0}$。</p>
+<p>在真类 $\mathbf{On}^2$ 上定义 $(\alpha,\beta)\prec(\alpha’,\beta’)$ 当且仅当</p>
+<ul>
+<li>$\max(\alpha,\beta)&lt;\max(\alpha’,\beta’)$，或者</li>
+<li>$\max(\alpha,\beta)=\max(\alpha’,\beta’)$ 且 $(\alpha,\beta)$ 的字典序比 $(\alpha’,\beta’)$ 小。</li>
+</ul>
+<p>则对任意序数 $\alpha$ 都有 $\mathbf{On}^2_{\prec(0,\alpha)}=(\alpha\times\alpha,\prec)$，称作 <strong>$\alpha\times\alpha$ 上的典范良序</strong>。</p>
+<p><strong>定理 13.</strong> 对任意序数 $\alpha$ 都有 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的序型为 $\aleph_\alpha$。</p>
+<p><strong>证明.</strong> 反证法，设 $\alpha$ 为不满足命题的最小序数，显然 $\alpha&gt;0$，设 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的序型为 $\gamma$，取同构 $f:\gamma\to(\aleph_\alpha\times\aleph_\alpha,\prec)$，则由基数性质知 $\gamma\ge|\gamma|=|\aleph_\alpha\times\aleph_\alpha|\ge\aleph_\alpha$，又因为 $\gamma\ne\aleph_\alpha$，所以 $\gamma&gt;\aleph_\alpha$，因为 $\aleph_\alpha$ 是 $\gamma$ 的真前段，所以限制 $f$ 得到 $\aleph_\alpha$ 到 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的某个真前段的同构，而 $\mathbf{On}^2_{\prec(0,\aleph_\alpha)}$ 的真前段必定包含于 $\sigma\times\sigma$，其中 $\sigma&lt;\aleph_\alpha$，由基数性质知存在 $\beta&lt;\alpha$ 使得 $|\sigma|=\aleph_\beta$，所以由 $\alpha$ 的最小性得 $\aleph_\alpha=|f(\aleph_\alpha)|\le|\sigma|^2=\aleph_\beta$，矛盾。$\square$</p>
+<p><strong>推论 14.</strong> 对于至少一个无穷的非零基数 $\kappa,\lambda$，$\kappa+\lambda=\kappa\cdot\lambda=\max(\kappa,\lambda)$，且若 $2\le\kappa\le\lambda$ 则 $\kappa^\lambda=2^\lambda$。</p>
+<p>对于基数 $\alpha$，若不存在极限序数 $\beta&lt;\alpha$ 和严格增的序数列 ${a_\xi:\xi&lt;\beta}$ 使得 $\sup{a_\xi:\xi&lt;\beta}=\alpha$，则称 $\alpha$ 为<strong>正则基数</strong>。</p>
+<p><strong>例 3.</strong> 对于任意序数 $\gamma$，$\aleph_{\gamma+\omega}$ 都不是正则基数：取 $\beta=\gamma+\omega$，$a_\xi=\aleph_\xi$ 即可。</p>
+<hr>
+<p>若集合 $\mathcal U$ 满足以下条件则称为<strong>宇宙</strong>：</p>
+<ul>
+<li>$\mathcal U$ 是传递集：$u\in\mathcal U\implies u\subset\mathcal U$；</li>
+<li>$u,v\in\mathcal U\implies{u,v}\in\mathcal U$；</li>
+<li>$u\in\mathcal U\implies\mathcal P(u)\in\mathcal U$；</li>
+<li>若 $I\subset\mathcal U$，则一族集合 ${u_i:i\in I}\subset\mathcal U$ 的并 $\bigcup_{i\in I}u_i\in\mathcal U$；</li>
+<li>$\varnothing\in\mathcal U$。</li>
+</ul>
+<p>对于集合 $X$，若 $X\in\mathcal U$ 则称为 <strong>$\mathcal U$-集</strong>；若 $X$ 和一个 $\mathcal U$-集等势则称为 <strong>$\mathcal U$-小集</strong>。</p>
+<p>定义一族由序数枚举的集合 $V_\alpha$ 如下：$V_0:=\varnothing$；$V_{\alpha+1}:=\mathcal P(V_\alpha)$；$\alpha$ 是极限序数时 $V_\alpha:=\bigcup_{\beta&lt;\alpha}V_\beta$。称为集合的<strong>层叠谱系</strong>。</p>
+<p><strong>定理 15-1.</strong> 任何非空的类 $C$ 都有相对于 $\in$ 的极小元 $x$。</p>
+<p><strong>证明.</strong> 任取 $S\in C$，若 $S\cap C=\varnothing$ 则 $S$ 即为所求，否则令 $S_0:=S$，$S_{n+1}:=\bigcup S_n$，$T:=\bigcup_{n\in\mathbb N}S_n$ 可得传递集 $T\supset S$，令 $X:=T\cap C$，由正则公理知 $X$ 中有相对于 $\in$ 的极小元 $x$。下证 $x$ 是 $(C,\in)$ 的极小元：否则存在 $y\in x\cap C$，因为 $T$ 是传递集且 $x\in T$，所以 $y\in T\cap C=X$，矛盾。$\square$</p>
+<p><strong>定理 15-2.</strong> 任意集合都属于某个 $V_\alpha$，其中 $\alpha$ 是序数。</p>
+<p><strong>证明.</strong> 反证法，取 $C$ 为所有不在任一个 $V_\alpha$ 内的集合构成的类，$x$ 为 $C$ 相对于 $\in$ 的极小元，所以 $\forall z\in x,z\in V_{\alpha(z)}$，由替换公理模式知 $\mathcal O:={\alpha(z):z\in x}$ 是序数构成的集合，取 $\theta:=\sup\mathcal O$，则 $x\subset V_\mathcal\theta$，也即 $x\in V_{\theta+1}$，矛盾。$\square$</p>
+<p>对于基数 $\kappa$，若 $\kappa$ 不可数，是正则基数，且对任意基数 $\lambda&lt;\kappa$ 都有 $2^\lambda&lt;\kappa$，则称 $\kappa$ 为<strong>强不可达基数</strong>。</p>
+<p><strong>推论 3.</strong> 宇宙即为层叠谱系中形如 $V_\kappa$ 的成员，其中 $\kappa$ 是一个强不可达基数。</p>
+<p><strong>Grothendieck 假设.</strong> 对任意基数 $\lambda$，存在强不可达基数 $\kappa$ 使得 $\lambda&lt;\kappa$。或者说，每个集合都属于宇宙。</p>
+<p><em>Note.</em> ZFC 公理系统无法证明强不可达基数的存在性。</p>
+<p><strong>习题 6 (König 定理).</strong> 设 $\kappa_i,\lambda_i$ 为两族以 $i\in I$ 为下标的基数，且对每个 $i\in I$ 都有 $\kappa_i&lt;\lambda_i$，证明：$\sum_{i\in I}\kappa_i&lt;\sum_{i\in I}\lambda_i$。</p>
+<p>$\le$ 是显然的。反证法，取集合 $|E_i|=\lambda_i$，$E:=\prod_{i\in I}E_i$，则存在划分 $E=\bigcup_{i\in I}F_i$，$|F_i|=\kappa_i$。</p>
+<p>对每个 $i\in I$，令 $G_i:=\text{Im}[F_i\hookrightarrow E\to E_i]$，其中映射取恒等映射和正则投射，则 $G_i\subsetneq E_i$，取 $f\in\prod_{i\in I}(E_i\backslash G_i)$，则 $f\notin\bigcup F_i$，矛盾。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/" rel="tag"># 抽象代数</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/21/analysis-21/" rel="prev" title="「数学分析习题课讲义」第 21 章学习笔记">
+      <i class="fa fa-chevron-left"></i> 「数学分析习题课讲义」第 21 章学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/21/ai-jabr-1-2/" rel="next" title="「代数学方法：第一卷」第 2 章学习笔记">
+      「代数学方法：第一卷」第 2 章学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Catcats555"
+      src="/images/favicon.jpg">
+  <p class="site-author-name" itemprop="name">Catcats555</p>
+  <div class="site-description" itemprop="description">遇到困难睡大觉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.luogu.com.cn/user/68148" title="洛谷 → https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;68148" rel="noopener" target="_blank">洛谷</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/AThousandMoon" title="Codeforces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;AThousandMoon" rel="noopener" target="_blank">Codeforces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://atcoder.jp/users/yyybbbb" title="AtCoder → https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;yyybbbb" rel="noopener" target="_blank">AtCoder</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/AThousandMoon" title="Github → https:&#x2F;&#x2F;github.com&#x2F;AThousandMoon" rel="noopener" target="_blank">Github</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/yyybbbb-9" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yyybbbb-9" rel="noopener" target="_blank">知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:woshijuruo@gmail.com" title="E-Mail → mailto:woshijuruo@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/1000Suns/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;1000Suns&#x2F;" rel="noopener" target="_blank">1000Suns</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://okazakiyumemi.github.io/" title="https:&#x2F;&#x2F;okazakiyumemi.github.io&#x2F;" rel="noopener" target="_blank">deque</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/p-b-p-b" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;p-b-p-b" rel="noopener" target="_blank">p_b_p_b</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/your-alpha1022/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;your-alpha1022&#x2F;" rel="noopener" target="_blank">alpha1022</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://memset0.cn/" title="https:&#x2F;&#x2F;memset0.cn&#x2F;" rel="noopener" target="_blank">memset0</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/NaCly-Fish-blog/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;NaCly-Fish-blog&#x2F;" rel="noopener" target="_blank">NaCly_Fish</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/EntropyIncreaser/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;EntropyIncreaser&#x2F;" rel="noopener" target="_blank">Elegia</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mrsrz.github.io/" title="https:&#x2F;&#x2F;mrsrz.github.io&#x2F;" rel="noopener" target="_blank">mrsrz</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/dysyn1314/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;dysyn1314&#x2F;" rel="noopener" target="_blank">duyi</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://studyingfather.com/" title="https:&#x2F;&#x2F;studyingfather.com&#x2F;" rel="noopener" target="_blank">studyingfather</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/Ynoi/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;Ynoi&#x2F;" rel="noopener" target="_blank">树剖酱</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/ix-35/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;ix-35&#x2F;" rel="noopener" target="_blank">ix35</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/jiangly/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;jiangly&#x2F;" rel="noopener" target="_blank">jiangly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://m-sea-blog.com/" title="https:&#x2F;&#x2F;m-sea-blog.com&#x2F;" rel="noopener" target="_blank">M_sea</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://azusacat1111.github.io/" title="https:&#x2F;&#x2F;azusacat1111.github.io&#x2F;" rel="noopener" target="_blank">AzusaCat</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/command-block/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;command-block&#x2F;" rel="noopener" target="_blank">command_block</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://xyix.github.io/" title="https:&#x2F;&#x2F;xyix.github.io&#x2F;" rel="noopener" target="_blank">x_Yi_x</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/qiuly/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;qiuly&#x2F;" rel="noopener" target="_blank">qiuly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/imakf/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;imakf&#x2F;" rel="noopener" target="_blank">Imakf</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/Mr-Spade/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Mr-Spade&#x2F;" rel="noopener" target="_blank">Mr_Spade</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.moyujiang.com/" title="https:&#x2F;&#x2F;www.moyujiang.com&#x2F;" rel="noopener" target="_blank">摸鱼酱</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://t.me/TwilightParliament" title="https:&#x2F;&#x2F;t.me&#x2F;TwilightParliament" rel="noopener" target="_blank">xiaodao</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://macesuted.cn/" title="https:&#x2F;&#x2F;macesuted.cn&#x2F;" rel="noopener" target="_blank">macesuted</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/wlzhouzhuan/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;wlzhouzhuan&#x2F;" rel="noopener" target="_blank">wlzhouzhuan</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Catcats555</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+  <script type="text/javascript" src="/js/userbj.js">    </script>
+</body>
+</html>

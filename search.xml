@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>XVIII Open Cup, GP of Khamovniki</title>
+    <url>/2021/10/06/XVIII-Open-Cup-GP-of-Khamovniki/</url>
+    <content><![CDATA[<p><a href="https://codeforces.com/gym/102155">题目链接</a></p>
+<span id="more"></span>
+
+<h1 id="I-le-or-ge"><a href="#I-le-or-ge" class="headerlink" title="I. $\le$ or $\ge$"></a>I. $\le$ or $\ge$</h1><p><strong>这是一道交互题</strong></p>
+<p>交互器有 $n$ 个栈，每个栈有 $k$ 个元素，都是不大于 $10^9$ 的正整数，初始时你只知道栈顶的元素，每次操作你选取正整数 $x$，交互器选择 $\le x$ 或 $\ge x$，将满足条件的栈顶元素弹出，然后交互器告诉你新的栈顶元素。你需要在 $50$ 次操作之内将所有栈弹空。</p>
+<p>$n=10^4$，$k=10$。交互器是自适应的。</p>
+<hr>
+<p>考虑暴力即为每次选中位数，但会被卡到 $k\lfloor\log_2 n\rfloor$ 次操作。</p>
+<p>我们不想让每次都弹小的栈，所以给大小为 $k$ 的栈赋 $\alpha^k$ 的权值，每次将权值对半分，最坏的操作次数是 $(k\log\alpha+\log n)/\log(2\alpha/(\alpha+1))$，三分一下得到当 $\alpha=3.909$ 时取到最小值 $49.09$，懒一点就取 $\alpha=4$，而且卡不满，测试数据 $43$ 次就可以搞完。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">10003</span>;</span><br><span class="line"><span class="keyword">int</span> n, k, a[N], id[N], siz[N], pw[<span class="number">11</span>];</span><br><span class="line"><span class="keyword">char</span> op[<span class="number">5</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)&#123;siz[i] = k; id[i] = i;&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= <span class="number">10</span>;++ i) pw[i] = <span class="number">1</span>&lt;&lt;i*<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">		LL sum = <span class="number">0</span>, res = <span class="number">0</span>; <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i) sum += pw[siz[i]];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i) cin &gt;&gt; a[i];</span><br><span class="line">		<span class="built_in">sort</span>(id, id + n, [&amp;](<span class="keyword">int</span> x, <span class="keyword">int</span> y)&#123;<span class="keyword">return</span> a[x] &lt; a[y] || a[x] == a[y] &amp;&amp; x &lt; y;&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">			<span class="keyword">if</span>((res += pw[siz[id[i]]]) * <span class="number">2</span> &gt;= sum)&#123;</span><br><span class="line">				cout &lt;&lt; (p = a[id[i]]) &lt;&lt; endl; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		cin &gt;&gt; op;</span><br><span class="line">		<span class="keyword">if</span>(*op == <span class="string">&#x27;E&#x27;</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(*op == <span class="string">&#x27;&lt;&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">				<span class="keyword">if</span>(siz[i] &amp;&amp; a[i] &lt;= p) -- siz[i];</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">				<span class="keyword">if</span>(siz[i] &amp;&amp; a[i] &gt;= p) -- siz[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Piecewise-Linearity"><a href="#G-Piecewise-Linearity" class="headerlink" title="G. Piecewise Linearity"></a>G. Piecewise Linearity</h1><p>给定一个分段 $1$ 次函数，问能否表示为 $\sum\lambda_i|x-a_i|$ 的形式。</p>
+<p>$n\le 10^5$。</p>
+<hr>
+<p>如果只看每段的斜率的话只需第一段和最后一段的斜率相反，所以还需要一个关于纵坐标的方程，然后再推推推就做完了。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100003</span>;</span><br><span class="line"><span class="keyword">int</span> n, x[N], y[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;= n;++ i)</span><br><span class="line">		cin &gt;&gt; x[i] &gt;&gt; y[i];</span><br><span class="line">	<span class="built_in">puts</span>(((LL)y[n]-y[n<span class="number">-1</span>])*(x[<span class="number">1</span>]-x[<span class="number">0</span>]) + ((LL)y[<span class="number">1</span>]-y[<span class="number">0</span>])*(x[n]-x[n<span class="number">-1</span>]) || ((LL)y[<span class="number">0</span>]+y[n])*(x[<span class="number">1</span>]-x[<span class="number">0</span>])+((LL)y[<span class="number">1</span>]-y[<span class="number">0</span>])*(x[n]-x[<span class="number">0</span>]) ? <span class="string">&quot;No&quot;</span> : <span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="F-Shuffle"><a href="#F-Shuffle" class="headerlink" title="F. Shuffle"></a>F. Shuffle</h1><p>对于 $s=s_0s_1\cdots s_{n-1}\pod{2\mid n}$，定义 $\text{shuffle}(s)=s_0s_2\cdots s_{n-2}s_1s_3\cdots s_{n-1}$。</p>
+<p>给定两个字符串 $s,t$，求最小的自然数 $k$ 使得 $\text{shuffle}^{(k)}(s)=t$。需判断无解。</p>
+<p>$2\le |s|=|t|\le 10^6$，$|s|$ 是偶数，$\Sigma=\{\texttt{a,b,}\cdots\texttt{,z}\}$。</p>
+<hr>
+<p>这个变换就是一个置换，每个环的限制是线性同余方程（因为若多种移位都满足则环上字符是循环串），可以用 exKMP 或哈希做匹配，然后直接 exCRT 解方程组即可。</p>
+<p>这个置换可以看成 $x\mapsto 2x\pmod{n-1}$，所以每个模数都是 $\varphi(n-1)$ 的因数，即答案如果存在就不会很大。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ULL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">double</span> LD;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1000003</span>, K = <span class="number">100003</span>, B = <span class="number">257</span>;</span><br><span class="line"><span class="keyword">char</span> s[N], t[N], s1[N], t1[N];</span><br><span class="line"><span class="keyword">int</span> n, m, nxt[N];</span><br><span class="line"><span class="keyword">bool</span> vis[N];</span><br><span class="line">LL a[K], p[K];</span><br><span class="line">ULL hs2[N&lt;&lt;<span class="number">1</span>], pw[N];</span><br><span class="line"><span class="function">LL <span class="title">mul</span><span class="params">(LL a, LL b, LL mod)</span></span>&#123;</span><br><span class="line">	a %= mod; b %= mod;</span><br><span class="line">	LL tmp = a*b - (LL)((LD)a/mod*b+<span class="number">0.5</span>)*mod;</span><br><span class="line">	<span class="keyword">return</span> tmp &lt; <span class="number">0</span> ? tmp+mod : tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LL <span class="title">exgcd</span><span class="params">(LL a, LL b, LL &amp;x, LL &amp;y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!b)&#123;x = <span class="number">1</span>; y = <span class="number">0</span>; <span class="keyword">return</span> a;&#125;</span><br><span class="line">	LL g = <span class="built_in">exgcd</span>(b, a % b, y, x);</span><br><span class="line">	y -= a / b * x; <span class="keyword">return</span> g;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s%s&quot;</span>, s+<span class="number">1</span>, t+<span class="number">1</span>); n = <span class="built_in">strlen</span>(s+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">if</span>(s[<span class="number">1</span>] != t[<span class="number">1</span>] || s[n] != t[n])&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i += <span class="number">2</span>) nxt[i] = i+<span class="number">1</span>&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= n;i += <span class="number">2</span>) nxt[i] = i+n&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	pw[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;++ i) pw[i] = pw[i<span class="number">-1</span>] * B;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> _ = <span class="number">1</span>;_ &lt;= n;++ _) <span class="keyword">if</span>(!vis[_])&#123;</span><br><span class="line">		<span class="keyword">int</span> u = _, len = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">do</span> &#123;vis[u] = <span class="number">1</span>; s1[++len] = s[u]; t1[len] = t[u]; u = nxt[u];&#125; <span class="keyword">while</span>(u != _);</span><br><span class="line">		ULL hs1 = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= len;++ i)&#123;</span><br><span class="line">			hs1 = hs1 * B + s1[i];</span><br><span class="line">			hs2[i] = hs2[i<span class="number">-1</span>] * B + t1[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = len+<span class="number">1</span>;i &lt;= (len&lt;&lt;<span class="number">1</span>);++ i)</span><br><span class="line">			hs2[i] = hs2[i<span class="number">-1</span>] * B + t1[i-len];</span><br><span class="line">		a[++m] = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; len;++ i)</span><br><span class="line">			<span class="keyword">if</span>(hs2[i+len] - hs2[i]*pw[len] == hs1)&#123;</span><br><span class="line">				a[m] = i; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[m] == <span class="number">-1</span>)&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= len;++ i)</span><br><span class="line">			<span class="keyword">if</span>(hs2[i+len] - hs2[i]*pw[len] == hs2[len])&#123;</span><br><span class="line">				p[m] = i; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(p[m] == <span class="number">1</span>) -- m;</span><br><span class="line">	&#125;</span><br><span class="line">	LL x, y, M = p[<span class="number">1</span>], ans = a[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= m;++ i)&#123;</span><br><span class="line">		LL c = (a[i] - ans % p[i] + p[i]) % p[i];</span><br><span class="line">		LL g = <span class="built_in">exgcd</span>(M, p[i], x, y), bg = p[i] / g;</span><br><span class="line">		<span class="keyword">if</span>(c % g)&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">		x = <span class="built_in">mul</span>(x, c / g, bg);</span><br><span class="line">		ans += x * M; M *= bg;</span><br><span class="line">		ans = (ans % M + M) % M;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="E-Oneness"><a href="#E-Oneness" class="headerlink" title="E. Oneness"></a>E. Oneness</h1><p>对于正整数 $n$，设 $f(n)$ 表示 $n$ 的因数中在十进制表示下只有数字 $1$ 且不是 $1$ 的个数。</p>
+<p>随机生成 $l$ 位正整数 $n$，求 $\sum_{k=1}^n f(k)$。</p>
+<p>$l\le 2.5\cdot 10^5$。</p>
+<hr>
+<p>考虑令 $n:=9n$，所求即为 $\lfloor n/99\rfloor+\lfloor n/999\rfloor+\cdots=n(1/99+1/999+\cdots)-\{n/99\}-\{n/999\}-\cdots$。</p>
+<p>第一项可以先算出那个常数的十进制表示然后 FFT 做高精度乘法，剩下的小数部分直接算，因为随机生成数据所以精度问题不是很大。</p>
+<p>时间复杂度 $O(l\log l)$，代码咕掉了 /dk</p>
+<p><em>To be continued…</em></p>
+]]></content>
+      <categories>
+        <category>OI</category>
+      </categories>
+      <tags>
+        <tag>OpenCup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「代数学方法：第一卷」第 2 章学习笔记</title>
+    <url>/2022/01/21/ai-jabr-1-2/</url>
+    <content><![CDATA[<p>一个<strong>范畴</strong> $\mathcal C$ 包含：</p>
+<ul>
+<li>集合 $\text{Ob}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>对象</strong>；</li>
+<li>集合 $\text{Mor}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>态射</strong>；</li>
+<li>一对映射 $s,t:\text{Mor}(\mathcal C)\to\text{Ob}(\mathcal C)$，分别给出态射的<strong>来源</strong>和<strong>目标</strong>。</li>
+<li>对于 $X,Y\in\text{Ob}(\mathcal C)$，定义 $\text{Hom}_\mathcal C(X,Y):=s^{-1}(X)\cap t^{-1}(Y)$ 为 <strong>$\text{Hom}$-集</strong>，其元素称为 <strong>$X$ 到 $Y$ 的态射</strong>。</li>
+<li>对于 $X\in\text{Ob}(\mathcal C)$，定义 $\text{id}_X\in\text{Hom}_\mathcal C(X,X)$，称为 $X$ 到自身的<strong>恒等态射</strong>。</li>
+<li>对于 $X,Y,Z\in\text{Ob}(\mathcal C)$，给定态射间的<strong>合成映射</strong> $\circ:\text{Hom}_\mathcal C(X,Y)\times\text{Hom}_\mathcal C(Y,Z)\to\text{Hom}_\mathcal C(X,Z),(f,g)\mapsto f\circ g$。它满足：<ul>
+<li>结合律：对于 $f,g,h\in\text{Mor}(\mathcal C)$，若 $(fg)h$ 和 $f(gh)$ 都有定义，则 $(fg)h=f(gh)$；</li>
+<li>对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 有 $f\circ \text{id}_X=f=\text{id}_Y\circ f$。</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<p>称 $\mathcal C’$ 是 $\mathcal C$ 的<strong>子范畴</strong>是指：</p>
+<ul>
+<li>$\text{Ob}(\mathcal C’)\subset\text{Ob}(\mathcal C)$；</li>
+<li>对任意 $X,Y\in\text{Ob}(\mathcal C’)$ 有 $\text{Hom}_{\mathcal C’}(X,Y)\subset\text{Hom}_\mathcal C(X,Y)$ 且与态射的合成兼容。</li>
+</ul>
+<p>若 $\text{Hom}_{\mathcal{C’}}(X,Y)=\text{Hom}_\mathcal C(X,Y)$ 则称 $\mathcal C’$ 是<strong>全子范畴</strong>。<del>导出子图（bushi</del></p>
+<p>一个范畴 $\mathcal C$ 称为 <strong>$\mathcal U$-范畴</strong>是指对任意对象 $X,Y$，$\text{Hom}_\mathcal C(X,Y)$ 都是 $\mathcal U$-小集。若 $\text{Mor}(\mathcal C)$ 也是 $\mathcal U$-小集则称为 <strong>$\mathcal U$-小范畴</strong>。</p>
+<p><em>之后定义的结构（群、环、拓扑空间等）作为集合都是事先选定的宇宙 $\mathcal U$ 的集合，范畴也都是 $\mathcal U$-范畴。</em></p>
+<p>设 $X,Y\in\text{Ob}(\mathcal C)$，$f:X\to Y$ 为态射，</p>
+<ul>
+<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Z\to X$ 都有 $fg=fh\iff g=h$，则称 $f$ 为<strong>单态射</strong>；</li>
+<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Y\to Z$ 都有 $gf=hf\iff g=h$，则称 $f$ 为<strong>满态射</strong>；</li>
+<li>若存在 $g:Y\to X$ 使得 $gf=\text{id}_X$，则称 $f$ <strong>左可逆</strong>而 $g$ 是 $f$ 的一个<strong>左逆</strong>，此时 $f$ 必为单态射；</li>
+<li>若存在 $g:Y\to X$ 使得 $fg=\text{id}_Y$，则称 $f$ <strong>右可逆</strong>而 $g$ 是 $f$ 的一个<strong>右逆</strong>，此时 $f$ 必为满态射；</li>
+<li>若 $f$ 既左可逆又右可逆则称 $f$ 是<strong>同构</strong>。</li>
+</ul>
+<p>$X$ 到 $Y$ 的同构集记作 $\text{Isom}_\mathcal C(X,Y)$。$X$ 的自同态集记作 $\text{End}_\mathcal C(X):=\text{Hom}_\mathcal C(X,X)$，自同构集记作 $\text{Aut}_\mathcal C(X):=\text{Isom}_\mathcal C(X,X)$。</p>
+<p>关于合成运算 $\circ$，$\text{End}_\mathcal C(X)$ 是含幺半群，$\text{Aut}_\mathcal C(X)$ 是群。</p>
+<p>若范畴 $\mathcal C$ 的所有态射都可逆，则称为<strong>广群</strong>。</p>
+<p><strong>例 1 (基本广群).</strong> 设 $X$ 是拓扑空间，其基本广群 $\Pi_1(X)$ 定义为如下范畴：对象是 $X$ 中的点，态射为两点间道路的同伦类。$\pi_1(X,x):=\text{Aut}(x)$ 称为以 $x$ 为基点的<strong>基本群</strong>。</p>
+<p>范畴 $\mathcal C$ 的<strong>反范畴</strong> $\mathcal C^{\text{op}}$ 定义为反转箭头和复合运算。</p>
+<p>设 $\mathcal C’$ 和 $\mathcal C$ 是范畴，<strong>函子</strong> $F:\mathcal C’\to\mathcal C$ 包含：</p>
+<ul>
+<li>对象间的映射 $F:\text{Ob}(\mathcal C’)\to\text{Ob}(\mathcal C)$；</li>
+<li>态射间的映射 $F:\text{Mor}(\mathcal C’)\to\text{Mor}(\mathcal C)$，使得<ul>
+<li>$F$ 与来源映射和目标映射相交换；</li>
+<li>保复合运算和恒等态射。</li>
+</ul>
+</li>
+</ul>
+<p>对于函子 $F:\mathcal C’\to\mathcal C$，</p>
+<ul>
+<li>若 $\mathcal C$ 中任意对象都同构于某个 $FX$ 则称 $F$ 是<strong>本质满</strong>的。</li>
+<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是单射，则称 $F$ 是<strong>忠实</strong>的；</li>
+<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是满射，则称 $F$ 是<strong>全</strong>的。</li>
+</ul>
+<p>函子 $F,G:\mathcal C’\to\mathcal C$ 的<strong>自然变换</strong> $\theta$ 是一族态射 $\theta_X\in\text{Hom}_\mathcal C(FX,GX)\ (X\in\text{Ob}(\mathcal C’))$ 使得对所有 $\mathcal C’$ 中的态射 $f:X\to Y$ 都有：</p>
+<p><img src="/images/ai-jabr-2-1.png"></p>
+<p>记作 $\theta:F\to G$。<em>一种理解方法是 $\theta$ 为 $F$ 到 $G$ 的一个同伦。</em></p>
+<p>对于 $\mathcal C’$ 到 $\mathcal C$ 的三个函子间的态射 $\theta:F\to G$ 和 $\psi:G\to H$，<strong>纵合成</strong> $\psi\circ\theta:={\psi_X\circ\theta_X:X\in\text{Ob}(\mathcal C’)}.$</p>
+<p>对于三个范畴 $\mathcal C’’$、$\mathcal C’$ 和 $\mathcal C$ 的函子 $F_1,F_2:\mathcal C’’\to\mathcal C’$ 和 $G_1,G_2:\mathcal C’\to\mathcal C$ 间的态射 $\theta:F_1\to F_2$ 和 $\psi:G_1\to G_2$，<strong>横合成</strong> $\psi\circ\theta:G_1\circ F_1\to G_2\circ F_2.$</p>
+<p><strong>引理 1-1.</strong> 上述纵、横合成都是函子间的态射，且都满足结合律。</p>
+<p><strong>证明.</strong> 纵合成是显然的。现证明横合成的自然性，只需证明右图。</p>
+<p><img src="/images/ai-jabr-2-2.png"></p>
+<p>而由 $\psi$ 和 $\theta$ 的自然性知每块均交换，而水平方向的合成分别为 $(\psi\circ\theta)_X$ 和 $(\psi\circ\theta)_Y$，此即说明 $\psi\circ\theta$ 的自然性。</p>
+<p>现证明横合成的结合律，考虑左图，施 $\psi$ 的自然性于 $F_1(X)\to F_2(X)$ 知其交换，所以对于三对函子间映射 $\theta:F_1\to F_2$，$\psi:G_1\to G_2$，$\varphi:H_1\to H_2$ 下图给出 $(\varphi\circ(\psi\circ\theta))_X$ 和 $((\varphi\circ\psi)\circ\theta)_X$，而施 $\varphi$ 的自然性于 $G_2F_1(X)\to G_2F_2(X)$ 知其交换。$\square$</p>
+<p><img src="/images/ai-jabr-2-3.png"></p>
+<p>对于自然变换 $\theta:F_1\to F_2$，若每个 $\theta_X$ 都是同构，则存在 $\psi:F_2\to F_1$ 使得 $\psi\circ\theta=\text{id}_{F_1}$ 且 $\theta\circ\psi=\text{id}_{F_2}$，称 $\psi$ 是 $\theta$ 的逆，记作 $\theta^{-1}$，并称 $\theta$ 是 $F_1$ 到 $F_2$ 的<strong>自然同构</strong>。显然同构的横纵合成均为同构。</p>
+<p>对于一对函子 $F:\mathcal C_1\to\mathcal C_2$ 和 $G:\mathcal C_2\to\mathcal C_1$，若存在自然同构 $\theta:\text{id}_{\mathcal C_2}\to FG$ 和 $\psi:\text{id}_{\mathcal C_1}\to GF$ 则称 $G$ 是 $F$ 的<strong>拟逆函子</strong>，并称 $F$ 是范畴 $\mathcal C_1$ 到 $\mathcal C_2$ 的<strong>等价</strong>。若进一步有 $FG=\text{id}_{\mathcal C_2}$ 且 $GF=\text{id}_{\mathcal C_1}$ 则称 $G$ 是 $F$ 的<strong>逆</strong>，并称 $F$ 是范畴间的<strong>同构</strong>。</p>
+<p><strong>命题 2.</strong> 设 $G,G’$ 是函子 $F:\mathcal C_1\to\mathcal C_2$ 的拟逆，则存在函子间同构 $G\cong G’$。</p>
+<p><strong>证明.</strong> 自然变换的横合成给出 $G\xrightarrow{\psi’\circ\text{id}_G}(G’F)G=G’(FG)\xleftarrow{\text{id}_{G’}\circ\theta}G’$。$\square$</p>
+<p>对于全子范畴 $\mathcal C’\subset\mathcal C$，若对每个 $X\in\text{Ob}(\mathcal C)$ 都存在唯一的 $Y\in\text{Ob}(\mathcal C’)$ 使得存在 $X$ 到 $Y$ 的同构，则称 $\mathcal C’$ 是 $\mathcal C$ 的一副<strong>骨架</strong>。自为骨架的范畴称为<strong>骨架范畴</strong>。</p>
+<p><strong>引理 3-1.</strong> 任意范畴 $\mathcal C$ 均有一副骨架 $\mathcal C’$，且包含函子 $\iota:\mathcal C’\to\mathcal C$ 是等价。</p>
+<p><strong>证明.</strong> 使用选择公理在 $\text{Ob}(\mathcal C)$ 的每个同构类中取代表元，设其构成的全子范畴为 $\mathcal C’$。</p>
+<p>对每个 $X\in\text{Ob}(\mathcal C)$ 选定同构 $\theta_X:X\to \kappa(X)$，其中 $\kappa(X)\in\text{Ob}(\mathcal C’)$，特别地对于 $X\in\text{Ob}(\mathcal C’)$ 有 $\theta_X=\text{id}_X$。</p>
+<p>此时存在唯一一种方法将 $\kappa:\text{Ob}(\mathcal C)\to\text{Ob}(\mathcal C’)$ 延拓为函子并使得 $\theta:\text{id}_\mathcal C\to\iota\kappa$ 是自然同构：对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 定义 $\kappa(f):=\theta_Y\circ f\circ\theta_X^{-1}\in\text{Hom}_{\mathcal C’}(\kappa(X),\kappa(Y))$。同时由定义有 $\kappa\iota=\text{id}_{\mathcal C’}$，所以 $\kappa$ 是 $\iota$ 的拟逆函子。$\square$</p>
+<p><strong>引理 3-2.</strong> 骨架范畴间的全忠实、本质满函子都是同构。</p>
+<p><strong>定理 4.</strong> 对于函子 $F:\mathcal C_1\to\mathcal C_2$，$F$ 是范畴等价 $\iff$ $F$ 是全忠实、本质满函子。</p>
+<p><strong>证明.</strong> $\implies$：设拟逆函子为 $G:\mathcal C_2\to\mathcal C_1$ 以及自然同构 $\psi:GF\to\text{id}_{\mathcal C_1}$ 和 $\varphi:FG\to\text{id}_{\mathcal C_2}$。</p>
+<p>对任意 $Z\in\text{Ob}(\mathcal C_2)$ 都有同构 $\varphi_Z:F(GZ)\to Z$ 故 $F$ 本质满，同理 $G$ 本质满。</p>
+<p>因为 $f\mapsto Ff\mapsto GF(f)\mapsto\psi_YGF(f)\psi_X^{-1}$ 合成为恒等映射，所以 $F$ 左可逆，同理可知当 $X,Y\in\text{Ob}(\mathcal C_1)$ 属于 $G$ 的像时 $\text{Hom}(X,Y)\xrightarrow F\text{Hom}(FX,FY)$ 右可逆，而 $\mathcal C_1$ 中每个对象都同构于 $G$ 的某个像，所以 $F$ 全忠实。</p>
+<p>$\impliedby$：由引理 3-1 取骨架 $\iota_i:\mathcal C_i’\to\mathcal C_i$ 及其拟逆函子 $\kappa_i\ (i=1,2)$，$F’:=\kappa_2\circ F\circ \iota_1:\mathcal C_1’\to\mathcal C_2’$ 也是全忠实、本质满函子，所以 $F’$ 是范畴同构。设 $G:=\iota_1\circ F’^{-1}\circ\kappa_2$，则由自然变换的横合成知：</p>
+<p>$$<br>\begin{aligned}<br>GF&amp;=\iota_1F’^{-1}\kappa_2F\cong\iota_1F’^{-1}\kappa_2F\iota_1\kappa_1=\iota_1\kappa_1\cong\text{id}_{\mathcal C_1}, \\<br>FG&amp;=F\iota_1F’^{-1}\kappa_2\cong\iota_2\kappa_2\iota_1F’^{-1}\kappa_2F=\iota_2\kappa_2\cong\text{id}_{\mathcal C_2}.\square<br>\end{aligned}<br>$$</p>
+<p><strong>例 2.</strong> 给定域 $\mathbb K$，定义范畴 $\textsf{Mat}$ 如下：对象是 $\mathbb Z_{\ge 0}$，$\text{Hom}(n,m):=M_{m\times n}(\mathbb K)$，态射的合成定义为矩阵乘法。定义函子 $F:\textsf{Mat}\to\text{Vect}_f(\mathbb K)$，$F(n)=\mathbb K^{\oplus n}:=M_{n\times 1}(\mathbb K)$，而对 $A\in\text{Hom}(n,m)$，线性映射 $FA:\mathbb K^{\oplus n}\to\mathbb K^{\oplus m}$ 是矩阵乘法 $v\mapsto Av$，则 $F$ 是范畴等价。</p>
+<hr>
+<p>设 $I$ 是 $\mathcal U$-集，${\mathcal C_i:i\in I}$ 是一族范畴。积范畴 $\prod_{i\in I}\mathcal C_i$ 定义为：</p>
+<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\prod_{i\in I}\mathcal C_i\right)&amp;:=\prod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\prod_{i\in I}\mathcal C_i}((X_i)_i,(Y_i)_i)&amp;:=\prod_{i\in I}\text{Hom}_{\mathcal C_i}(X_i,Y_i).<br>\end{aligned}<br>$$</p>
+<p>其中 $(X_i)_i$ 表示 $\prod_{i\in I}\text{Ob}(\mathcal C_i)$ 的元素。余积（无交并）范畴 $\coprod_{i\in I}\mathcal C_i$ 定义为：</p>
+<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\coprod_{i\in I}\mathcal C_i\right)&amp;:=\coprod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\coprod_{i\in I}\mathcal C}(X_j,X_k)&amp;:=\begin{cases}\text{Hom}_{\mathcal C_j}(X_j,X_k),&amp;j=k, \\ \varnothing,&amp;j\ne k.\end{cases}<br>\end{aligned}<br>$$</p>
+<p>其中对每个 $j\in I$，$X_j\in\mathcal C_j$。</p>
+<p>定义投射函子 $\mathbf{pr}_j:\prod_{i\in I}\mathcal C_i\to\mathcal C_j$ 和包含函子 $\iota_j:\mathcal C_j\to\coprod_{i\in I}\mathcal C_i$。</p>
+<p>形如 $F:\mathcal C_1\times\cdots\times\mathcal C_n\to\mathcal C$ 的函子称为 <strong>$n$ 元函子</strong>。 </p>
+<p><strong>例 3 (Hom 函子).</strong> 给定范畴 $\mathcal C$，因为 $\mathcal C$ 中的每一对态射 $f:X’\to X$ 和 $g:Y\to Y’$ 诱导出<br>$$<br>\begin{aligned}<br>\text{Hom}_\mathcal C(X,Y)&amp;\to\text{Hom}_\mathcal C(X’,Y’), \\<br>\varphi&amp;\mapsto g\varphi f.<br>\end{aligned}<br>$$<br>称为态射 $\varphi$ 对 $f$ 作<strong>拉回</strong>，对 $g$ 作<strong>推出</strong>。拉回记为 $f^\star\varphi=\varphi f$，推出记为 $g_\star\varphi=g\varphi$，易知 $(f_1f_2)^\star=f_2^\star f_1^\star$ 且 $(f_1f_2)_\star=(f_1)_\star(f_2)_\star$。</p>
+<p>所以 $(X,Y)\mapsto\text{Hom}_\mathcal C(X,Y)$ 定义了二元函子 $\text{Hom}_\mathcal C:\mathcal C^{\text{op}}\times\mathcal C\to\textsf{Set}$。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>抽象代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「代数学方法：第一卷」第 1 章学习笔记</title>
+    <url>/2022/01/21/ai-jabr-1-1/</url>
+    <content><![CDATA[<p><strong>Zermelo-Fraenkel Set Theory (ZFC)</strong> 构筑于：</p>
+<ul>
+<li>一阶逻辑：$\land,\neg,\implies,\forall,\exists$ 等逻辑连词和量词，括号 $(\ )$，变元 $x,y,z,\cdots$ 和等号 $=$，以及判定公式是否合法的规则。</li>
+<li>集合论所需的二元谓词 $\in$ 及下述的九条公理。ZFC 处理的所有对象均为集合。</li>
+</ul>
+<span id="more"></span>
+
+<p><strong>外延公理 (<em>Extensionality</em>).</strong> 若两集合有相同元素，则两者相等。</p>
+<p><strong>配对公理 (<em>Pair</em>).</strong> 对任意 $x,y$，存在 ${x,y}$。</p>
+<p><strong>分离公理模式 (<em>Separation</em>).</strong> 设 $P$ 为关于集合的一个性质，以 $P(u)$ 表示集合 $u$ 满足性质 $P$，则对任意集合 $X$ 存在 ${u\in X:P(u)}$。</p>
+<p><strong>并集公理 (<em>Union</em>).</strong> 对任意集合 $X$，存在相应的并集 $\bigcup X:={u:\exists x\in X,u\in x}$。</p>
+<p><strong>幂集公理 (<em>Power Set</em>).</strong> 对任意集合 $X$，其子集构成集合 $\mathcal P(X):={u:u\subset X}$。</p>
+<p><strong>无穷公理 (<em>Infinity</em>).</strong> 存在集合 $X$ 使得 $\varnothing\in X$ 且 $x\in X\implies x\cup{x}\in X$。</p>
+<p><strong>替换公理模式 (<em>Replacement</em>).</strong> 设 $F$ 为以一个集合 $X$ 为定义域的函数，则存在集合 $F(X):={F(x):x\in X}$。</p>
+<p><strong>正则公理 (<em>Foundation</em>).</strong> 对任意非空集 $X$，存在 $x\in X$ 使得对所有 $y\in X$ 都有 $y\notin x$。</p>
+<p><strong>选择公理 (<em>Choice</em>).</strong> 对任意集合 $X$，若 $\forall x\in X$ 都有 $x\ne\varnothing$，则存在函数 $g:X\to\bigcup X$ 使得 $\forall x\in X$ 都有 $g(x)\in X$。</p>
+<p>由此定义集合的并、交、差、积和子集等运算，以及元组、函数、$n$ 元关系等概念。</p>
+<p><strong>偏序集</strong>是指集合及其二元关系 $(P,\le)$ 满足：</p>
+<ul>
+<li>反身性：$\forall x\in P,x\le x$；</li>
+<li>传递性：$(x\le y)\land(y\le z)\implies x\le z$；</li>
+<li>反对称性：$(x\le y)\land(y\le x)\implies x=y$。</li>
+</ul>
+<p>仅满足反身性和传递性则称为<strong>预序集</strong>。预序集间满足 $x\le y\implies f(x)\le f(y)$ 的映射称为<strong>保序映射</strong>。</p>
+<p>设 $P,Q$ 为偏序集，若映射 $\varphi:P\to Q$ 满足 $x&lt;x’\implies\varphi(x)&lt;\varphi(x’)$ 则称 $\varphi$ 是<strong>严格增</strong>的。</p>
+<p>若 $\varphi:P\to Q$ 是双射且 $\varphi,\varphi^{-1}$ 都严格增，则称 $\varphi$ 为偏序集 $P,Q$ 间的<strong>同构</strong>。偏序集的同构类称为<strong>序型</strong>。</p>
+<p>设 $P’\subset P$ 而 $P$ 为预序集，对于 $x\in P$，</p>
+<ul>
+<li>若不存在 $y\in P$ 使得 $x&lt;y$，则称 $x$ 是 $P$ 的<strong>极大元</strong>；</li>
+<li>若 $\forall x’\in P’$ 都有 $x’\le x$，则称 $x$ 是 $P’$ 的<strong>上界</strong>；</li>
+<li>若 $x$ 是 $P’$ 的上界且对每个上界 $y$ 都有 $x\le y$，则称 $x$ 是 $P’$ 的<strong>上确界</strong>。</li>
+</ul>
+<p>同理可以定义<strong>极小元</strong>、<strong>下界</strong>和<strong>下确界</strong>。若 $P$ 是偏序集则上/下确界存在则唯一，记为 $\sup P’$ 和 $\inf P’$。</p>
+<p>若偏序集 $P$ 非空且任意 ${x,y}$ 都有上界，则称 $P$ 是<strong>滤过</strong>的。</p>
+<p>若偏序集 $P$ 满足 $x\le y\lor y\le x$，则称为<strong>全序集</strong>。</p>
+<p>若全序集 $P$ 满足每个非空子集都有极小元则称为<strong>良序集</strong>。</p>
+<p><strong>例 1.</strong> 对任意集合 $X$，则幂集 $\mathcal P(X)$ 对包含关系 $\subset$ 构成滤过偏序集。</p>
+<p><strong>引理 1.</strong> 设 $P$ 为良序集，映射 $\varphi:P\to P$ 严格增，则 $\forall x\in P$ 都有 $\varphi(x)\ge x$。</p>
+<p><strong>证明.</strong> 反证法，不妨设 $P_0={x\in P:\varphi(x)&lt;x}$ 非空，极小元为 $z$，则 $\varphi(z)\in P_0$ 而 $\varphi(z)&lt;z$，矛盾。$\square$</p>
+<p><strong>推论 1.</strong> $P$ 没有非平凡的自同构。</p>
+<p><strong>推论 2.</strong> 对任意 $x\in P$，不存在从 $P$ 到 $P_{&lt;x}$ 的同构。</p>
+<p>若集合 $\alpha$ 的每个元素都是它的子集，则称 $\alpha$ 是<strong>传递</strong>的。</p>
+<p>若传递集 $\alpha$ 对 $\in$ 构成良序集，则称 $\alpha$ 为<strong>序数</strong>。</p>
+<p><strong>引理 2-1.</strong> 若 $\alpha$ 是序数，$\beta\in\alpha$，则 $\beta$ 是序数。</p>
+<p><strong>证明.</strong> 由 $\alpha$ 的传递性知 $\beta\subset\alpha$，则 $(\beta,\in)$ 是良序集。</p>
+<p>若 $\tau\in\beta\subset\alpha$，因为 $(\alpha,\in)$ 是序结构所以 $x\in\tau\in\beta\implies x\in\beta$，也即 $\tau\subset\beta$，所以 $\beta$ 是序数。$\square$</p>
+<p><strong>引理 2-2.</strong> 对任意两个序数 $\alpha,\beta$，若 $\alpha\subsetneq\beta$，则 $\alpha\in\beta$。</p>
+<p><strong>证明.</strong> 设 $\gamma$ 为 $(\beta\backslash\alpha,\in)$ 的极小元，则 $\gamma={x\in\beta:x\in\gamma}$，显然 $\gamma\subset\alpha$。</p>
+<p>对所有 $y\in\alpha\subset\beta$，显然 $\gamma\ne y$，若 $\gamma\in y$，又因为 $y\subset\alpha$ 所以 $\gamma\in\alpha$，矛盾；所以 $y\in\gamma$，即 $\alpha\subset\gamma$，所以 $\alpha=\gamma\in\beta$。$\square$</p>
+<p><strong>引理 2-3.</strong> 对任意两个序数 $\alpha,\beta$，必有 $\alpha\subset\beta$ 或 $\beta\subset\alpha$。</p>
+<p><strong>证明.</strong> 设 $\gamma=\alpha\cap\beta$，则 $\gamma$ 也是序数，由引理 2-2 得证。$\square$</p>
+<p><strong>定理 3.</strong> 定义 $\mathbf{On}$ 为全体序数构成的真类，则：</p>
+<ul>
+<li>$(\mathbf{On},\in)$ 构成全序，且对任意序数 $\alpha$ 都有 $\alpha={\beta:\beta&lt;\alpha}$；</li>
+<li>设 $C$ 是由序数构成的非空类，则 $\inf C:=\bigcap C$ 也是序数，且 $\inf C\in C$，且 $\alpha\sqcup{\alpha}=\inf{\beta:\alpha&lt;\beta}$。</li>
+<li>设 $S$ 是由序数构成的集合，则 $\sup S:=\bigcup S$ 也是序数。</li>
+</ul>
+<p>给定序数 $\alpha$，定义 $\alpha+1:=\alpha\sqcup{\alpha}$，称为 $\alpha$ 的<strong>后继</strong>。若 $\alpha$ 不是任何序数的后继，则称为<strong>极限序数</strong>。</p>
+<p>定义无穷序数 $\omega=\mathbb Z_{\ge 0}$，则 $\omega$ 也是极限序数。</p>
+<p><strong>定理 4 (超穷归纳法).</strong> 设 $C$ 是由序数构成的类，若</p>
+<ul>
+<li>$0\in C$；</li>
+<li>$\alpha\in C\implies\alpha+1\in C$；</li>
+<li>设 $\alpha$ 为极限序数，若对每个 $\beta&lt;\alpha$ 皆有 $\beta\in C$，则 $\alpha\in C$。</li>
+</ul>
+<p>则 $C=\mathbf{On}$。若仅考虑小于 $\theta$ 的序数则仍然成立。</p>
+<p><strong>定理 5 (超穷递归原理).</strong> 设 $\mathbf{V}$ 表示所有集合构成的类，$G:\mathbf V\to\mathbf V$，则：</p>
+<ul>
+<li>对任意序数 $\theta$，称函数 $a:\theta\to V$ 为 $\theta$-列，则存在唯一的 $\theta$-列 $a$ 使得 $a&lt;\theta\implies a(\alpha)=G(a|_\alpha)$，其中 $a|_\alpha$ 表示函数限制 ${(\beta,a(\beta)):\beta&lt;\alpha}$。</li>
+<li>存在唯一的函数 $a:\mathbf{On}\to V$ 使得对每个序数 $\alpha$ 都有 $a(\alpha)=G(a|_\alpha)$。</li>
+</ul>
+<p>利用超穷递归原理可以对序数定义加法、乘法和指数。</p>
+<p><strong>定理 6.</strong> 对任意良序集 $P$，存在唯一的序数 $\alpha$ 和良序集之间的同构 $\varphi:P\xrightarrow{\sim}\alpha$。</p>
+<p><strong>证明.</strong> 不妨设 $P\ne\varnothing$，并选取 $\mho\notin P$，设 $a_0:=\min(P)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}\min(P\backslash{a_\beta:\beta&lt;\alpha}),&amp;{a_\beta:\beta&lt;\alpha}\subsetneq P, \ \mho,&amp;{a_\beta:\beta&lt;\alpha}=P.\end{cases}<br>$$<br>因为 $P$ 是集合，所以存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了偏序集的同构 $P\to\theta$。$\square$</p>
+<p><strong>定理 7 (良序公理).</strong> 任意集合 $S$ 都能被赋予良序。</p>
+<p><strong>证明.</strong> 选取 $\mho\notin S$ 如上。根据选择公理，对 $S$ 的每个子集 $S’$ 选择其元素 $g(S’)$。设 $a_0=g(S)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}g(S\backslash{a_\beta:\beta&lt;\alpha}),&amp; S\ne{a_\beta:\beta&lt;\alpha}, \<br>\mho,&amp;S={a_\beta:\beta&lt;\alpha}.\end{cases}<br>$$<br>同理可得存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了 $S$ 与 $\theta$ 的同构，于是导出 $S$ 上的良序。$\square$</p>
+<p><strong>定理 8 (Zorn 引理).</strong> 设 $P$ 为非空偏序集，并且 $P$ 中每个链都有上界，则 $P$ 含有极大元。</p>
+<p><strong>证明.</strong> 反证法，假设没有极大元，根据选择公理，对 $P$ 的每个链 $P’$ 选择比它的上界大的元素 $g(P’)$。任取 $a_0\in P$，利用超穷递归定义 $a_\alpha:=g({a_\beta:\beta&lt;\alpha})$，得出 $\mathbf{On}$ 到 $P$ 的单射，矛盾。$\square$</p>
+<hr>
+<p>若两集合 $X,Y$ 之间存在双射 $\varphi:X\to Y$，则称 $X,Y$ <strong>等势</strong>。集合 $X$ 的等势类记作 $|X|$，若存在单射 $\varphi:X\to Y$ 则记作 $|X|\le|Y|$。</p>
+<p><strong>定理 9 (Schröder–Bernstein).</strong> 若两集合 $X,Y$ 满足 $|X|\le |Y|$ 且 $|Y|\le |X|$，则 $|X|=|Y|$。</p>
+<p><strong>证明.</strong> 考虑单射 $f:X\to Y$ 和 $g:Y\to X$，则以 $g(Y)$ 代替 $Y$ 即得 $f(X)\subset Y\subset X$，定义 $X_0:=X$，$Y_0:=Y$，$X_{n+1}:=f(X_n)$，$Y_{n+1}:=f(Y_n)$。定义映射 $\varphi:X\to Y$ 如下<br>$$<br>\varphi(x)=\begin{cases}f(x),&amp;\exists n\in\mathbb N,x\in X_n\backslash Y_n, \ x,&amp;\text{otherwise.}\end{cases}<br>$$<br>则 $\varphi$ 是 $X$ 和 $Y$ 之间的双射。$\square$</p>
+<p><strong>定理 10 (Cantor).</strong> 对任意集合 $X$ 都有 $|\mathcal P(X)|&gt;X$。</p>
+<p><strong>证明.</strong> 对于映射 $\varphi:X\to\mathcal P(X)$，必有 ${x:x\notin\varphi(x)}\notin\varphi(X)$。$\square$</p>
+<p>若序数 $\kappa$ 满足对任意序数 $\lambda&lt;\kappa$ 都有 $|\lambda|&lt;|\kappa|$，则称 $\kappa$ 为<strong>基数</strong>。</p>
+<p><strong>定理 11.</strong> 对任意集合 $X$ 可取最小的序数 $\alpha(X)$ 使得 $|X|=|\alpha(X)|$，则 $X\mapsto\alpha(X)$ 给出等势类与基数的双射。</p>
+<p><strong>证明.</strong> 良序公理说明了 $\alpha(X)$ 的存在性，由序数的良序性得证。$\square$</p>
+<p>基数为有限序数的集合称为<strong>有限集</strong>，基数为 $\omega$ 的集合称为<strong>可数集</strong>，其余称为<strong>不可数集</strong>。</p>
+<p><strong>引理 12-1.</strong> 对任意序数 $\alpha$ 存在基数 $\kappa&gt;\alpha$。</p>
+<p><strong>证明.</strong> 反证法，若对所有序数 $\theta$ 都有 $|\theta|\le|\alpha|$，则有 $\mathbf{On}\to\alpha$，矛盾。$\square$</p>
+<p><strong>引理 12-2.</strong> 设 $S$ 是基数构成的集合，则 $\sup S$ 是基数。</p>
+<p><strong>证明.</strong> 反证法，若存在序数 $\beta&lt;\alpha:=\sup S$ 满足 $|\beta|=|\alpha|$，由上确界性质知存在 $\kappa\in S$ 使得 $|\beta|\le|\kappa|\le|\alpha|$，则 $|\beta|=|\kappa|$，矛盾。$\square$</p>
+<p>任意无穷集 $\alpha$ 都满足 $|\alpha\sqcup{\alpha}|=|\alpha|$，所以无穷基数必为极限序数。</p>
+<p>由上述引理可以用序数枚举无穷基数：$\aleph_0:=\omega$，$\aleph_{\alpha+1}:=$ 大于 $\aleph_\alpha$ 的最小基数，若 $\alpha$ 为极限序数则 $\aleph_\alpha:=\sup{\aleph_\beta:\beta&lt;\alpha}$。</p>
+<p><strong>例 2.</strong> 因为 Dedekind 分割 $x\mapsto{r\in\mathbb Q:r&lt;x}$ 给出 $\mathbb R\hookrightarrow\mathcal P(\mathbb Q)$，所以 $|\mathbb R|\le|\mathcal P(\mathbb Q)|=2^{\aleph_0}$，而区间 $[0,1]$ 包含<br>$$<br>C=\left\{\sum_{n\ge 0}a_n3^{-n}:\forall n,a_n=0\ 或\ 2\right\},<br>$$<br>所以 $|\mathbb R|\ge |C|=2^{\aleph_0}$，所以 $|\mathbb R|=2^{\aleph_0}$。</p>
+<p>在真类 $\mathbf{On}^2$ 上定义 $(\alpha,\beta)\prec(\alpha’,\beta’)$ 当且仅当</p>
+<ul>
+<li>$\max(\alpha,\beta)&lt;\max(\alpha’,\beta’)$，或者</li>
+<li>$\max(\alpha,\beta)=\max(\alpha’,\beta’)$ 且 $(\alpha,\beta)$ 的字典序比 $(\alpha’,\beta’)$ 小。</li>
+</ul>
+<p>则对任意序数 $\alpha$ 都有 $\mathbf{On}^2_{\prec(0,\alpha)}=(\alpha\times\alpha,\prec)$，称作 <strong>$\alpha\times\alpha$ 上的典范良序</strong>。</p>
+<p><strong>定理 13.</strong> 对任意序数 $\alpha$ 都有 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的序型为 $\aleph_\alpha$。</p>
+<p><strong>证明.</strong> 反证法，设 $\alpha$ 为不满足命题的最小序数，显然 $\alpha&gt;0$，设 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的序型为 $\gamma$，取同构 $f:\gamma\to(\aleph_\alpha\times\aleph_\alpha,\prec)$，则由基数性质知 $\gamma\ge|\gamma|=|\aleph_\alpha\times\aleph_\alpha|\ge\aleph_\alpha$，又因为 $\gamma\ne\aleph_\alpha$，所以 $\gamma&gt;\aleph_\alpha$，因为 $\aleph_\alpha$ 是 $\gamma$ 的真前段，所以限制 $f$ 得到 $\aleph_\alpha$ 到 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的某个真前段的同构，而 $\mathbf{On}^2_{\prec(0,\aleph_\alpha)}$ 的真前段必定包含于 $\sigma\times\sigma$，其中 $\sigma&lt;\aleph_\alpha$，由基数性质知存在 $\beta&lt;\alpha$ 使得 $|\sigma|=\aleph_\beta$，所以由 $\alpha$ 的最小性得 $\aleph_\alpha=|f(\aleph_\alpha)|\le|\sigma|^2=\aleph_\beta$，矛盾。$\square$</p>
+<p><strong>推论 14.</strong> 对于至少一个无穷的非零基数 $\kappa,\lambda$，$\kappa+\lambda=\kappa\cdot\lambda=\max(\kappa,\lambda)$，且若 $2\le\kappa\le\lambda$ 则 $\kappa^\lambda=2^\lambda$。</p>
+<p>对于基数 $\alpha$，若不存在极限序数 $\beta&lt;\alpha$ 和严格增的序数列 ${a_\xi:\xi&lt;\beta}$ 使得 $\sup{a_\xi:\xi&lt;\beta}=\alpha$，则称 $\alpha$ 为<strong>正则基数</strong>。</p>
+<p><strong>例 3.</strong> 对于任意序数 $\gamma$，$\aleph_{\gamma+\omega}$ 都不是正则基数：取 $\beta=\gamma+\omega$，$a_\xi=\aleph_\xi$ 即可。</p>
+<hr>
+<p>若集合 $\mathcal U$ 满足以下条件则称为<strong>宇宙</strong>：</p>
+<ul>
+<li>$\mathcal U$ 是传递集：$u\in\mathcal U\implies u\subset\mathcal U$；</li>
+<li>$u,v\in\mathcal U\implies{u,v}\in\mathcal U$；</li>
+<li>$u\in\mathcal U\implies\mathcal P(u)\in\mathcal U$；</li>
+<li>若 $I\subset\mathcal U$，则一族集合 ${u_i:i\in I}\subset\mathcal U$ 的并 $\bigcup_{i\in I}u_i\in\mathcal U$；</li>
+<li>$\varnothing\in\mathcal U$。</li>
+</ul>
+<p>对于集合 $X$，若 $X\in\mathcal U$ 则称为 <strong>$\mathcal U$-集</strong>；若 $X$ 和一个 $\mathcal U$-集等势则称为 <strong>$\mathcal U$-小集</strong>。</p>
+<p>定义一族由序数枚举的集合 $V_\alpha$ 如下：$V_0:=\varnothing$；$V_{\alpha+1}:=\mathcal P(V_\alpha)$；$\alpha$ 是极限序数时 $V_\alpha:=\bigcup_{\beta&lt;\alpha}V_\beta$。称为集合的<strong>层叠谱系</strong>。</p>
+<p><strong>定理 15-1.</strong> 任何非空的类 $C$ 都有相对于 $\in$ 的极小元 $x$。</p>
+<p><strong>证明.</strong> 任取 $S\in C$，若 $S\cap C=\varnothing$ 则 $S$ 即为所求，否则令 $S_0:=S$，$S_{n+1}:=\bigcup S_n$，$T:=\bigcup_{n\in\mathbb N}S_n$ 可得传递集 $T\supset S$，令 $X:=T\cap C$，由正则公理知 $X$ 中有相对于 $\in$ 的极小元 $x$。下证 $x$ 是 $(C,\in)$ 的极小元：否则存在 $y\in x\cap C$，因为 $T$ 是传递集且 $x\in T$，所以 $y\in T\cap C=X$，矛盾。$\square$</p>
+<p><strong>定理 15-2.</strong> 任意集合都属于某个 $V_\alpha$，其中 $\alpha$ 是序数。</p>
+<p><strong>证明.</strong> 反证法，取 $C$ 为所有不在任一个 $V_\alpha$ 内的集合构成的类，$x$ 为 $C$ 相对于 $\in$ 的极小元，所以 $\forall z\in x,z\in V_{\alpha(z)}$，由替换公理模式知 $\mathcal O:={\alpha(z):z\in x}$ 是序数构成的集合，取 $\theta:=\sup\mathcal O$，则 $x\subset V_\mathcal\theta$，也即 $x\in V_{\theta+1}$，矛盾。$\square$</p>
+<p>对于基数 $\kappa$，若 $\kappa$ 不可数，是正则基数，且对任意基数 $\lambda&lt;\kappa$ 都有 $2^\lambda&lt;\kappa$，则称 $\kappa$ 为<strong>强不可达基数</strong>。</p>
+<p><strong>推论 3.</strong> 宇宙即为层叠谱系中形如 $V_\kappa$ 的成员，其中 $\kappa$ 是一个强不可达基数。</p>
+<p><strong>Grothendieck 假设.</strong> 对任意基数 $\lambda$，存在强不可达基数 $\kappa$ 使得 $\lambda&lt;\kappa$。或者说，每个集合都属于宇宙。</p>
+<p><em>Note.</em> ZFC 公理系统无法证明强不可达基数的存在性。</p>
+<p><strong>习题 6 (König 定理).</strong> 设 $\kappa_i,\lambda_i$ 为两族以 $i\in I$ 为下标的基数，且对每个 $i\in I$ 都有 $\kappa_i&lt;\lambda_i$，证明：$\sum_{i\in I}\kappa_i&lt;\sum_{i\in I}\lambda_i$。</p>
+<p>$\le$ 是显然的。反证法，取集合 $|E_i|=\lambda_i$，$E:=\prod_{i\in I}E_i$，则存在划分 $E=\bigcup_{i\in I}F_i$，$|F_i|=\kappa_i$。</p>
+<p>对每个 $i\in I$，令 $G_i:=\text{Im}[F_i\hookrightarrow E\to E_i]$，其中映射取恒等映射和正则投射，则 $G_i\subsetneq E_i$，取 $f\in\prod_{i\in I}(E_i\backslash G_i)$，则 $f\notin\bigcup F_i$，矛盾。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>抽象代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「数学分析习题课讲义」第 21 章学习笔记</title>
+    <url>/2022/01/21/analysis-21/</url>
+    <content><![CDATA[<p>设空间曲线 $l$ 在 $(x_0,y_0,z_0)$ 处的切向量为 $\boldsymbol\tau=(\tau_x,\tau_y,\tau_z)$，则曲线 $l$ 在点 $(x_0,y_0,z_0)$ 的切线方程为：<br>$$<br>\dfrac{x-x_0}{\tau_x}=\dfrac{y-y_0}{\tau_y}=\dfrac{z-z_0}{\tau_z}.<br>$$</p>
+<span id="more"></span>
+
+<p>法平面方程为：<br>$$<br>\tau_x(x-x_0)+\tau_y(y-y_0)+\tau_z(z-z_0)=0.<br>$$<br>设空间曲线 $l$ 的参数方程是：<br>$$<br>x=x(t),\ y=y(t),\ z=z(t),\ a\le t\le b,<br>$$<br>其中 $t$ 是参数，若 $x’(t),y’(t),z’(t)$ 都在 $[a,b]$ 上连续，并且不同时为 $0$，这样的曲线称为<strong>光滑曲线</strong>，这时曲线上点 $(x_0,y_0,z_0)=(x’(t_0),y’(t_0),z’(t_0))$ 的切向量为 $\boldsymbol\tau=(x’(t_0),y’(t_0),z’(t_0))$。</p>
+<p>设空间曲线 $l$ 是用两个曲面 $F(x,y,z)=G(x,y,z)=0$ 的交线来表示的，又设 $F,G$ 关于 $x,y,z$ 有连续的偏导数，点 $\boldsymbol{p_0}(x_0,y_0,z_0)$ 满足这一方程组，且 $F,G$ 的 Jacobi 矩阵在点 $\boldsymbol{p_0}$ 的秩为 $2$，则曲线 $l$ 在点 $\boldsymbol{p_0}$ 的切向量为 $\boldsymbol\tau=\left(\dfrac{\partial(F,G)}{\partial(y,z)},\dfrac{\partial(F,G)}{\partial(z,x)},\dfrac{\partial(F,G)}{\partial(x,y)}\right)\bigg|_{\boldsymbol{p_0}}$。</p>
+<p>由 $F(x,y,z)=0$ 确定的光滑曲面在 $(x,y,z)$ 处的法向量为 $\boldsymbol n=(F_x(x,y,z),F_y(x,y,z),F_z(x,y,z))$。</p>
+<p>由参数方程 $x=x(u,v),\ y=y(u,v),\ z=z(u,v)$ 决定的光滑曲面在点 $(x,y,z)$ 的法向量为 $\boldsymbol n=\left(\dfrac{\partial(y,z)}{\partial(u,v)},\dfrac{\partial(z,x)}{\partial(u,v)},\dfrac{\partial(x,y)}{\partial(u,v)}\right)$。</p>
+<p>设 $D$ 是 $\mathbb R^n$ 中的一个区域，$f$ 是定义在 $D$ 上的函数，$\boldsymbol{p_0}\in D$，$\boldsymbol l$ 是 $\mathbb R^n$ 中的一个单位向量，若极限 $\lim\limits_{t\to 0^+}\dfrac{f(\boldsymbol{p_0}+t\boldsymbol l)-f(\boldsymbol{p_0})}t$ 存在，则称此极限是函数 $f$ 在点 $\boldsymbol{p_0}$ 处沿方向 $\boldsymbol l$ 的<strong>方向导数</strong>，记为 $\dfrac{\partial f}{\partial\boldsymbol l}(\boldsymbol{p_0})$。</p>
+<p>设函数 $f$ 定义于某个区域 $D\subset\mathbb R^n$ 上，又设 $f$ 具有各个变元的偏导数，称向量 $\nabla f(\boldsymbol x)=\left(\dfrac{\partial f}{\partial x_i}(\boldsymbol x)\right)$ 是 $f$ 在点 $\boldsymbol x$ 的<strong>梯度</strong>，则方向导数 $\dfrac{\partial f}{\partial\boldsymbol l}(\boldsymbol x)=\nabla f(\boldsymbol x)\cdot\boldsymbol l=|\nabla f(\boldsymbol x)|\cos\theta$，其中 $\theta$ 是向量 $\nabla f(\boldsymbol x)$ 与 $\boldsymbol l$ 之间的夹角，从而梯度的方向即为函数在该点增加最快的方向。</p>
+<p><strong>Taylor 公式.</strong> 设函数 $f(\boldsymbol x)$ 在凸区域 $D$ 上有各个变元的 $m+1$ 阶连续偏导数，则对任意 $\boldsymbol{x_0},\boldsymbol x\subset D$，记 $\Delta\boldsymbol x=\boldsymbol x-\boldsymbol{x_0}$，则存在 $\theta\in(0,1)$ 使得<br>$$<br>f(\boldsymbol x)=\sum_{k=0}^m\frac{(\Delta\boldsymbol x\cdot\nabla)^k}{k!}f(\boldsymbol{x_0})+\frac{(\Delta\boldsymbol x\cdot\nabla)^{m+1}}{(m+1)!}f(\boldsymbol{x_0}+\theta\Delta\boldsymbol x).<br>$$<br>二阶项形如 $\dfrac 12\Delta\boldsymbol x\boldsymbol Q\Delta\boldsymbol x^\top$，其中 $\boldsymbol Q=\left(\dfrac{\partial^2 f}{\partial x_i\partial x_j}\right)\bigg|_{\boldsymbol{x_0}}$ 称为 <strong>Hesse 矩阵</strong>。</p>
+<p>当 $\boldsymbol{x_0}$ 是可微函数 $f$ 的一个极值点时，必有 $\nabla f(\boldsymbol{x_0})=\boldsymbol 0$。</p>
+<p>当 $\nabla f(\boldsymbol{x_0})=\boldsymbol 0$ 且 $\boldsymbol Q\ne \boldsymbol 0$ 时，$f$ 增长最快的可能方向在 $\boldsymbol Q$ 的最大特征值对应的特征子空间内。</p>
+<p>设函数 $f$ 在驻点 $\boldsymbol{x_0}$ 的某邻域上有二阶连续偏导数，则</p>
+<ul>
+<li>若 $\boldsymbol Q$ 是正定的，则 $f(\boldsymbol{x_0})$ 是极小值；</li>
+<li>若 $\boldsymbol Q$ 是负定的，则 $f(\boldsymbol{x_0})$ 是极大值；</li>
+<li>若 $\boldsymbol Q$ 是不定的（即既有正的特征值，又有负的特征值），则 $\boldsymbol{x_0}$ 不是极值点；</li>
+<li>若 $\boldsymbol Q$ 是半定的（即所有特征值同号，但有零特征值），则需进一步判别。</li>
+</ul>
+<p><strong>定理 4.1 (Lagrange 乘数法).</strong> 设开集 $D\subset\mathbb R^{n+m}$，函数 $f:D\to\mathbb R$ 和映射 $\boldsymbol\Phi:D\to\mathbb R^m$ 满足以下条件：</p>
+<ul>
+<li>$f,\boldsymbol\Phi\in C^1(D)$；</li>
+<li>存在 $\boldsymbol{z_0}=(\boldsymbol{x_0},\boldsymbol{y_0})\in D$，满足 $\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$；</li>
+<li>$\det J_y\boldsymbol\Phi(\boldsymbol{z_0})\ne 0$。</li>
+</ul>
+<p>若 $f$ 在 $(2)$ 的约束下在 $\boldsymbol{z_0}$ 处取得极值，则存在 $\boldsymbol\lambda\in\mathbb R^m$，使得 $Jf(\boldsymbol{z_0})+\boldsymbol\lambda J\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$。</p>
+<p><strong>证明.</strong> 根据隐映射定理，存在 $\boldsymbol{z_0}=(\boldsymbol{x_0},\boldsymbol{y_0})$ 的邻域 $G\times H$ 满足 $\boldsymbol\Phi(\boldsymbol x,\boldsymbol y)=0$ 对任意 $\boldsymbol x\in G$ 在 $H$ 中存在唯一的解 $\boldsymbol\varphi(\boldsymbol x)$ 满足 $\boldsymbol{y_0}=\boldsymbol \varphi(\boldsymbol{x_0})$ 且 $J\boldsymbol\varphi(\boldsymbol{x_0})=-(J_y\boldsymbol\Phi(\boldsymbol{z_0}))^{-1}J_x\boldsymbol\Phi(\boldsymbol{z_0})$，因为 $\boldsymbol{z_0}$ 是约束条件下的极值，所以 $\boldsymbol{x_0}$ 是 $f(\boldsymbol{x_0},\boldsymbol\varphi(\boldsymbol{x_0}))$ 的驻点，由链式法则知 $J_xf(\boldsymbol{z_0})+J_yf(\boldsymbol{z_0})J\boldsymbol\varphi(\boldsymbol{x_0})=\boldsymbol 0$，代入得 $J_xf(\boldsymbol{z_0})-J_yf(\boldsymbol{z_0})(J_y\boldsymbol\Phi(\boldsymbol{z_0}))^{-1}J_x\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$。</p>
+<p>取 $\boldsymbol\lambda=-J_y(\boldsymbol{z_0})(J_y\boldsymbol\Phi(\boldsymbol{z_0}))^{-1}$，则 $J_yf(\boldsymbol{z_0})+\boldsymbol\lambda J_y\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol 0$，又因为 $J_xf(\boldsymbol{z_0})+\boldsymbol\lambda J_x\boldsymbol\Phi(\boldsymbol{z_0})=\boldsymbol0$，合并即得证。$\square$</p>
+<p><strong>定理 4.2</strong> 设 $\boldsymbol{z_0}$ 是辅助函数 $F(\boldsymbol z)=f(\boldsymbol z)+\sum_{i=1}^m\lambda_i\Phi_i(\boldsymbol z)$ 的一个驻点。设 Hesse 矩阵为 $\boldsymbol H(\boldsymbol{z_0})$，</p>
+<ul>
+<li>若 $\boldsymbol H(\boldsymbol{z_0})$ 严格正定，则 $\boldsymbol{z_0}$ 为条件极小值点；</li>
+<li>若 $\boldsymbol H(\boldsymbol{z_0})$ 严格负定，则 $\boldsymbol{z_0}$ 为条件极大值点。</li>
+</ul>
+<p><strong>定理 5.1</strong> 设函数 $f$ 在 $\mathbb R^n$ 中的闭球 $\overline B(0;r)$ 上连续，在它的边界上等于常值，并且在开球 $B(0;r)$ 上可微，则在球内至少有一个点是函数的驻点。</p>
+<p><strong>定理 5.2</strong> 设 $\boldsymbol F:B(0,r)\to\mathbb R^m$ 可微，在闭球 $\overline B(0;r)$ 上连续，且存在非零向量 $\boldsymbol v\in\mathbb R^m$ 使得 $\forall\boldsymbol x\in\partial B(0,r)$，$\boldsymbol v\cdot\boldsymbol F(\boldsymbol x)=0$。则存在 $\boldsymbol\xi\in B(0;r)$ 使得对任意 $\boldsymbol u\in\mathbb R^n$ 都有 $\boldsymbol v\cdot J\boldsymbol F(\boldsymbol\xi)\boldsymbol u=0.$</p>
+<p><strong>证明.</strong> 定义 $f(\boldsymbol x)=\boldsymbol v\cdot\boldsymbol F(\boldsymbol x)$ 然后运用定理 5.1 即可。$\square$</p>
+<p><strong>参考题 1.</strong> 曲面 $z=z(x,y)$ 由方程 $F\left(\dfrac{x-a}{z-c},\dfrac{y-b}{z-c}\right)=0$ 确定，其中 $a,b,c$ 为常数，证明：</p>
+<ul>
+<li>曲面的切平面经过定点 $(a,b,c)$；</li>
+<li>函数 $z=z(x,y)$ 满足方程 $\dfrac{\partial^2 z}{\partial x^2}\cdot\dfrac{\partial^2 z}{\partial y^2}=\left(\dfrac{\partial^2 z}{\partial x\partial y}\right)^2.$</li>
+</ul>
+<p>$(1)$：曲面在 $(x_0,y_0,z_0)$ 处的法向量为 $\left(\dfrac{F_1}{z_0-c},\dfrac{F_2}{z_0-c},\dfrac{(a-x_0)F_1+(b-y_0)F_2}{(z_0-c)^2}\right)$，而 $(x_0-a,y_0-b,z_0-c)$ 与其正交。</p>
+<p>$(2)$：将方程对 $x$ 求导得到 $\dfrac{z_x(F_1(x-a)+F_2(y-b))-F_1(z-c)}{(z-c)^2}=0$，所以 $z_x=\dfrac{F_1(z-c)}{F_1(x-a)+F_2(y-b)}.$</p>
+<p><strong>【留坑待填】</strong><del>不想算了 /fn</del></p>
+<p><strong>参考题 2.</strong> 在平面上给定一个边长为 $a,b,c$ 的三角形，在它上面可作无数个等体积的给定高 $h$ 的三棱锥，求侧面积的最小值。</p>
+<p>设锥顶在地面的投影到三边的距离分别为 $x,y,z$，三角形面积的两倍为 $S$，则所求为 $ax+by+cz=S$ 条件下 $a\sqrt{h^2+x^2}+b\sqrt{h^2+y^2}+c\sqrt{h^2+z^2}$ 的最小值。由 Lagrange 乘数法知 $x=y=z$，所以该点即为外心。</p>
+<p><strong>参考题 3.</strong> 设 $u=f(x,y,z)$ 为二次可微函数，$\cos\alpha,\cos\beta,\cos\gamma$ 为方向 $\boldsymbol l$ 的方向余弦，求 $\dfrac{\partial^2 u}{\partial\boldsymbol l^2}$ 的值。</p>
+<p>$u_{xx}\cos^2\alpha+u_{yy}\cos^2\beta+u_{zz}\cos^2\gamma+2u_{xy}\cos\alpha\cos\beta+2u_{xz}\cos\alpha\cos\gamma+2u_{yz}\cos\beta\cos\gamma.$</p>
+<p><strong>参考题 4.</strong> 设 $u=f(x,y,z)$ 为二次可微函数，$\boldsymbol{l_i}=(\cos\alpha_i,\cos\beta_i,\cos\gamma_i),\ i=1,2,3$ 为三个互相垂直的单位向量，证明：</p>
+<ul>
+<li>$\left(\dfrac{\partial u}{\partial\boldsymbol{l_1}}\right)^2+\left(\dfrac{\partial u}{\partial\boldsymbol{l_2}}\right)^2+\left(\dfrac{\partial u}{\partial\boldsymbol{l_3}}\right)^2=\left(\dfrac{\partial u}{\partial x}\right)^2+\left(\dfrac{\partial u}{\partial y}\right)^2+\left(\dfrac{\partial u}{\partial z}\right)^2$；</li>
+</ul>
+<p>$u_x^2$ 的系数为 $\sum \cos^2\alpha_i=1$。</p>
+<ul>
+<li>$\dfrac{\partial^2 u}{\partial\boldsymbol{l_1}^2}+\dfrac{\partial^2 u}{\partial\boldsymbol{l_2}^2}+\dfrac{\partial^2 u}{\partial\boldsymbol{l_3}^2}=\dfrac{\partial^2 u}{\partial x^2}+\dfrac{\partial^2 u}{\partial y^2}+\dfrac{\partial^2 u}{\partial z^2}$。</li>
+</ul>
+<p>$u_{xx}$ 的系数为 $\sum\cos^2\alpha_i=1$，$u_{xy}$ 的系数为 $2\sum\cos\alpha_i\cos\beta_i=0$。</p>
+<ul>
+<li>若 $\dfrac{\partial f}{\partial\boldsymbol{l_i}}=0,\ i=1,2,3$，则 $f(x,y,z)$ 在 $\mathbb R^3$ 中恒为常数。</li>
+</ul>
+<p>直接应用 $(1)$ 即可。</p>
+<p><strong>参考题 5.</strong> 设 $f$ 在 $O_\delta(\boldsymbol{x_0})\subset\mathbb R^n$ 上连续，在 $O_\delta(\boldsymbol{x_0})\backslash{\boldsymbol{x_0}}$ 可微，证明：若 $\forall\boldsymbol x\in O_\delta(\boldsymbol{x_0})\backslash{\boldsymbol{x_0}}$，有 $(\boldsymbol x-\boldsymbol{x_0})\cdot\nabla f(\boldsymbol x)&lt;0$，则 $\boldsymbol{x_0}$ 是 $f$ 的一个极大值点。</p>
+<p>设 $F(t)=f(\boldsymbol{x_0}+t(\boldsymbol x-\boldsymbol{x_0}))$，则 $F’(t)&lt;0$，所以 $\boldsymbol{x_0}$ 在 $\boldsymbol x-\boldsymbol{x_0}$ 方向上是极大值点，由 $\boldsymbol x$ 的任意性得证。</p>
+<p><strong>参考题 6.</strong> 设 $f$ 在 $O_{\delta_0}(\boldsymbol{x_0})\subset\mathbb R^n$ 上二次连续可微，Hesse 矩阵 $\left(\dfrac{\partial^2 f}{\partial x_i\partial x_j}(\boldsymbol{x_0})\right)$ 为正定阵，$\nabla f(\boldsymbol{x_0})=\boldsymbol 0$，证明：存在 $\delta\in(0,\delta_0)$，使得 $\forall\boldsymbol x\in O_\delta(\boldsymbol{x_0})\backslash{\boldsymbol{x_0}}$，$(\boldsymbol x-\boldsymbol{x_0})\cdot\nabla f(\boldsymbol x)&gt;0$。</p>
+<p>设 $Q(\boldsymbol\alpha,\boldsymbol{x_0})=\boldsymbol\alpha^\top\left(\dfrac{\partial^2 f}{\partial x_i\partial x_j}(\boldsymbol{x_0})\right)\boldsymbol\alpha$，由紧集上连续函数的最值定理知 $|\boldsymbol\alpha|=1$ 时有最小值 $m$，由连续性知存在 $\delta\in(0,\delta_0)$ 使得 $Q(\boldsymbol\alpha,\boldsymbol x)\ge m/2$，设 $F(t)=f(\boldsymbol{x_0}+t(\boldsymbol x-\boldsymbol{x_0}))$，则 $t\in(0,1)$ 时 $F’’(t)&gt;0$，由 $\boldsymbol x$ 的任意性得证。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>数学分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「近世代数引论」学习笔记</title>
+    <url>/2021/10/05/%E3%80%8C%E8%BF%91%E4%B8%96%E4%BB%A3%E6%95%B0%E5%BC%95%E8%AE%BA%E3%80%8D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>抽代好难，我要退学呜呜呜。</p>
+<span id="more"></span>
+
+<h1 id="2-1-基本概念"><a href="#2-1-基本概念" class="headerlink" title="2.1 基本概念"></a>2.1 基本概念</h1><p><strong>定义 1. 环</strong>是集合 $R$ 及其两个二元运算 $+,\cdot$ 组成的代数结构 $(R,+,\cdot)$，满足：</p>
+<ul>
+<li>$(R,+)$ 是 Abel 群，这个加法群的幺元素记作 $0$，称为环 $R$ 的零元素。</li>
+<li>$(R,\cdot)$ 是半群，即 $R$ 中乘法运算满足结合律。</li>
+<li>乘法对加法有分配律。</li>
+</ul>
+<p>如果满足交换律则称为<strong>交换环</strong>，如果存在乘法单位元 $1$ 则成为<strong>含幺环</strong>。</p>
+<p><strong>定义 2.</strong> 环 $R$ 的非零元素 $a$ 叫做 $R$ 的<strong>左零因子</strong>，是指存在非零元素 $b\in R$，使得 $ab=0$。若 $a$ 同时是左零因子和右零因子，则 $a$ 叫做环 $R$ 的<strong>零因子</strong>。</p>
+<p><strong>定义 3.</strong> 含幺环 $R$ 的非零元素 $a$ 叫做<strong>左可逆的</strong>，是指存在非零元素 $c\in R$，使得 $ca=1$，此时 $c$ 叫做元素 $a$ 的<strong>左逆</strong>。若 $a$ 同时是左可逆和右可逆的，则称为环 $R$ 的<strong>单位</strong>，全体单位构成乘法群，称为环 $R$ 的单位群，记作 $U(R)$。</p>
+<p><strong>定义 4.</strong> 若含幺交换环的 $0\ne 1$ 且没有零因子则称为<strong>整环</strong>。若含幺环的 $0\ne 1$ 且非零元素都是单位则称为<strong>体</strong>。若体又是交换环则称为<strong>域</strong>。</p>
+<p><strong>例子 1.</strong> 对于 $\mathbb H=\{a_0+a_1\text i+a_2\text j+a_3\text k:a_i\in\mathbb R\}$，定义加法为按分量相加，乘法则定义为 $r\text i=\text ir$，$r\text j=\text jr$，$r\text k=\text kr$，其中 $r\in\mathbb R$。$\text i^2=\text j^2=\text k^2=-1$，$\text{ij}=-\text{ji}=\text k$，$\text{jk}=-\text{kj}=\text i$，$\text{ki}=-\text{ik}=\text j$，然后用分配律和结合律扩大到 $\mathbb H$ 上。$\mathbb H$ 对如此定义的加法和乘法构成体但不构成域，称为<strong>实四元数体</strong>。</p>
+<p><strong>定义 5.</strong> 设 $S$ 是环 $R$ 的子集合，若 $S$ 对于环 $R$ 的运算构成环/体/域，则称为<strong>子环/体/域</strong>。</p>
+<p><strong>定义 6.</strong> 设 $R,S$ 是环，$f:R\to S$ 称为<strong>环的同态</strong>，是指 $\forall a,b\in R$，$f(a+b)=f(a)+f(b)$ 且 $f(ab)=f(a)f(b)$，同理定义<strong>单同态/满同态/同构</strong>，单同态也称为<strong>嵌入</strong>。环 $R$ 的全体自同构构成群，称为<strong>自同构群</strong> $\text{Aut}(G)$。</p>
+<p><strong>习题 1.</strong> 举例证明含幺环中左可逆元素可以有多于一个左逆。</p>
+<p><strong>【留坑待填】</strong></p>
+<p><strong>习题 2.</strong> 若含幺环中左可逆元素 $a$ 不是右零因子，则 $a$ 只有唯一一个左逆。</p>
+<p><strong>证明</strong> 若 $ba=ca=1$，则 $(b-c)a=0$，又因为 $a$ 不是右零因子，所以 $b-c=0$，也即 $b=c$。所以 $a$ 的左逆唯一。$\square$</p>
+<p><strong>习题 3.</strong> 设 $a$ 是环 $R$ 中非零元素，则 $a$ 不是 $R$ 中左零因子的充要条件是 $ab=ac\Rightarrow b=c$。</p>
+<p><strong>习题 4.</strong> 环 $\mathbb Z_n$ 中元素 $a$ 可逆的充要条件是 $(a,n)=1$。</p>
+<p><strong>习题 5.</strong> 若 $p$ 为质数，则 $\mathbb Z_p$ 为域；若 $n\ge 2$ 不为质数，则 $\mathbb Z_n$ 不是整环。</p>
+<p><strong>习题 6.</strong> 求 $\mathbb Z[\sqrt{-1}]$ 的单位群，证明其为整环但不是域。</p>
+<p><strong>习题 7.</strong> 求 $\mathbb Z[\sqrt{-3}]$ 的单位群，证明其为整环但不是域。</p>
+<p><strong>习题 8.</strong> 设 $R$ 和 $S$ 为含幺环，$0_S\ne 1_S$，$f:R\to S$ 为满同态，则 $f(1_R)=1_S$，且若 $a\in U(R)$，则 $f(a)\in U(S)$，且 $f(a^{-1})=f(a)^{-1}$。</p>
+<p><strong>习题 9.</strong> 设 $A$ 是 Abel 群，$\text{End}(A)$ 是 $A$ 的全部自同态构成的集合，$\forall f,g\in\text{End}(A)$，定义 $(f+g)(a)=f(a)+g(a)$，$(f\cdot g))(a)=f(g(a))$，则 $\text{End}(A)$ 构成含幺环。</p>
+<p><strong>习题 10.</strong> 设 $G$ 是乘法群，$R$ 是环，定义 $R[G]=\{\sum_{g\in G}r_gg:r_g\in R$ 且只有有限个 $r_g\ne 0\}$，定义：<br>$$<br>\sum_{g\in G}r_gg+\sum_{g\in G}t_gg=\sum_{g\in G}(r_g+t_g)g<br>$$</p>
+<p>$$<br>\left(\sum_{g\in G}r_gg\right)\left(\sum_{g\in G}t_gg\right)=\sum_{g\in G}\left(\sum_{g’g’’=g}r_{g’}t_{g’’}\right)g<br>$$</p>
+<ol>
+<li>$R[G]$ 构成环，称为群 $G$ 在环 $R$ 上的<strong>群环</strong>。</li>
+<li>$R[G]$ 是交换环的充要条件是 $R$ 是交换环且 $G$ 是交换群。</li>
+<li>设 $R$ 有幺元素 $1_R$，群 $G$ 的单位元素是 $e$，则 $1_Re$ 是 $R[G]$ 的幺元素。</li>
+<li>$R$ 是 $R[G]$ 的子环。</li>
+</ol>
+<p><strong>习题 11.</strong> $\mathbb Q[\sqrt 2]$ 是 $\mathbb R$ 的子域。</p>
+<p><strong>习题 12.</strong> $\mathbb Z_m$ 的全部子环是 $\mathbb Z_n\pod{n\mid m}$。</p>
+<p><strong>习题 13.</strong> $\mathbb Q$ 的全部子域是 $\mathbb Q$，$\mathbb Q[\sqrt 2]$ 的全部子域是 $\mathbb Q$ 和 $\mathbb Q[\sqrt 2]$。</p>
+<p><strong>习题 14.</strong> $\text{Aut}(\mathbb Q[\sqrt 2])=S_2$，即 $1$ 和 $(\sqrt 2\mapsto -\sqrt 2)$；$\text{Aut}(\mathbb Z_m)=U(\mathbb Z_m)$，即整数模 $m$ 乘法群。</p>
+<p><strong>习题 15.</strong> $\text{Aut}(\mathbb R)={1}$。</p>
+<p><strong>习题 16.</strong> $a+b\text i\mapsto \begin{bmatrix}a &amp; b \\ -b &amp; a\end{bmatrix}$ 是 $\mathbb C$ 到 $M_2(\mathbb R)$ 的嵌入。</p>
+<p><strong>习题 17.</strong> 设 $R$ 为环，$a\in R$，则 $\{r\in R:ra=ar\}$ 是 $R$ 的子环。</p>
+<p><strong>习题 18.</strong> 设 $f:R\to S$ 是环同态，则 $f(R)$ 是 $S$ 的子环。</p>
+<p><strong>习题 19.</strong> 设 $U$ 是集合，对于 $A,B\subseteq S$，定义 $A-B=\{c\in U:c\in A\land c\notin B\}$，$A+B=(A-B)\cup(B-A)$，$A\cdot B=A\cap B$，则 $(2^U,+,\cdot)$ 是交换环，幺元是 $U$。</p>
+<p><strong>习题 20.</strong> 设 $R$ 为环，若 $\forall a\in R$，$a^2=a$，则称 $R$ 为<strong>布尔环</strong>，则布尔环是交换环，且 $\forall a\in R$，$a+a=0_R$，且上题的环是布尔环。</p>
+<p><strong>习题 21.</strong> 设 $R$ 是有限整环，且 $|R|\ge 2$，则 $R$ 是域。</p>
+<p><strong>习题 22.</strong> $\left\{\begin{bmatrix}z &amp; w \\ -\overline w &amp; \overline z\end{bmatrix}:z,w\in\mathbb C\right\}\cong\mathbb H$。</p>
+<p><strong>习题 23.</strong> 环 $R$ 中的元素 $a$ 叫做<strong>幂零</strong>的，是指存在 $m\in\mathbb N_+$，使得 $a^m=0$。证明：对于交换环 $R$，若 $a,b$ 均为幂零的，则 $a+b$ 也是幂零的。若 $R$ 是非交换环，例如 $M_2(\mathbb R)$，$\begin{bmatrix}0 &amp; 1 \\ 0 &amp; 0\end{bmatrix}$ 和 $\begin{bmatrix}0 &amp; 0 \\ 1 &amp; 0\end{bmatrix}$ 是幂零的，而 $\begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}$ 不是幂零的。</p>
+<p><strong>习题 24.</strong> 设 $a,b$ 是含幺环 $R$ 的元素，则 $1-ab$ 可逆 $\iff 1-ba$ 可逆。</p>
+<p><strong>证明</strong> 设 $c=(1-ab)^{-1}$，则 $cab=c-1$，则 $(1+bca)(1-ba)=1-ba+bca-b(c-1)a=1$。</p>
+<p><strong>习题 25.</strong> 含幺环中某个元素有多于一个右逆，则其有无限多个右逆。</p>
+<p><strong>证明</strong> 设 $x$ 有多于一个右逆，考虑 $I=\{g\in R:xg=0\}$，其有非零元素，只需证 $I$ 是无限集合。</p>
+<p>设 $I=\{0,b_1,\cdots,b_l\}$，设 $a$ 是 $x$ 的右逆，则 $\{b_1a,\cdots,b_la\}$ 是 $\{b_1,\cdots,b_l\}$ 的置换，所以 $b_ia\ne 0$，而由于 $x$ 的右逆多于一个所以 $ax\ne 1$（<strong>为什么？</strong>），所以 $(ax-1)a=x(ax-1)=0$，矛盾。$\square$</p>
+<p><strong>习题 26.</strong> 设 $C(\mathbb R)$ 是全部连续实函数 $f:\mathbb R\to\mathbb R$ 组成的集合，定义 $(f+g)(a)=f(a)+g(a)$，$(f\cdot g)(a)=f(a)\cdot f(b)$，则 $C(\mathbb R)$ 是含幺交换环，且是整环，只有 $0$ 是幂零元素，$U(C(\mathbb R))=\{f\in C(\mathbb R):\forall a\in\mathbb R,f(a)\ne 0\}$。</p>
+<p><strong>习题 27.</strong> 设 $D$ 是有限体，则 $\forall a\in D,a^{|D|}=a$。</p>
+<p><strong>习题 28.</strong> 设 $G=\{1_G,g\}$ 是二元群，$U(\mathbb Z[G])=\{\pm 1_G,\pm g\}$。</p>
+<h1 id="2-2-环的同构定理"><a href="#2-2-环的同构定理" class="headerlink" title="2.2 环的同构定理"></a>2.2 环的同构定理</h1><p><strong>引理 1.</strong> 设 $S$ 是环 $R$ 的子环，加法商群 $R/S:\overline a=a+S$ 对于乘法 $\overline a\cdot\overline b=\overline{ab}$ 是环，充要条件是 $\forall r\in R,a\in S$，$ra\in S,ar\in S$。</p>
+<p><strong>证明</strong> $\Rightarrow$：考虑 $r\in R,a\in S$，$\overline a=\overline 0$，所以 $\overline 0=\overline 0\cdot \overline r=\overline{ar}$，所以 $ar\in S$，同理可证 $ra\in S$。</p>
+<p>$\Leftarrow$：只需证乘法的可定义性，即若 $\overline a=\overline{a’}$，$\overline b=\overline{b’}$，则 $a-a’\in S,b-b’\in S$，则 $ab-a’b’=(a-a’)b+a’(b-b’)\in S$，得到 $\overline{ab}=\overline{a’b’}$。$\square$</p>
+<p><strong>定义 1.</strong> 环 $R$ 的子集 $S$ 称为 $R$ 的<strong>理想</strong>，是指满足：</p>
+<ul>
+<li>$\forall a,b\in S$，$a+b\in S$；</li>
+<li>$\forall r\in R,a\in S$，$ar,ra\in S$。</li>
+</ul>
+<p>设 $A$ 是环 $R$ 的理想，则 $R/A$ 形成环，称为 $R$ 对于理想 $A$ 的<strong>商环</strong>。只有平凡理想（$0$ 和自身）的环叫做<strong>单环</strong>。</p>
+<p><strong>定义 2.</strong> 环 $R$ 的子集 $X$ 的<strong>生成理想</strong>是指包含 $X$ 的最小理想，表示为 $(X)=ZX+RX+XR+RXR$。</p>
+<p><strong>定义 3.</strong> 由一个元素 $x\in R$ 生成的理想叫做环 $R$ 的<strong>主理想</strong>，若 $R$ 是整环且每个理想都是主理想，则称为**主理想整环 (Principal Ideal Domain)**。例如 $\mathbb Z$ 是 PID。</p>
+<p><strong>定理 1 (第一同构定理).</strong> 若 $f:R\to S$ 是环的同态，则 $\ker f$ 为环 $R$ 的理想，且 $\overline f:R/\ker f\to S,\overline r\mapsto f(r)$ 是环的嵌入。</p>
+<p><strong>定理 2 (第二同构定理).</strong> 设 $I,J$ 是环 $R$ 的理想，则 $I/(I\cap J)\cong (I+J)/J$。</p>
+<p><strong>证明</strong> 易得 $I+J$ 是 $R$ 的子环，$J$ 是 $I+J$ 的理想，设 $f:I\to(I+J)/J$，$a\mapsto a+J$，则 $f$ 是满同态，且 $\ker f=I\cap J$，由定理 1 得证。</p>
+<p><strong>定理 3 (第三同构定理).</strong> 设 $I,J$ 是环 $R$ 的理想，$I\subseteq J$，则 $(R/I)/(J/I)\cong R/J$。</p>
+<p><strong>证明</strong> 设 $f:R/I\to R/J$，$a+I\mapsto a+J$，则 $f$ 是满同态，$\ker f=J/I$，由定理 1 得证。</p>
+<p><strong>习题 1.</strong> 交换环 $R$ 中全部幂零元素组成的集合 $N$ 是环 $R$ 的理想，且商环 $R/N$ 中只有零元素是幂零元素。</p>
+<p><strong>习题 2.</strong> 设 $I$ 是交换环 $R$ 的理想，证明：集合 $\sqrt I=\{r\in R:\exists n\in\mathbb N_+,r^n\in I\}$ 也是环 $R$ 的理想。</p>
+<p><strong>习题 3.</strong> 设 $R$ 是环，集合 $C(R)=\{c\in R:\forall r\in R,rc=cr\}$ 称为环 $R$ 的<strong>中心</strong>，证明：</p>
+<ul>
+<li>$C(R)$ 是 $R$ 的子环，但不一定是 $R$ 的理想。</li>
+<li>$F$ 是域，$M_n(F)$ 的中心为 $\{aI_n:a\in F\}$，其中 $I_n$ 表示单位方阵。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>抽象代数</tag>
+      </tags>
+  </entry>
+</search>

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"athousandmoon.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"enable","style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一个范畴 $\mathcal C$ 包含：  集合 $\text{Ob}(\mathcal C)$，其元素称为 $\mathcal C$ 的对象； 集合 $\text{Mor}(\mathcal C)$，其元素称为 $\mathcal C$ 的态射； 一对映射 $s,t:\text{Mor}(\mathcal C)\to\text{Ob}(\mathcal C)$，分别给出态射的来源和目标。 对于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「代数学方法：第一卷」第 2 章学习笔记">
+<meta property="og:url" content="https://athousandmoon.github.io/2022/01/21/ai-jabr-1-2/index.html">
+<meta property="og:site_name" content="猫猫的游乐场">
+<meta property="og:description" content="一个范畴 $\mathcal C$ 包含：  集合 $\text{Ob}(\mathcal C)$，其元素称为 $\mathcal C$ 的对象； 集合 $\text{Mor}(\mathcal C)$，其元素称为 $\mathcal C$ 的态射； 一对映射 $s,t:\text{Mor}(\mathcal C)\to\text{Ob}(\mathcal C)$，分别给出态射的来源和目标。 对于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://athousandmoon.github.io/images/ai-jabr-2-1.png">
+<meta property="og:image" content="https://athousandmoon.github.io/images/ai-jabr-2-2.png">
+<meta property="og:image" content="https://athousandmoon.github.io/images/ai-jabr-2-3.png">
+<meta property="article:published_time" content="2022-01-21T12:34:46.000Z">
+<meta property="article:modified_time" content="2022-01-21T13:41:55.547Z">
+<meta property="article:author" content="Catcats555">
+<meta property="article:tag" content="抽象代数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://athousandmoon.github.io/images/ai-jabr-2-1.png">
+
+<link rel="canonical" href="https://athousandmoon.github.io/2022/01/21/ai-jabr-1-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>「代数学方法：第一卷」第 2 章学习笔记 | 猫猫的游乐场</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">猫猫的游乐场</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">退役 OIer / 喜欢但不会数学</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://athousandmoon.github.io/2022/01/21/ai-jabr-1-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.jpg">
+      <meta itemprop="name" content="Catcats555">
+      <meta itemprop="description" content="遇到困难睡大觉">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="猫猫的游乐场">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「代数学方法：第一卷」第 2 章学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-21 20:34:46 / 修改时间：21:41:55" itemprop="dateCreated datePublished" datetime="2022-01-21T20:34:46+08:00">2022-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="far fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一个<strong>范畴</strong> $\mathcal C$ 包含：</p>
+<ul>
+<li>集合 $\text{Ob}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>对象</strong>；</li>
+<li>集合 $\text{Mor}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>态射</strong>；</li>
+<li>一对映射 $s,t:\text{Mor}(\mathcal C)\to\text{Ob}(\mathcal C)$，分别给出态射的<strong>来源</strong>和<strong>目标</strong>。</li>
+<li>对于 $X,Y\in\text{Ob}(\mathcal C)$，定义 $\text{Hom}_\mathcal C(X,Y):=s^{-1}(X)\cap t^{-1}(Y)$ 为 <strong>$\text{Hom}$-集</strong>，其元素称为 <strong>$X$ 到 $Y$ 的态射</strong>。</li>
+<li>对于 $X\in\text{Ob}(\mathcal C)$，定义 $\text{id}_X\in\text{Hom}_\mathcal C(X,X)$，称为 $X$ 到自身的<strong>恒等态射</strong>。</li>
+<li>对于 $X,Y,Z\in\text{Ob}(\mathcal C)$，给定态射间的<strong>合成映射</strong> $\circ:\text{Hom}_\mathcal C(X,Y)\times\text{Hom}_\mathcal C(Y,Z)\to\text{Hom}_\mathcal C(X,Z),(f,g)\mapsto f\circ g$。它满足：<ul>
+<li>结合律：对于 $f,g,h\in\text{Mor}(\mathcal C)$，若 $(fg)h$ 和 $f(gh)$ 都有定义，则 $(fg)h=f(gh)$；</li>
+<li>对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 有 $f\circ \text{id}_X=f=\text{id}_Y\circ f$。</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<p>称 $\mathcal C’$ 是 $\mathcal C$ 的<strong>子范畴</strong>是指：</p>
+<ul>
+<li>$\text{Ob}(\mathcal C’)\subset\text{Ob}(\mathcal C)$；</li>
+<li>对任意 $X,Y\in\text{Ob}(\mathcal C’)$ 有 $\text{Hom}_{\mathcal C’}(X,Y)\subset\text{Hom}_\mathcal C(X,Y)$ 且与态射的合成兼容。</li>
+</ul>
+<p>若 $\text{Hom}_{\mathcal{C’}}(X,Y)=\text{Hom}_\mathcal C(X,Y)$ 则称 $\mathcal C’$ 是<strong>全子范畴</strong>。<del>导出子图（bushi</del></p>
+<p>一个范畴 $\mathcal C$ 称为 <strong>$\mathcal U$-范畴</strong>是指对任意对象 $X,Y$，$\text{Hom}_\mathcal C(X,Y)$ 都是 $\mathcal U$-小集。若 $\text{Mor}(\mathcal C)$ 也是 $\mathcal U$-小集则称为 <strong>$\mathcal U$-小范畴</strong>。</p>
+<p><em>之后定义的结构（群、环、拓扑空间等）作为集合都是事先选定的宇宙 $\mathcal U$ 的集合，范畴也都是 $\mathcal U$-范畴。</em></p>
+<p>设 $X,Y\in\text{Ob}(\mathcal C)$，$f:X\to Y$ 为态射，</p>
+<ul>
+<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Z\to X$ 都有 $fg=fh\iff g=h$，则称 $f$ 为<strong>单态射</strong>；</li>
+<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Y\to Z$ 都有 $gf=hf\iff g=h$，则称 $f$ 为<strong>满态射</strong>；</li>
+<li>若存在 $g:Y\to X$ 使得 $gf=\text{id}_X$，则称 $f$ <strong>左可逆</strong>而 $g$ 是 $f$ 的一个<strong>左逆</strong>，此时 $f$ 必为单态射；</li>
+<li>若存在 $g:Y\to X$ 使得 $fg=\text{id}_Y$，则称 $f$ <strong>右可逆</strong>而 $g$ 是 $f$ 的一个<strong>右逆</strong>，此时 $f$ 必为满态射；</li>
+<li>若 $f$ 既左可逆又右可逆则称 $f$ 是<strong>同构</strong>。</li>
+</ul>
+<p>$X$ 到 $Y$ 的同构集记作 $\text{Isom}_\mathcal C(X,Y)$。$X$ 的自同态集记作 $\text{End}_\mathcal C(X):=\text{Hom}_\mathcal C(X,X)$，自同构集记作 $\text{Aut}_\mathcal C(X):=\text{Isom}_\mathcal C(X,X)$。</p>
+<p>关于合成运算 $\circ$，$\text{End}_\mathcal C(X)$ 是含幺半群，$\text{Aut}_\mathcal C(X)$ 是群。</p>
+<p>若范畴 $\mathcal C$ 的所有态射都可逆，则称为<strong>广群</strong>。</p>
+<p><strong>例 1 (基本广群).</strong> 设 $X$ 是拓扑空间，其基本广群 $\Pi_1(X)$ 定义为如下范畴：对象是 $X$ 中的点，态射为两点间道路的同伦类。$\pi_1(X,x):=\text{Aut}(x)$ 称为以 $x$ 为基点的<strong>基本群</strong>。</p>
+<p>范畴 $\mathcal C$ 的<strong>反范畴</strong> $\mathcal C^{\text{op}}$ 定义为反转箭头和复合运算。</p>
+<p>设 $\mathcal C’$ 和 $\mathcal C$ 是范畴，<strong>函子</strong> $F:\mathcal C’\to\mathcal C$ 包含：</p>
+<ul>
+<li>对象间的映射 $F:\text{Ob}(\mathcal C’)\to\text{Ob}(\mathcal C)$；</li>
+<li>态射间的映射 $F:\text{Mor}(\mathcal C’)\to\text{Mor}(\mathcal C)$，使得<ul>
+<li>$F$ 与来源映射和目标映射相交换；</li>
+<li>保复合运算和恒等态射。</li>
+</ul>
+</li>
+</ul>
+<p>对于函子 $F:\mathcal C’\to\mathcal C$，</p>
+<ul>
+<li>若 $\mathcal C$ 中任意对象都同构于某个 $FX$ 则称 $F$ 是<strong>本质满</strong>的。</li>
+<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是单射，则称 $F$ 是<strong>忠实</strong>的；</li>
+<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是满射，则称 $F$ 是<strong>全</strong>的。</li>
+</ul>
+<p>函子 $F,G:\mathcal C’\to\mathcal C$ 的<strong>自然变换</strong> $\theta$ 是一族态射 $\theta_X\in\text{Hom}_\mathcal C(FX,GX)\ (X\in\text{Ob}(\mathcal C’))$ 使得对所有 $\mathcal C’$ 中的态射 $f:X\to Y$ 都有：</p>
+<p><img src="/images/ai-jabr-2-1.png"></p>
+<p>记作 $\theta:F\to G$。<em>一种理解方法是 $\theta$ 为 $F$ 到 $G$ 的一个同伦。</em></p>
+<p>对于 $\mathcal C’$ 到 $\mathcal C$ 的三个函子间的态射 $\theta:F\to G$ 和 $\psi:G\to H$，<strong>纵合成</strong> $\psi\circ\theta:={\psi_X\circ\theta_X:X\in\text{Ob}(\mathcal C’)}.$</p>
+<p>对于三个范畴 $\mathcal C’’$、$\mathcal C’$ 和 $\mathcal C$ 的函子 $F_1,F_2:\mathcal C’’\to\mathcal C’$ 和 $G_1,G_2:\mathcal C’\to\mathcal C$ 间的态射 $\theta:F_1\to F_2$ 和 $\psi:G_1\to G_2$，<strong>横合成</strong> $\psi\circ\theta:G_1\circ F_1\to G_2\circ F_2.$</p>
+<p><strong>引理 1-1.</strong> 上述纵、横合成都是函子间的态射，且都满足结合律。</p>
+<p><strong>证明.</strong> 纵合成是显然的。现证明横合成的自然性，只需证明右图。</p>
+<p><img src="/images/ai-jabr-2-2.png"></p>
+<p>而由 $\psi$ 和 $\theta$ 的自然性知每块均交换，而水平方向的合成分别为 $(\psi\circ\theta)_X$ 和 $(\psi\circ\theta)_Y$，此即说明 $\psi\circ\theta$ 的自然性。</p>
+<p>现证明横合成的结合律，考虑左图，施 $\psi$ 的自然性于 $F_1(X)\to F_2(X)$ 知其交换，所以对于三对函子间映射 $\theta:F_1\to F_2$，$\psi:G_1\to G_2$，$\varphi:H_1\to H_2$ 下图给出 $(\varphi\circ(\psi\circ\theta))_X$ 和 $((\varphi\circ\psi)\circ\theta)_X$，而施 $\varphi$ 的自然性于 $G_2F_1(X)\to G_2F_2(X)$ 知其交换。$\square$</p>
+<p><img src="/images/ai-jabr-2-3.png"></p>
+<p>对于自然变换 $\theta:F_1\to F_2$，若每个 $\theta_X$ 都是同构，则存在 $\psi:F_2\to F_1$ 使得 $\psi\circ\theta=\text{id}_{F_1}$ 且 $\theta\circ\psi=\text{id}_{F_2}$，称 $\psi$ 是 $\theta$ 的逆，记作 $\theta^{-1}$，并称 $\theta$ 是 $F_1$ 到 $F_2$ 的<strong>自然同构</strong>。显然同构的横纵合成均为同构。</p>
+<p>对于一对函子 $F:\mathcal C_1\to\mathcal C_2$ 和 $G:\mathcal C_2\to\mathcal C_1$，若存在自然同构 $\theta:\text{id}_{\mathcal C_2}\to FG$ 和 $\psi:\text{id}_{\mathcal C_1}\to GF$ 则称 $G$ 是 $F$ 的<strong>拟逆函子</strong>，并称 $F$ 是范畴 $\mathcal C_1$ 到 $\mathcal C_2$ 的<strong>等价</strong>。若进一步有 $FG=\text{id}_{\mathcal C_2}$ 且 $GF=\text{id}_{\mathcal C_1}$ 则称 $G$ 是 $F$ 的<strong>逆</strong>，并称 $F$ 是范畴间的<strong>同构</strong>。</p>
+<p><strong>命题 2.</strong> 设 $G,G’$ 是函子 $F:\mathcal C_1\to\mathcal C_2$ 的拟逆，则存在函子间同构 $G\cong G’$。</p>
+<p><strong>证明.</strong> 自然变换的横合成给出 $G\xrightarrow{\psi’\circ\text{id}_G}(G’F)G=G’(FG)\xleftarrow{\text{id}_{G’}\circ\theta}G’$。$\square$</p>
+<p>对于全子范畴 $\mathcal C’\subset\mathcal C$，若对每个 $X\in\text{Ob}(\mathcal C)$ 都存在唯一的 $Y\in\text{Ob}(\mathcal C’)$ 使得存在 $X$ 到 $Y$ 的同构，则称 $\mathcal C’$ 是 $\mathcal C$ 的一副<strong>骨架</strong>。自为骨架的范畴称为<strong>骨架范畴</strong>。</p>
+<p><strong>引理 3-1.</strong> 任意范畴 $\mathcal C$ 均有一副骨架 $\mathcal C’$，且包含函子 $\iota:\mathcal C’\to\mathcal C$ 是等价。</p>
+<p><strong>证明.</strong> 使用选择公理在 $\text{Ob}(\mathcal C)$ 的每个同构类中取代表元，设其构成的全子范畴为 $\mathcal C’$。</p>
+<p>对每个 $X\in\text{Ob}(\mathcal C)$ 选定同构 $\theta_X:X\to \kappa(X)$，其中 $\kappa(X)\in\text{Ob}(\mathcal C’)$，特别地对于 $X\in\text{Ob}(\mathcal C’)$ 有 $\theta_X=\text{id}_X$。</p>
+<p>此时存在唯一一种方法将 $\kappa:\text{Ob}(\mathcal C)\to\text{Ob}(\mathcal C’)$ 延拓为函子并使得 $\theta:\text{id}_\mathcal C\to\iota\kappa$ 是自然同构：对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 定义 $\kappa(f):=\theta_Y\circ f\circ\theta_X^{-1}\in\text{Hom}_{\mathcal C’}(\kappa(X),\kappa(Y))$。同时由定义有 $\kappa\iota=\text{id}_{\mathcal C’}$，所以 $\kappa$ 是 $\iota$ 的拟逆函子。$\square$</p>
+<p><strong>引理 3-2.</strong> 骨架范畴间的全忠实、本质满函子都是同构。</p>
+<p><strong>定理 4.</strong> 对于函子 $F:\mathcal C_1\to\mathcal C_2$，$F$ 是范畴等价 $\iff$ $F$ 是全忠实、本质满函子。</p>
+<p><strong>证明.</strong> $\implies$：设拟逆函子为 $G:\mathcal C_2\to\mathcal C_1$ 以及自然同构 $\psi:GF\to\text{id}_{\mathcal C_1}$ 和 $\varphi:FG\to\text{id}_{\mathcal C_2}$。</p>
+<p>对任意 $Z\in\text{Ob}(\mathcal C_2)$ 都有同构 $\varphi_Z:F(GZ)\to Z$ 故 $F$ 本质满，同理 $G$ 本质满。</p>
+<p>因为 $f\mapsto Ff\mapsto GF(f)\mapsto\psi_YGF(f)\psi_X^{-1}$ 合成为恒等映射，所以 $F$ 左可逆，同理可知当 $X,Y\in\text{Ob}(\mathcal C_1)$ 属于 $G$ 的像时 $\text{Hom}(X,Y)\xrightarrow F\text{Hom}(FX,FY)$ 右可逆，而 $\mathcal C_1$ 中每个对象都同构于 $G$ 的某个像，所以 $F$ 全忠实。</p>
+<p>$\impliedby$：由引理 3-1 取骨架 $\iota_i:\mathcal C_i’\to\mathcal C_i$ 及其拟逆函子 $\kappa_i\ (i=1,2)$，$F’:=\kappa_2\circ F\circ \iota_1:\mathcal C_1’\to\mathcal C_2’$ 也是全忠实、本质满函子，所以 $F’$ 是范畴同构。设 $G:=\iota_1\circ F’^{-1}\circ\kappa_2$，则由自然变换的横合成知：</p>
+<p>$$<br>\begin{aligned}<br>GF&amp;=\iota_1F’^{-1}\kappa_2F\cong\iota_1F’^{-1}\kappa_2F\iota_1\kappa_1=\iota_1\kappa_1\cong\text{id}_{\mathcal C_1}, \\<br>FG&amp;=F\iota_1F’^{-1}\kappa_2\cong\iota_2\kappa_2\iota_1F’^{-1}\kappa_2F=\iota_2\kappa_2\cong\text{id}_{\mathcal C_2}.\square<br>\end{aligned}<br>$$</p>
+<p><strong>例 2.</strong> 给定域 $\mathbb K$，定义范畴 $\textsf{Mat}$ 如下：对象是 $\mathbb Z_{\ge 0}$，$\text{Hom}(n,m):=M_{m\times n}(\mathbb K)$，态射的合成定义为矩阵乘法。定义函子 $F:\textsf{Mat}\to\text{Vect}_f(\mathbb K)$，$F(n)=\mathbb K^{\oplus n}:=M_{n\times 1}(\mathbb K)$，而对 $A\in\text{Hom}(n,m)$，线性映射 $FA:\mathbb K^{\oplus n}\to\mathbb K^{\oplus m}$ 是矩阵乘法 $v\mapsto Av$，则 $F$ 是范畴等价。</p>
+<hr>
+<p>设 $I$ 是 $\mathcal U$-集，${\mathcal C_i:i\in I}$ 是一族范畴。积范畴 $\prod_{i\in I}\mathcal C_i$ 定义为：</p>
+<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\prod_{i\in I}\mathcal C_i\right)&amp;:=\prod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\prod_{i\in I}\mathcal C_i}((X_i)_i,(Y_i)_i)&amp;:=\prod_{i\in I}\text{Hom}_{\mathcal C_i}(X_i,Y_i).<br>\end{aligned}<br>$$</p>
+<p>其中 $(X_i)_i$ 表示 $\prod_{i\in I}\text{Ob}(\mathcal C_i)$ 的元素。余积（无交并）范畴 $\coprod_{i\in I}\mathcal C_i$ 定义为：</p>
+<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\coprod_{i\in I}\mathcal C_i\right)&amp;:=\coprod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\coprod_{i\in I}\mathcal C}(X_j,X_k)&amp;:=\begin{cases}\text{Hom}_{\mathcal C_j}(X_j,X_k),&amp;j=k, \\ \varnothing,&amp;j\ne k.\end{cases}<br>\end{aligned}<br>$$</p>
+<p>其中对每个 $j\in I$，$X_j\in\mathcal C_j$。</p>
+<p>定义投射函子 $\mathbf{pr}_j:\prod_{i\in I}\mathcal C_i\to\mathcal C_j$ 和包含函子 $\iota_j:\mathcal C_j\to\coprod_{i\in I}\mathcal C_i$。</p>
+<p>形如 $F:\mathcal C_1\times\cdots\times\mathcal C_n\to\mathcal C$ 的函子称为 <strong>$n$ 元函子</strong>。 </p>
+<p><strong>例 3 (Hom 函子).</strong> 给定范畴 $\mathcal C$，因为 $\mathcal C$ 中的每一对态射 $f:X’\to X$ 和 $g:Y\to Y’$ 诱导出<br>$$<br>\begin{aligned}<br>\text{Hom}_\mathcal C(X,Y)&amp;\to\text{Hom}_\mathcal C(X’,Y’), \\<br>\varphi&amp;\mapsto g\varphi f.<br>\end{aligned}<br>$$<br>称为态射 $\varphi$ 对 $f$ 作<strong>拉回</strong>，对 $g$ 作<strong>推出</strong>。拉回记为 $f^\star\varphi=\varphi f$，推出记为 $g_\star\varphi=g\varphi$，易知 $(f_1f_2)^\star=f_2^\star f_1^\star$ 且 $(f_1f_2)_\star=(f_1)_\star(f_2)_\star$。</p>
+<p>所以 $(X,Y)\mapsto\text{Hom}_\mathcal C(X,Y)$ 定义了二元函子 $\text{Hom}_\mathcal C:\mathcal C^{\text{op}}\times\mathcal C\to\textsf{Set}$。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/" rel="tag"># 抽象代数</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/21/ai-jabr-1-1/" rel="prev" title="「代数学方法：第一卷」第 1 章学习笔记">
+      <i class="fa fa-chevron-left"></i> 「代数学方法：第一卷」第 1 章学习笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Catcats555"
+      src="/images/favicon.jpg">
+  <p class="site-author-name" itemprop="name">Catcats555</p>
+  <div class="site-description" itemprop="description">遇到困难睡大觉</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://www.luogu.com.cn/user/68148" title="洛谷 → https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;user&#x2F;68148" rel="noopener" target="_blank">洛谷</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://codeforces.com/profile/AThousandMoon" title="Codeforces → https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;AThousandMoon" rel="noopener" target="_blank">Codeforces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://atcoder.jp/users/yyybbbb" title="AtCoder → https:&#x2F;&#x2F;atcoder.jp&#x2F;users&#x2F;yyybbbb" rel="noopener" target="_blank">AtCoder</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/AThousandMoon" title="Github → https:&#x2F;&#x2F;github.com&#x2F;AThousandMoon" rel="noopener" target="_blank">Github</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/yyybbbb-9" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yyybbbb-9" rel="noopener" target="_blank">知乎</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:woshijuruo@gmail.com" title="E-Mail → mailto:woshijuruo@gmail.com" rel="noopener" target="_blank">E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/1000Suns/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;1000Suns&#x2F;" rel="noopener" target="_blank">1000Suns</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://okazakiyumemi.github.io/" title="https:&#x2F;&#x2F;okazakiyumemi.github.io&#x2F;" rel="noopener" target="_blank">deque</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/p-b-p-b" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;p-b-p-b" rel="noopener" target="_blank">p_b_p_b</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/your-alpha1022/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;your-alpha1022&#x2F;" rel="noopener" target="_blank">alpha1022</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://memset0.cn/" title="https:&#x2F;&#x2F;memset0.cn&#x2F;" rel="noopener" target="_blank">memset0</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/NaCly-Fish-blog/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;NaCly-Fish-blog&#x2F;" rel="noopener" target="_blank">NaCly_Fish</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/EntropyIncreaser/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;EntropyIncreaser&#x2F;" rel="noopener" target="_blank">Elegia</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://mrsrz.github.io/" title="https:&#x2F;&#x2F;mrsrz.github.io&#x2F;" rel="noopener" target="_blank">mrsrz</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/dysyn1314/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;dysyn1314&#x2F;" rel="noopener" target="_blank">duyi</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://studyingfather.com/" title="https:&#x2F;&#x2F;studyingfather.com&#x2F;" rel="noopener" target="_blank">studyingfather</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/Ynoi/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;Ynoi&#x2F;" rel="noopener" target="_blank">树剖酱</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/ix-35/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;ix-35&#x2F;" rel="noopener" target="_blank">ix35</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/jiangly/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;jiangly&#x2F;" rel="noopener" target="_blank">jiangly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://m-sea-blog.com/" title="https:&#x2F;&#x2F;m-sea-blog.com&#x2F;" rel="noopener" target="_blank">M_sea</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://azusacat1111.github.io/" title="https:&#x2F;&#x2F;azusacat1111.github.io&#x2F;" rel="noopener" target="_blank">AzusaCat</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/command-block/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;command-block&#x2F;" rel="noopener" target="_blank">command_block</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://xyix.github.io/" title="https:&#x2F;&#x2F;xyix.github.io&#x2F;" rel="noopener" target="_blank">x_Yi_x</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.luogu.com.cn/blog/qiuly/" title="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;blog&#x2F;qiuly&#x2F;" rel="noopener" target="_blank">qiuly</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/imakf/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;imakf&#x2F;" rel="noopener" target="_blank">Imakf</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/Mr-Spade/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Mr-Spade&#x2F;" rel="noopener" target="_blank">Mr_Spade</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.moyujiang.com/" title="https:&#x2F;&#x2F;www.moyujiang.com&#x2F;" rel="noopener" target="_blank">摸鱼酱</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://t.me/TwilightParliament" title="https:&#x2F;&#x2F;t.me&#x2F;TwilightParliament" rel="noopener" target="_blank">xiaodao</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://macesuted.cn/" title="https:&#x2F;&#x2F;macesuted.cn&#x2F;" rel="noopener" target="_blank">macesuted</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.cnblogs.com/wlzhouzhuan/" title="https:&#x2F;&#x2F;www.cnblogs.com&#x2F;wlzhouzhuan&#x2F;" rel="noopener" target="_blank">wlzhouzhuan</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Catcats555</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+  <script type="text/javascript" src="/js/userbj.js">    </script>
+</body>
+</html>
