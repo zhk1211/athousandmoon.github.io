@@ -1,150 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>XVIII Open Cup, GP of Khamovniki</title>
-    <url>/2021/10/06/XVIII-Open-Cup-GP-of-Khamovniki/</url>
-    <content><![CDATA[<p><a href="https://codeforces.com/gym/102155">题目链接</a></p>
-<span id="more"></span>
-
-<h1 id="I-le-or-ge"><a href="#I-le-or-ge" class="headerlink" title="I. $\le$ or $\ge$"></a>I. $\le$ or $\ge$</h1><p><strong>这是一道交互题</strong></p>
-<p>交互器有 $n$ 个栈，每个栈有 $k$ 个元素，都是不大于 $10^9$ 的正整数，初始时你只知道栈顶的元素，每次操作你选取正整数 $x$，交互器选择 $\le x$ 或 $\ge x$，将满足条件的栈顶元素弹出，然后交互器告诉你新的栈顶元素。你需要在 $50$ 次操作之内将所有栈弹空。</p>
-<p>$n=10^4$，$k=10$。交互器是自适应的。</p>
-<hr>
-<p>考虑暴力即为每次选中位数，但会被卡到 $k\lfloor\log_2 n\rfloor$ 次操作。</p>
-<p>我们不想让每次都弹小的栈，所以给大小为 $k$ 的栈赋 $\alpha^k$ 的权值，每次将权值对半分，最坏的操作次数是 $(k\log\alpha+\log n)/\log(2\alpha/(\alpha+1))$，三分一下得到当 $\alpha=3.909$ 时取到最小值 $49.09$，懒一点就取 $\alpha=4$，而且卡不满，测试数据 $43$ 次就可以搞完。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">10003</span>;</span><br><span class="line"><span class="keyword">int</span> n, k, a[N], id[N], siz[N], pw[<span class="number">11</span>];</span><br><span class="line"><span class="keyword">char</span> op[<span class="number">5</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)&#123;siz[i] = k; id[i] = i;&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= <span class="number">10</span>;++ i) pw[i] = <span class="number">1</span>&lt;&lt;i*<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">		LL sum = <span class="number">0</span>, res = <span class="number">0</span>; <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i) sum += pw[siz[i]];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i) cin &gt;&gt; a[i];</span><br><span class="line">		<span class="built_in">sort</span>(id, id + n, [&amp;](<span class="keyword">int</span> x, <span class="keyword">int</span> y)&#123;<span class="keyword">return</span> a[x] &lt; a[y] || a[x] == a[y] &amp;&amp; x &lt; y;&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">			<span class="keyword">if</span>((res += pw[siz[id[i]]]) * <span class="number">2</span> &gt;= sum)&#123;</span><br><span class="line">				cout &lt;&lt; (p = a[id[i]]) &lt;&lt; endl; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		cin &gt;&gt; op;</span><br><span class="line">		<span class="keyword">if</span>(*op == <span class="string">&#x27;E&#x27;</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(*op == <span class="string">&#x27;&lt;&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">				<span class="keyword">if</span>(siz[i] &amp;&amp; a[i] &lt;= p) -- siz[i];</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">				<span class="keyword">if</span>(siz[i] &amp;&amp; a[i] &gt;= p) -- siz[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="G-Piecewise-Linearity"><a href="#G-Piecewise-Linearity" class="headerlink" title="G. Piecewise Linearity"></a>G. Piecewise Linearity</h1><p>给定一个分段 $1$ 次函数，问能否表示为 $\sum\lambda_i|x-a_i|$ 的形式。</p>
-<p>$n\le 10^5$。</p>
-<hr>
-<p>如果只看每段的斜率的话只需第一段和最后一段的斜率相反，所以还需要一个关于纵坐标的方程，然后再推推推就做完了。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100003</span>;</span><br><span class="line"><span class="keyword">int</span> n, x[N], y[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;= n;++ i)</span><br><span class="line">		cin &gt;&gt; x[i] &gt;&gt; y[i];</span><br><span class="line">	<span class="built_in">puts</span>(((LL)y[n]-y[n<span class="number">-1</span>])*(x[<span class="number">1</span>]-x[<span class="number">0</span>]) + ((LL)y[<span class="number">1</span>]-y[<span class="number">0</span>])*(x[n]-x[n<span class="number">-1</span>]) || ((LL)y[<span class="number">0</span>]+y[n])*(x[<span class="number">1</span>]-x[<span class="number">0</span>])+((LL)y[<span class="number">1</span>]-y[<span class="number">0</span>])*(x[n]-x[<span class="number">0</span>]) ? <span class="string">&quot;No&quot;</span> : <span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="F-Shuffle"><a href="#F-Shuffle" class="headerlink" title="F. Shuffle"></a>F. Shuffle</h1><p>对于 $s=s_0s_1\cdots s_{n-1}\pod{2\mid n}$，定义 $\text{shuffle}(s)=s_0s_2\cdots s_{n-2}s_1s_3\cdots s_{n-1}$。</p>
-<p>给定两个字符串 $s,t$，求最小的自然数 $k$ 使得 $\text{shuffle}^{(k)}(s)=t$。需判断无解。</p>
-<p>$2\le |s|=|t|\le 10^6$，$|s|$ 是偶数，$\Sigma=\{\texttt{a,b,}\cdots\texttt{,z}\}$。</p>
-<hr>
-<p>这个变换就是一个置换，每个环的限制是线性同余方程（因为若多种移位都满足则环上字符是循环串），可以用 exKMP 或哈希做匹配，然后直接 exCRT 解方程组即可。</p>
-<p>这个置换可以看成 $x\mapsto 2x\pmod{n-1}$，所以每个模数都是 $\varphi(n-1)$ 的因数，即答案如果存在就不会很大。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ULL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">double</span> LD;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1000003</span>, K = <span class="number">100003</span>, B = <span class="number">257</span>;</span><br><span class="line"><span class="keyword">char</span> s[N], t[N], s1[N], t1[N];</span><br><span class="line"><span class="keyword">int</span> n, m, nxt[N];</span><br><span class="line"><span class="keyword">bool</span> vis[N];</span><br><span class="line">LL a[K], p[K];</span><br><span class="line">ULL hs2[N&lt;&lt;<span class="number">1</span>], pw[N];</span><br><span class="line"><span class="function">LL <span class="title">mul</span><span class="params">(LL a, LL b, LL mod)</span></span>&#123;</span><br><span class="line">	a %= mod; b %= mod;</span><br><span class="line">	LL tmp = a*b - (LL)((LD)a/mod*b+<span class="number">0.5</span>)*mod;</span><br><span class="line">	<span class="keyword">return</span> tmp &lt; <span class="number">0</span> ? tmp+mod : tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LL <span class="title">exgcd</span><span class="params">(LL a, LL b, LL &amp;x, LL &amp;y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!b)&#123;x = <span class="number">1</span>; y = <span class="number">0</span>; <span class="keyword">return</span> a;&#125;</span><br><span class="line">	LL g = <span class="built_in">exgcd</span>(b, a % b, y, x);</span><br><span class="line">	y -= a / b * x; <span class="keyword">return</span> g;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s%s&quot;</span>, s+<span class="number">1</span>, t+<span class="number">1</span>); n = <span class="built_in">strlen</span>(s+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">if</span>(s[<span class="number">1</span>] != t[<span class="number">1</span>] || s[n] != t[n])&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i += <span class="number">2</span>) nxt[i] = i+<span class="number">1</span>&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= n;i += <span class="number">2</span>) nxt[i] = i+n&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	pw[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;++ i) pw[i] = pw[i<span class="number">-1</span>] * B;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> _ = <span class="number">1</span>;_ &lt;= n;++ _) <span class="keyword">if</span>(!vis[_])&#123;</span><br><span class="line">		<span class="keyword">int</span> u = _, len = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">do</span> &#123;vis[u] = <span class="number">1</span>; s1[++len] = s[u]; t1[len] = t[u]; u = nxt[u];&#125; <span class="keyword">while</span>(u != _);</span><br><span class="line">		ULL hs1 = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= len;++ i)&#123;</span><br><span class="line">			hs1 = hs1 * B + s1[i];</span><br><span class="line">			hs2[i] = hs2[i<span class="number">-1</span>] * B + t1[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = len+<span class="number">1</span>;i &lt;= (len&lt;&lt;<span class="number">1</span>);++ i)</span><br><span class="line">			hs2[i] = hs2[i<span class="number">-1</span>] * B + t1[i-len];</span><br><span class="line">		a[++m] = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; len;++ i)</span><br><span class="line">			<span class="keyword">if</span>(hs2[i+len] - hs2[i]*pw[len] == hs1)&#123;</span><br><span class="line">				a[m] = i; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[m] == <span class="number">-1</span>)&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= len;++ i)</span><br><span class="line">			<span class="keyword">if</span>(hs2[i+len] - hs2[i]*pw[len] == hs2[len])&#123;</span><br><span class="line">				p[m] = i; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(p[m] == <span class="number">1</span>) -- m;</span><br><span class="line">	&#125;</span><br><span class="line">	LL x, y, M = p[<span class="number">1</span>], ans = a[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= m;++ i)&#123;</span><br><span class="line">		LL c = (a[i] - ans % p[i] + p[i]) % p[i];</span><br><span class="line">		LL g = <span class="built_in">exgcd</span>(M, p[i], x, y), bg = p[i] / g;</span><br><span class="line">		<span class="keyword">if</span>(c % g)&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">		x = <span class="built_in">mul</span>(x, c / g, bg);</span><br><span class="line">		ans += x * M; M *= bg;</span><br><span class="line">		ans = (ans % M + M) % M;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="E-Oneness"><a href="#E-Oneness" class="headerlink" title="E. Oneness"></a>E. Oneness</h1><p>对于正整数 $n$，设 $f(n)$ 表示 $n$ 的因数中在十进制表示下只有数字 $1$ 且不是 $1$ 的个数。</p>
-<p>随机生成 $l$ 位正整数 $n$，求 $\sum_{k=1}^n f(k)$。</p>
-<p>$l\le 2.5\cdot 10^5$。</p>
-<hr>
-<p>考虑令 $n:=9n$，所求即为 $\lfloor n/99\rfloor+\lfloor n/999\rfloor+\cdots=n(1/99+1/999+\cdots)-\{n/99\}-\{n/999\}-\cdots$。</p>
-<p>第一项可以先算出那个常数的十进制表示然后 FFT 做高精度乘法，剩下的小数部分直接算，因为随机生成数据所以精度问题不是很大。</p>
-<p>时间复杂度 $O(l\log l)$，代码咕掉了 /dk</p>
-<p><em>To be continued…</em></p>
-]]></content>
-      <categories>
-        <category>OI</category>
-      </categories>
-      <tags>
-        <tag>OpenCup</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>「代数学方法：第一卷」第 2 章学习笔记</title>
-    <url>/2022/01/21/ai-jabr-1-2/</url>
-    <content><![CDATA[<p>一个<strong>范畴</strong> $\mathcal C$ 包含：</p>
-<ul>
-<li>集合 $\text{Ob}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>对象</strong>；</li>
-<li>集合 $\text{Mor}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>态射</strong>；</li>
-<li>一对映射 $s,t:\text{Mor}(\mathcal C)\to\text{Ob}(\mathcal C)$，分别给出态射的<strong>来源</strong>和<strong>目标</strong>。</li>
-<li>对于 $X,Y\in\text{Ob}(\mathcal C)$，定义 $\text{Hom}_\mathcal C(X,Y):=s^{-1}(X)\cap t^{-1}(Y)$ 为 <strong>$\text{Hom}$-集</strong>，其元素称为 <strong>$X$ 到 $Y$ 的态射</strong>。</li>
-<li>对于 $X\in\text{Ob}(\mathcal C)$，定义 $\text{id}_X\in\text{Hom}_\mathcal C(X,X)$，称为 $X$ 到自身的<strong>恒等态射</strong>。</li>
-<li>对于 $X,Y,Z\in\text{Ob}(\mathcal C)$，给定态射间的<strong>合成映射</strong> $\circ:\text{Hom}_\mathcal C(X,Y)\times\text{Hom}_\mathcal C(Y,Z)\to\text{Hom}_\mathcal C(X,Z),(f,g)\mapsto f\circ g$。它满足：<ul>
-<li>结合律：对于 $f,g,h\in\text{Mor}(\mathcal C)$，若 $(fg)h$ 和 $f(gh)$ 都有定义，则 $(fg)h=f(gh)$；</li>
-<li>对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 有 $f\circ \text{id}_X=f=\text{id}_Y\circ f$。</li>
-</ul>
-</li>
-</ul>
-<span id="more"></span>
-
-<p>称 $\mathcal C’$ 是 $\mathcal C$ 的<strong>子范畴</strong>是指：</p>
-<ul>
-<li>$\text{Ob}(\mathcal C’)\subset\text{Ob}(\mathcal C)$；</li>
-<li>对任意 $X,Y\in\text{Ob}(\mathcal C’)$ 有 $\text{Hom}_{\mathcal C’}(X,Y)\subset\text{Hom}_\mathcal C(X,Y)$ 且与态射的合成兼容。</li>
-</ul>
-<p>若 $\text{Hom}_{\mathcal{C’}}(X,Y)=\text{Hom}_\mathcal C(X,Y)$ 则称 $\mathcal C’$ 是<strong>全子范畴</strong>。<del>导出子图（bushi</del></p>
-<p>一个范畴 $\mathcal C$ 称为 <strong>$\mathcal U$-范畴</strong>是指对任意对象 $X,Y$，$\text{Hom}_\mathcal C(X,Y)$ 都是 $\mathcal U$-小集。若 $\text{Mor}(\mathcal C)$ 也是 $\mathcal U$-小集则称为 <strong>$\mathcal U$-小范畴</strong>。</p>
-<p><em>之后定义的结构（群、环、拓扑空间等）作为集合都是事先选定的宇宙 $\mathcal U$ 的集合，范畴也都是 $\mathcal U$-范畴。</em></p>
-<p>设 $X,Y\in\text{Ob}(\mathcal C)$，$f:X\to Y$ 为态射，</p>
-<ul>
-<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Z\to X$ 都有 $fg=fh\iff g=h$，则称 $f$ 为<strong>单态射</strong>；</li>
-<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Y\to Z$ 都有 $gf=hf\iff g=h$，则称 $f$ 为<strong>满态射</strong>；</li>
-<li>若存在 $g:Y\to X$ 使得 $gf=\text{id}_X$，则称 $f$ <strong>左可逆</strong>而 $g$ 是 $f$ 的一个<strong>左逆</strong>，此时 $f$ 必为单态射；</li>
-<li>若存在 $g:Y\to X$ 使得 $fg=\text{id}_Y$，则称 $f$ <strong>右可逆</strong>而 $g$ 是 $f$ 的一个<strong>右逆</strong>，此时 $f$ 必为满态射；</li>
-<li>若 $f$ 既左可逆又右可逆则称 $f$ 是<strong>同构</strong>。</li>
-</ul>
-<p>$X$ 到 $Y$ 的同构集记作 $\text{Isom}_\mathcal C(X,Y)$。$X$ 的自同态集记作 $\text{End}_\mathcal C(X):=\text{Hom}_\mathcal C(X,X)$，自同构集记作 $\text{Aut}_\mathcal C(X):=\text{Isom}_\mathcal C(X,X)$。</p>
-<p>关于合成运算 $\circ$，$\text{End}_\mathcal C(X)$ 是含幺半群，$\text{Aut}_\mathcal C(X)$ 是群。</p>
-<p>若范畴 $\mathcal C$ 的所有态射都可逆，则称为<strong>广群</strong>。</p>
-<p><strong>例 1 (基本广群).</strong> 设 $X$ 是拓扑空间，其基本广群 $\Pi_1(X)$ 定义为如下范畴：对象是 $X$ 中的点，态射为两点间道路的同伦类。$\pi_1(X,x):=\text{Aut}(x)$ 称为以 $x$ 为基点的<strong>基本群</strong>。</p>
-<p>范畴 $\mathcal C$ 的<strong>反范畴</strong> $\mathcal C^{\text{op}}$ 定义为反转箭头和复合运算。</p>
-<p>设 $\mathcal C’$ 和 $\mathcal C$ 是范畴，<strong>函子</strong> $F:\mathcal C’\to\mathcal C$ 包含：</p>
-<ul>
-<li>对象间的映射 $F:\text{Ob}(\mathcal C’)\to\text{Ob}(\mathcal C)$；</li>
-<li>态射间的映射 $F:\text{Mor}(\mathcal C’)\to\text{Mor}(\mathcal C)$，使得<ul>
-<li>$F$ 与来源映射和目标映射相交换；</li>
-<li>保复合运算和恒等态射。</li>
-</ul>
-</li>
-</ul>
-<p>对于函子 $F:\mathcal C’\to\mathcal C$，</p>
-<ul>
-<li>若 $\mathcal C$ 中任意对象都同构于某个 $FX$ 则称 $F$ 是<strong>本质满</strong>的。</li>
-<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是单射，则称 $F$ 是<strong>忠实</strong>的；</li>
-<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是满射，则称 $F$ 是<strong>全</strong>的。</li>
-</ul>
-<p>函子 $F,G:\mathcal C’\to\mathcal C$ 的<strong>自然变换</strong> $\theta$ 是一族态射 $\theta_X\in\text{Hom}_\mathcal C(FX,GX)\ (X\in\text{Ob}(\mathcal C’))$ 使得对所有 $\mathcal C’$ 中的态射 $f:X\to Y$ 都有：</p>
-<p><img src="/images/ai-jabr-2-1.png"></p>
-<p>记作 $\theta:F\to G$。<em>一种理解方法是 $\theta$ 为 $F$ 到 $G$ 的一个同伦。</em></p>
-<p>对于 $\mathcal C’$ 到 $\mathcal C$ 的三个函子间的态射 $\theta:F\to G$ 和 $\psi:G\to H$，<strong>纵合成</strong> $\psi\circ\theta:={\psi_X\circ\theta_X:X\in\text{Ob}(\mathcal C’)}.$</p>
-<p>对于三个范畴 $\mathcal C’’$、$\mathcal C’$ 和 $\mathcal C$ 的函子 $F_1,F_2:\mathcal C’’\to\mathcal C’$ 和 $G_1,G_2:\mathcal C’\to\mathcal C$ 间的态射 $\theta:F_1\to F_2$ 和 $\psi:G_1\to G_2$，<strong>横合成</strong> $\psi\circ\theta:G_1\circ F_1\to G_2\circ F_2.$</p>
-<p><strong>引理 1-1.</strong> 上述纵、横合成都是函子间的态射，且都满足结合律。</p>
-<p><strong>证明.</strong> 纵合成是显然的。现证明横合成的自然性，只需证明右图。</p>
-<p><img src="/images/ai-jabr-2-2.png"></p>
-<p>而由 $\psi$ 和 $\theta$ 的自然性知每块均交换，而水平方向的合成分别为 $(\psi\circ\theta)_X$ 和 $(\psi\circ\theta)_Y$，此即说明 $\psi\circ\theta$ 的自然性。</p>
-<p>现证明横合成的结合律，考虑左图，施 $\psi$ 的自然性于 $F_1(X)\to F_2(X)$ 知其交换，所以对于三对函子间映射 $\theta:F_1\to F_2$，$\psi:G_1\to G_2$，$\varphi:H_1\to H_2$ 下图给出 $(\varphi\circ(\psi\circ\theta))_X$ 和 $((\varphi\circ\psi)\circ\theta)_X$，而施 $\varphi$ 的自然性于 $G_2F_1(X)\to G_2F_2(X)$ 知其交换。$\square$</p>
-<p><img src="/images/ai-jabr-2-3.png"></p>
-<p>对于自然变换 $\theta:F_1\to F_2$，若每个 $\theta_X$ 都是同构，则存在 $\psi:F_2\to F_1$ 使得 $\psi\circ\theta=\text{id}_{F_1}$ 且 $\theta\circ\psi=\text{id}_{F_2}$，称 $\psi$ 是 $\theta$ 的逆，记作 $\theta^{-1}$，并称 $\theta$ 是 $F_1$ 到 $F_2$ 的<strong>自然同构</strong>。显然同构的横纵合成均为同构。</p>
-<p>对于一对函子 $F:\mathcal C_1\to\mathcal C_2$ 和 $G:\mathcal C_2\to\mathcal C_1$，若存在自然同构 $\theta:\text{id}_{\mathcal C_2}\to FG$ 和 $\psi:\text{id}_{\mathcal C_1}\to GF$ 则称 $G$ 是 $F$ 的<strong>拟逆函子</strong>，并称 $F$ 是范畴 $\mathcal C_1$ 到 $\mathcal C_2$ 的<strong>等价</strong>。若进一步有 $FG=\text{id}_{\mathcal C_2}$ 且 $GF=\text{id}_{\mathcal C_1}$ 则称 $G$ 是 $F$ 的<strong>逆</strong>，并称 $F$ 是范畴间的<strong>同构</strong>。</p>
-<p><strong>命题 2.</strong> 设 $G,G’$ 是函子 $F:\mathcal C_1\to\mathcal C_2$ 的拟逆，则存在函子间同构 $G\cong G’$。</p>
-<p><strong>证明.</strong> 自然变换的横合成给出 $G\xrightarrow{\psi’\circ\text{id}_G}(G’F)G=G’(FG)\xleftarrow{\text{id}_{G’}\circ\theta}G’$。$\square$</p>
-<p>对于全子范畴 $\mathcal C’\subset\mathcal C$，若对每个 $X\in\text{Ob}(\mathcal C)$ 都存在唯一的 $Y\in\text{Ob}(\mathcal C’)$ 使得存在 $X$ 到 $Y$ 的同构，则称 $\mathcal C’$ 是 $\mathcal C$ 的一副<strong>骨架</strong>。自为骨架的范畴称为<strong>骨架范畴</strong>。</p>
-<p><strong>引理 3-1.</strong> 任意范畴 $\mathcal C$ 均有一副骨架 $\mathcal C’$，且包含函子 $\iota:\mathcal C’\to\mathcal C$ 是等价。</p>
-<p><strong>证明.</strong> 使用选择公理在 $\text{Ob}(\mathcal C)$ 的每个同构类中取代表元，设其构成的全子范畴为 $\mathcal C’$。</p>
-<p>对每个 $X\in\text{Ob}(\mathcal C)$ 选定同构 $\theta_X:X\to \kappa(X)$，其中 $\kappa(X)\in\text{Ob}(\mathcal C’)$，特别地对于 $X\in\text{Ob}(\mathcal C’)$ 有 $\theta_X=\text{id}_X$。</p>
-<p>此时存在唯一一种方法将 $\kappa:\text{Ob}(\mathcal C)\to\text{Ob}(\mathcal C’)$ 延拓为函子并使得 $\theta:\text{id}_\mathcal C\to\iota\kappa$ 是自然同构：对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 定义 $\kappa(f):=\theta_Y\circ f\circ\theta_X^{-1}\in\text{Hom}_{\mathcal C’}(\kappa(X),\kappa(Y))$。同时由定义有 $\kappa\iota=\text{id}_{\mathcal C’}$，所以 $\kappa$ 是 $\iota$ 的拟逆函子。$\square$</p>
-<p><strong>引理 3-2.</strong> 骨架范畴间的全忠实、本质满函子都是同构。</p>
-<p><strong>定理 4.</strong> 对于函子 $F:\mathcal C_1\to\mathcal C_2$，$F$ 是范畴等价 $\iff$ $F$ 是全忠实、本质满函子。</p>
-<p><strong>证明.</strong> $\implies$：设拟逆函子为 $G:\mathcal C_2\to\mathcal C_1$ 以及自然同构 $\psi:GF\to\text{id}_{\mathcal C_1}$ 和 $\varphi:FG\to\text{id}_{\mathcal C_2}$。</p>
-<p>对任意 $Z\in\text{Ob}(\mathcal C_2)$ 都有同构 $\varphi_Z:F(GZ)\to Z$ 故 $F$ 本质满，同理 $G$ 本质满。</p>
-<p>因为 $f\mapsto Ff\mapsto GF(f)\mapsto\psi_YGF(f)\psi_X^{-1}$ 合成为恒等映射，所以 $F$ 左可逆，同理可知当 $X,Y\in\text{Ob}(\mathcal C_1)$ 属于 $G$ 的像时 $\text{Hom}(X,Y)\xrightarrow F\text{Hom}(FX,FY)$ 右可逆，而 $\mathcal C_1$ 中每个对象都同构于 $G$ 的某个像，所以 $F$ 全忠实。</p>
-<p>$\impliedby$：由引理 3-1 取骨架 $\iota_i:\mathcal C_i’\to\mathcal C_i$ 及其拟逆函子 $\kappa_i\ (i=1,2)$，$F’:=\kappa_2\circ F\circ \iota_1:\mathcal C_1’\to\mathcal C_2’$ 也是全忠实、本质满函子，所以 $F’$ 是范畴同构。设 $G:=\iota_1\circ F’^{-1}\circ\kappa_2$，则由自然变换的横合成知：</p>
-<p>$$<br>\begin{aligned}<br>GF&amp;=\iota_1F’^{-1}\kappa_2F\cong\iota_1F’^{-1}\kappa_2F\iota_1\kappa_1=\iota_1\kappa_1\cong\text{id}_{\mathcal C_1}, \\<br>FG&amp;=F\iota_1F’^{-1}\kappa_2\cong\iota_2\kappa_2\iota_1F’^{-1}\kappa_2F=\iota_2\kappa_2\cong\text{id}_{\mathcal C_2}.\square<br>\end{aligned}<br>$$</p>
-<p><strong>例 2.</strong> 给定域 $\mathbb K$，定义范畴 $\textsf{Mat}$ 如下：对象是 $\mathbb Z_{\ge 0}$，$\text{Hom}(n,m):=M_{m\times n}(\mathbb K)$，态射的合成定义为矩阵乘法。定义函子 $F:\textsf{Mat}\to\text{Vect}_f(\mathbb K)$，$F(n)=\mathbb K^{\oplus n}:=M_{n\times 1}(\mathbb K)$，而对 $A\in\text{Hom}(n,m)$，线性映射 $FA:\mathbb K^{\oplus n}\to\mathbb K^{\oplus m}$ 是矩阵乘法 $v\mapsto Av$，则 $F$ 是范畴等价。</p>
-<hr>
-<p>设 $I$ 是 $\mathcal U$-集，${\mathcal C_i:i\in I}$ 是一族范畴。积范畴 $\prod_{i\in I}\mathcal C_i$ 定义为：</p>
-<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\prod_{i\in I}\mathcal C_i\right)&amp;:=\prod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\prod_{i\in I}\mathcal C_i}((X_i)_i,(Y_i)_i)&amp;:=\prod_{i\in I}\text{Hom}_{\mathcal C_i}(X_i,Y_i).<br>\end{aligned}<br>$$</p>
-<p>其中 $(X_i)_i$ 表示 $\prod_{i\in I}\text{Ob}(\mathcal C_i)$ 的元素。余积（无交并）范畴 $\coprod_{i\in I}\mathcal C_i$ 定义为：</p>
-<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\coprod_{i\in I}\mathcal C_i\right)&amp;:=\coprod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\coprod_{i\in I}\mathcal C}(X_j,X_k)&amp;:=\begin{cases}\text{Hom}_{\mathcal C_j}(X_j,X_k),&amp;j=k, \\ \varnothing,&amp;j\ne k.\end{cases}<br>\end{aligned}<br>$$</p>
-<p>其中对每个 $j\in I$，$X_j\in\mathcal C_j$。</p>
-<p>定义投射函子 $\mathbf{pr}_j:\prod_{i\in I}\mathcal C_i\to\mathcal C_j$ 和包含函子 $\iota_j:\mathcal C_j\to\coprod_{i\in I}\mathcal C_i$。</p>
-<p>形如 $F:\mathcal C_1\times\cdots\times\mathcal C_n\to\mathcal C$ 的函子称为 <strong>$n$ 元函子</strong>。 </p>
-<p><strong>例 3 (Hom 函子).</strong> 给定范畴 $\mathcal C$，因为 $\mathcal C$ 中的每一对态射 $f:X’\to X$ 和 $g:Y\to Y’$ 诱导出<br>$$<br>\begin{aligned}<br>\text{Hom}_\mathcal C(X,Y)&amp;\to\text{Hom}_\mathcal C(X’,Y’), \\<br>\varphi&amp;\mapsto g\varphi f.<br>\end{aligned}<br>$$<br>称为态射 $\varphi$ 对 $f$ 作<strong>拉回</strong>，对 $g$ 作<strong>推出</strong>。拉回记为 $f^\star\varphi=\varphi f$，推出记为 $g_\star\varphi=g\varphi$，易知 $(f_1f_2)^\star=f_2^\star f_1^\star$ 且 $(f_1f_2)_\star=(f_1)_\star(f_2)_\star$。</p>
-<p>所以 $(X,Y)\mapsto\text{Hom}_\mathcal C(X,Y)$ 定义了二元函子 $\text{Hom}_\mathcal C:\mathcal C^{\text{op}}\times\mathcal C\to\textsf{Set}$。</p>
-]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>抽象代数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>「代数学方法：第一卷」第 1 章学习笔记</title>
     <url>/2022/01/21/ai-jabr-1-1/</url>
     <content><![CDATA[<p><strong>Zermelo-Fraenkel Set Theory (ZFC)</strong> 构筑于：</p>
@@ -275,6 +131,184 @@
 <p><strong>习题 6 (König 定理).</strong> 设 $\kappa_i,\lambda_i$ 为两族以 $i\in I$ 为下标的基数，且对每个 $i\in I$ 都有 $\kappa_i&lt;\lambda_i$，证明：$\sum_{i\in I}\kappa_i&lt;\sum_{i\in I}\lambda_i$。</p>
 <p>$\le$ 是显然的。反证法，取集合 $|E_i|=\lambda_i$，$E:=\prod_{i\in I}E_i$，则存在划分 $E=\bigcup_{i\in I}F_i$，$|F_i|=\kappa_i$。</p>
 <p>对每个 $i\in I$，令 $G_i:=\text{Im}[F_i\hookrightarrow E\to E_i]$，其中映射取恒等映射和正则投射，则 $G_i\subsetneq E_i$，取 $f\in\prod_{i\in I}(E_i\backslash G_i)$，则 $f\notin\bigcup F_i$，矛盾。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>抽象代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XVIII Open Cup, GP of Khamovniki</title>
+    <url>/2021/10/06/XVIII-Open-Cup-GP-of-Khamovniki/</url>
+    <content><![CDATA[<p><a href="https://codeforces.com/gym/102155">题目链接</a></p>
+<span id="more"></span>
+
+<h1 id="I-le-or-ge"><a href="#I-le-or-ge" class="headerlink" title="I. $\le$ or $\ge$"></a>I. $\le$ or $\ge$</h1><p><strong>这是一道交互题</strong></p>
+<p>交互器有 $n$ 个栈，每个栈有 $k$ 个元素，都是不大于 $10^9$ 的正整数，初始时你只知道栈顶的元素，每次操作你选取正整数 $x$，交互器选择 $\le x$ 或 $\ge x$，将满足条件的栈顶元素弹出，然后交互器告诉你新的栈顶元素。你需要在 $50$ 次操作之内将所有栈弹空。</p>
+<p>$n=10^4$，$k=10$。交互器是自适应的。</p>
+<hr>
+<p>考虑暴力即为每次选中位数，但会被卡到 $k\lfloor\log_2 n\rfloor$ 次操作。</p>
+<p>我们不想让每次都弹小的栈，所以给大小为 $k$ 的栈赋 $\alpha^k$ 的权值，每次将权值对半分，最坏的操作次数是 $(k\log\alpha+\log n)/\log(2\alpha/(\alpha+1))$，三分一下得到当 $\alpha=3.909$ 时取到最小值 $49.09$，懒一点就取 $\alpha=4$，而且卡不满，测试数据 $43$ 次就可以搞完。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">10003</span>;</span><br><span class="line"><span class="keyword">int</span> n, k, a[N], id[N], siz[N], pw[<span class="number">11</span>];</span><br><span class="line"><span class="keyword">char</span> op[<span class="number">5</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)&#123;siz[i] = k; id[i] = i;&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= <span class="number">10</span>;++ i) pw[i] = <span class="number">1</span>&lt;&lt;i*<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">		LL sum = <span class="number">0</span>, res = <span class="number">0</span>; <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i) sum += pw[siz[i]];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i) cin &gt;&gt; a[i];</span><br><span class="line">		<span class="built_in">sort</span>(id, id + n, [&amp;](<span class="keyword">int</span> x, <span class="keyword">int</span> y)&#123;<span class="keyword">return</span> a[x] &lt; a[y] || a[x] == a[y] &amp;&amp; x &lt; y;&#125;);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">			<span class="keyword">if</span>((res += pw[siz[id[i]]]) * <span class="number">2</span> &gt;= sum)&#123;</span><br><span class="line">				cout &lt;&lt; (p = a[id[i]]) &lt;&lt; endl; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		cin &gt;&gt; op;</span><br><span class="line">		<span class="keyword">if</span>(*op == <span class="string">&#x27;E&#x27;</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">if</span>(*op == <span class="string">&#x27;&lt;&#x27;</span>)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">				<span class="keyword">if</span>(siz[i] &amp;&amp; a[i] &lt;= p) -- siz[i];</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; n;++ i)</span><br><span class="line">				<span class="keyword">if</span>(siz[i] &amp;&amp; a[i] &gt;= p) -- siz[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="G-Piecewise-Linearity"><a href="#G-Piecewise-Linearity" class="headerlink" title="G. Piecewise Linearity"></a>G. Piecewise Linearity</h1><p>给定一个分段 $1$ 次函数，问能否表示为 $\sum\lambda_i|x-a_i|$ 的形式。</p>
+<p>$n\le 10^5$。</p>
+<hr>
+<p>如果只看每段的斜率的话只需第一段和最后一段的斜率相反，所以还需要一个关于纵坐标的方程，然后再推推推就做完了。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100003</span>;</span><br><span class="line"><span class="keyword">int</span> n, x[N], y[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;= n;++ i)</span><br><span class="line">		cin &gt;&gt; x[i] &gt;&gt; y[i];</span><br><span class="line">	<span class="built_in">puts</span>(((LL)y[n]-y[n<span class="number">-1</span>])*(x[<span class="number">1</span>]-x[<span class="number">0</span>]) + ((LL)y[<span class="number">1</span>]-y[<span class="number">0</span>])*(x[n]-x[n<span class="number">-1</span>]) || ((LL)y[<span class="number">0</span>]+y[n])*(x[<span class="number">1</span>]-x[<span class="number">0</span>])+((LL)y[<span class="number">1</span>]-y[<span class="number">0</span>])*(x[n]-x[<span class="number">0</span>]) ? <span class="string">&quot;No&quot;</span> : <span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="F-Shuffle"><a href="#F-Shuffle" class="headerlink" title="F. Shuffle"></a>F. Shuffle</h1><p>对于 $s=s_0s_1\cdots s_{n-1}\pod{2\mid n}$，定义 $\text{shuffle}(s)=s_0s_2\cdots s_{n-2}s_1s_3\cdots s_{n-1}$。</p>
+<p>给定两个字符串 $s,t$，求最小的自然数 $k$ 使得 $\text{shuffle}^{(k)}(s)=t$。需判断无解。</p>
+<p>$2\le |s|=|t|\le 10^6$，$|s|$ 是偶数，$\Sigma=\{\texttt{a,b,}\cdots\texttt{,z}\}$。</p>
+<hr>
+<p>这个变换就是一个置换，每个环的限制是线性同余方程（因为若多种移位都满足则环上字符是循环串），可以用 exKMP 或哈希做匹配，然后直接 exCRT 解方程组即可。</p>
+<p>这个置换可以看成 $x\mapsto 2x\pmod{n-1}$，所以每个模数都是 $\varphi(n-1)$ 的因数，即答案如果存在就不会很大。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> ULL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">double</span> LD;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1000003</span>, K = <span class="number">100003</span>, B = <span class="number">257</span>;</span><br><span class="line"><span class="keyword">char</span> s[N], t[N], s1[N], t1[N];</span><br><span class="line"><span class="keyword">int</span> n, m, nxt[N];</span><br><span class="line"><span class="keyword">bool</span> vis[N];</span><br><span class="line">LL a[K], p[K];</span><br><span class="line">ULL hs2[N&lt;&lt;<span class="number">1</span>], pw[N];</span><br><span class="line"><span class="function">LL <span class="title">mul</span><span class="params">(LL a, LL b, LL mod)</span></span>&#123;</span><br><span class="line">	a %= mod; b %= mod;</span><br><span class="line">	LL tmp = a*b - (LL)((LD)a/mod*b+<span class="number">0.5</span>)*mod;</span><br><span class="line">	<span class="keyword">return</span> tmp &lt; <span class="number">0</span> ? tmp+mod : tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LL <span class="title">exgcd</span><span class="params">(LL a, LL b, LL &amp;x, LL &amp;y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!b)&#123;x = <span class="number">1</span>; y = <span class="number">0</span>; <span class="keyword">return</span> a;&#125;</span><br><span class="line">	LL g = <span class="built_in">exgcd</span>(b, a % b, y, x);</span><br><span class="line">	y -= a / b * x; <span class="keyword">return</span> g;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s%s&quot;</span>, s+<span class="number">1</span>, t+<span class="number">1</span>); n = <span class="built_in">strlen</span>(s+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">if</span>(s[<span class="number">1</span>] != t[<span class="number">1</span>] || s[n] != t[n])&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i += <span class="number">2</span>) nxt[i] = i+<span class="number">1</span>&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= n;i += <span class="number">2</span>) nxt[i] = i+n&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	pw[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;++ i) pw[i] = pw[i<span class="number">-1</span>] * B;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> _ = <span class="number">1</span>;_ &lt;= n;++ _) <span class="keyword">if</span>(!vis[_])&#123;</span><br><span class="line">		<span class="keyword">int</span> u = _, len = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">do</span> &#123;vis[u] = <span class="number">1</span>; s1[++len] = s[u]; t1[len] = t[u]; u = nxt[u];&#125; <span class="keyword">while</span>(u != _);</span><br><span class="line">		ULL hs1 = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= len;++ i)&#123;</span><br><span class="line">			hs1 = hs1 * B + s1[i];</span><br><span class="line">			hs2[i] = hs2[i<span class="number">-1</span>] * B + t1[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = len+<span class="number">1</span>;i &lt;= (len&lt;&lt;<span class="number">1</span>);++ i)</span><br><span class="line">			hs2[i] = hs2[i<span class="number">-1</span>] * B + t1[i-len];</span><br><span class="line">		a[++m] = <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; len;++ i)</span><br><span class="line">			<span class="keyword">if</span>(hs2[i+len] - hs2[i]*pw[len] == hs1)&#123;</span><br><span class="line">				a[m] = i; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(a[m] == <span class="number">-1</span>)&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= len;++ i)</span><br><span class="line">			<span class="keyword">if</span>(hs2[i+len] - hs2[i]*pw[len] == hs2[len])&#123;</span><br><span class="line">				p[m] = i; <span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="keyword">if</span>(p[m] == <span class="number">1</span>) -- m;</span><br><span class="line">	&#125;</span><br><span class="line">	LL x, y, M = p[<span class="number">1</span>], ans = a[<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>;i &lt;= m;++ i)&#123;</span><br><span class="line">		LL c = (a[i] - ans % p[i] + p[i]) % p[i];</span><br><span class="line">		LL g = <span class="built_in">exgcd</span>(M, p[i], x, y), bg = p[i] / g;</span><br><span class="line">		<span class="keyword">if</span>(c % g)&#123;<span class="built_in">puts</span>(<span class="string">&quot;-1&quot;</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">		x = <span class="built_in">mul</span>(x, c / g, bg);</span><br><span class="line">		ans += x * M; M *= bg;</span><br><span class="line">		ans = (ans % M + M) % M;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="E-Oneness"><a href="#E-Oneness" class="headerlink" title="E. Oneness"></a>E. Oneness</h1><p>对于正整数 $n$，设 $f(n)$ 表示 $n$ 的因数中在十进制表示下只有数字 $1$ 且不是 $1$ 的个数。</p>
+<p>随机生成 $l$ 位正整数 $n$，求 $\sum_{k=1}^n f(k)$。</p>
+<p>$l\le 2.5\cdot 10^5$。</p>
+<hr>
+<p>考虑令 $n:=9n$，所求即为 $\lfloor n/99\rfloor+\lfloor n/999\rfloor+\cdots=n(1/99+1/999+\cdots)-\{n/99\}-\{n/999\}-\cdots$。</p>
+<p>第一项可以先算出那个常数的十进制表示然后 FFT 做高精度乘法，剩下的小数部分直接算，因为随机生成数据所以精度问题不是很大。</p>
+<p>时间复杂度 $O(l\log l)$，代码咕掉了 /dk</p>
+<p><em>To be continued…</em></p>
+]]></content>
+      <categories>
+        <category>OI</category>
+      </categories>
+      <tags>
+        <tag>OpenCup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「代数学方法：第一卷」第 2 章学习笔记</title>
+    <url>/2022/01/21/ai-jabr-1-2/</url>
+    <content><![CDATA[<p>一个<strong>范畴</strong> $\mathcal C$ 包含：</p>
+<ul>
+<li>集合 $\text{Ob}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>对象</strong>；</li>
+<li>集合 $\text{Mor}(\mathcal C)$，其元素称为 $\mathcal C$ 的<strong>态射</strong>；</li>
+<li>一对映射 $s,t:\text{Mor}(\mathcal C)\to\text{Ob}(\mathcal C)$，分别给出态射的<strong>来源</strong>和<strong>目标</strong>。</li>
+<li>对于 $X,Y\in\text{Ob}(\mathcal C)$，定义 $\text{Hom}_\mathcal C(X,Y):=s^{-1}(X)\cap t^{-1}(Y)$ 为 <strong>$\text{Hom}$-集</strong>，其元素称为 <strong>$X$ 到 $Y$ 的态射</strong>。</li>
+<li>对于 $X\in\text{Ob}(\mathcal C)$，定义 $\text{id}_X\in\text{Hom}_\mathcal C(X,X)$，称为 $X$ 到自身的<strong>恒等态射</strong>。</li>
+<li>对于 $X,Y,Z\in\text{Ob}(\mathcal C)$，给定态射间的<strong>合成映射</strong> $\circ:\text{Hom}_\mathcal C(X,Y)\times\text{Hom}_\mathcal C(Y,Z)\to\text{Hom}_\mathcal C(X,Z),(f,g)\mapsto f\circ g$。它满足：<ul>
+<li>结合律：对于 $f,g,h\in\text{Mor}(\mathcal C)$，若 $(fg)h$ 和 $f(gh)$ 都有定义，则 $(fg)h=f(gh)$；</li>
+<li>对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 有 $f\circ \text{id}_X=f=\text{id}_Y\circ f$。</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<p>称 $\mathcal C’$ 是 $\mathcal C$ 的<strong>子范畴</strong>是指：</p>
+<ul>
+<li>$\text{Ob}(\mathcal C’)\subset\text{Ob}(\mathcal C)$；</li>
+<li>对任意 $X,Y\in\text{Ob}(\mathcal C’)$ 有 $\text{Hom}_{\mathcal C’}(X,Y)\subset\text{Hom}_\mathcal C(X,Y)$ 且与态射的合成兼容。</li>
+</ul>
+<p>若 $\text{Hom}_{\mathcal{C’}}(X,Y)=\text{Hom}_\mathcal C(X,Y)$ 则称 $\mathcal C’$ 是<strong>全子范畴</strong>。<del>导出子图（bushi</del></p>
+<p>一个范畴 $\mathcal C$ 称为 <strong>$\mathcal U$-范畴</strong>是指对任意对象 $X,Y$，$\text{Hom}_\mathcal C(X,Y)$ 都是 $\mathcal U$-小集。若 $\text{Mor}(\mathcal C)$ 也是 $\mathcal U$-小集则称为 <strong>$\mathcal U$-小范畴</strong>。</p>
+<p><em>之后定义的结构（群、环、拓扑空间等）作为集合都是事先选定的宇宙 $\mathcal U$ 的集合，范畴也都是 $\mathcal U$-范畴。</em></p>
+<p>设 $X,Y\in\text{Ob}(\mathcal C)$，$f:X\to Y$ 为态射，</p>
+<ul>
+<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Z\to X$ 都有 $fg=fh\iff g=h$，则称 $f$ 为<strong>单态射</strong>；</li>
+<li>若对任意 $Z\in\text{Ob}(\mathcal C)$ 和 $g,h:Y\to Z$ 都有 $gf=hf\iff g=h$，则称 $f$ 为<strong>满态射</strong>；</li>
+<li>若存在 $g:Y\to X$ 使得 $gf=\text{id}_X$，则称 $f$ <strong>左可逆</strong>而 $g$ 是 $f$ 的一个<strong>左逆</strong>，此时 $f$ 必为单态射；</li>
+<li>若存在 $g:Y\to X$ 使得 $fg=\text{id}_Y$，则称 $f$ <strong>右可逆</strong>而 $g$ 是 $f$ 的一个<strong>右逆</strong>，此时 $f$ 必为满态射；</li>
+<li>若 $f$ 既左可逆又右可逆则称 $f$ 是<strong>同构</strong>。</li>
+</ul>
+<p>$X$ 到 $Y$ 的同构集记作 $\text{Isom}_\mathcal C(X,Y)$。$X$ 的自同态集记作 $\text{End}_\mathcal C(X):=\text{Hom}_\mathcal C(X,X)$，自同构集记作 $\text{Aut}_\mathcal C(X):=\text{Isom}_\mathcal C(X,X)$。</p>
+<p>关于合成运算 $\circ$，$\text{End}_\mathcal C(X)$ 是含幺半群，$\text{Aut}_\mathcal C(X)$ 是群。</p>
+<p>若范畴 $\mathcal C$ 的所有态射都可逆，则称为<strong>广群</strong>。</p>
+<p><strong>例 1 (基本广群).</strong> 设 $X$ 是拓扑空间，其基本广群 $\Pi_1(X)$ 定义为如下范畴：对象是 $X$ 中的点，态射为两点间道路的同伦类。$\pi_1(X,x):=\text{Aut}(x)$ 称为以 $x$ 为基点的<strong>基本群</strong>。</p>
+<p>范畴 $\mathcal C$ 的<strong>反范畴</strong> $\mathcal C^{\text{op}}$ 定义为反转箭头和复合运算。</p>
+<p>设 $\mathcal C’$ 和 $\mathcal C$ 是范畴，<strong>函子</strong> $F:\mathcal C’\to\mathcal C$ 包含：</p>
+<ul>
+<li>对象间的映射 $F:\text{Ob}(\mathcal C’)\to\text{Ob}(\mathcal C)$；</li>
+<li>态射间的映射 $F:\text{Mor}(\mathcal C’)\to\text{Mor}(\mathcal C)$，使得<ul>
+<li>$F$ 与来源映射和目标映射相交换；</li>
+<li>保复合运算和恒等态射。</li>
+</ul>
+</li>
+</ul>
+<p>对于函子 $F:\mathcal C’\to\mathcal C$，</p>
+<ul>
+<li>若 $\mathcal C$ 中任意对象都同构于某个 $FX$ 则称 $F$ 是<strong>本质满</strong>的。</li>
+<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是单射，则称 $F$ 是<strong>忠实</strong>的；</li>
+<li>若对 $X,Y\in\text{Ob}(\mathcal C’)$ 都有 $\text{Hom}_\mathcal C(X,Y)\to\text{Hom}_\mathcal C(FX,FY)$ 是满射，则称 $F$ 是<strong>全</strong>的。</li>
+</ul>
+<p>函子 $F,G:\mathcal C’\to\mathcal C$ 的<strong>自然变换</strong> $\theta$ 是一族态射 $\theta_X\in\text{Hom}_\mathcal C(FX,GX)\ (X\in\text{Ob}(\mathcal C’))$ 使得对所有 $\mathcal C’$ 中的态射 $f:X\to Y$ 都有：</p>
+<p><img src="/images/ai-jabr-2-1.png"></p>
+<p>记作 $\theta:F\to G$。<em>一种理解方法是 $\theta$ 为 $F$ 到 $G$ 的一个同伦。</em></p>
+<p>对于 $\mathcal C’$ 到 $\mathcal C$ 的三个函子间的态射 $\theta:F\to G$ 和 $\psi:G\to H$，<strong>纵合成</strong> $\psi\circ\theta:=\{\psi_X\circ\theta_X:X\in\text{Ob}(\mathcal C’)\}.$</p>
+<p>对于三个范畴 $\mathcal C’’$、$\mathcal C’$ 和 $\mathcal C$ 的函子 $F_1,F_2:\mathcal C’’\to\mathcal C’$ 和 $G_1,G_2:\mathcal C’\to\mathcal C$ 间的态射 $\theta:F_1\to F_2$ 和 $\psi:G_1\to G_2$，<strong>横合成</strong> $\psi\circ\theta:G_1\circ F_1\to G_2\circ F_2.$</p>
+<p><strong>引理 1-1.</strong> 上述纵、横合成都是函子间的态射，且都满足结合律。</p>
+<p><strong>证明.</strong> 纵合成是显然的。现证明横合成的自然性，只需证明右图。</p>
+<p><img src="/images/ai-jabr-2-2.png"></p>
+<p>而由 $\psi$ 和 $\theta$ 的自然性知每块均交换，而水平方向的合成分别为 $(\psi\circ\theta)_X$ 和 $(\psi\circ\theta)_Y$，此即说明 $\psi\circ\theta$ 的自然性。</p>
+<p>现证明横合成的结合律，考虑左图，施 $\psi$ 的自然性于 $F_1(X)\to F_2(X)$ 知其交换，所以对于三对函子间映射 $\theta:F_1\to F_2$，$\psi:G_1\to G_2$，$\varphi:H_1\to H_2$ 下图给出 $(\varphi\circ(\psi\circ\theta))_X$ 和 $((\varphi\circ\psi)\circ\theta)_X$，而施 $\varphi$ 的自然性于 $G_2F_1(X)\to G_2F_2(X)$ 知其交换。$\square$</p>
+<p><img src="/images/ai-jabr-2-3.png"></p>
+<p>对于自然变换 $\theta:F_1\to F_2$，若每个 $\theta_X$ 都是同构，则存在 $\psi:F_2\to F_1$ 使得 $\psi\circ\theta=\text{id}_{F_1}$ 且 $\theta\circ\psi=\text{id}_{F_2}$，称 $\psi$ 是 $\theta$ 的逆，记作 $\theta^{-1}$，并称 $\theta$ 是 $F_1$ 到 $F_2$ 的<strong>自然同构</strong>。显然同构的横纵合成均为同构。</p>
+<p>对于一对函子 $F:\mathcal C_1\to\mathcal C_2$ 和 $G:\mathcal C_2\to\mathcal C_1$，若存在自然同构 $\theta:\text{id}_{\mathcal C_2}\to FG$ 和 $\psi:\text{id}_{\mathcal C_1}\to GF$ 则称 $G$ 是 $F$ 的<strong>拟逆函子</strong>，并称 $F$ 是范畴 $\mathcal C_1$ 到 $\mathcal C_2$ 的<strong>等价</strong>。若进一步有 $FG=\text{id}_{\mathcal C_2}$ 且 $GF=\text{id}_{\mathcal C_1}$ 则称 $G$ 是 $F$ 的<strong>逆</strong>，并称 $F$ 是范畴间的<strong>同构</strong>。</p>
+<p><strong>命题 2.</strong> 设 $G,G’$ 是函子 $F:\mathcal C_1\to\mathcal C_2$ 的拟逆，则存在函子间同构 $G\cong G’$。</p>
+<p><strong>证明.</strong> 自然变换的横合成给出 $G\xrightarrow{\psi’\circ\text{id}_G}(G’F)G=G’(FG)\xleftarrow{\text{id}_{G’}\circ\theta}G’$。$\square$</p>
+<p>对于全子范畴 $\mathcal C’\subset\mathcal C$，若对每个 $X\in\text{Ob}(\mathcal C)$ 都存在唯一的 $Y\in\text{Ob}(\mathcal C’)$ 使得存在 $X$ 到 $Y$ 的同构，则称 $\mathcal C’$ 是 $\mathcal C$ 的一副<strong>骨架</strong>。自为骨架的范畴称为<strong>骨架范畴</strong>。</p>
+<p><strong>引理 3-1.</strong> 任意范畴 $\mathcal C$ 均有一副骨架 $\mathcal C’$，且包含函子 $\iota:\mathcal C’\to\mathcal C$ 是等价。</p>
+<p><strong>证明.</strong> 使用选择公理在 $\text{Ob}(\mathcal C)$ 的每个同构类中取代表元，设其构成的全子范畴为 $\mathcal C’$。</p>
+<p>对每个 $X\in\text{Ob}(\mathcal C)$ 选定同构 $\theta_X:X\to \kappa(X)$，其中 $\kappa(X)\in\text{Ob}(\mathcal C’)$，特别地对于 $X\in\text{Ob}(\mathcal C’)$ 有 $\theta_X=\text{id}_X$。</p>
+<p>此时存在唯一一种方法将 $\kappa:\text{Ob}(\mathcal C)\to\text{Ob}(\mathcal C’)$ 延拓为函子并使得 $\theta:\text{id}_\mathcal C\to\iota\kappa$ 是自然同构：对于 $f\in\text{Hom}_\mathcal C(X,Y)$ 定义 $\kappa(f):=\theta_Y\circ f\circ\theta_X^{-1}\in\text{Hom}_{\mathcal C’}(\kappa(X),\kappa(Y))$。同时由定义有 $\kappa\iota=\text{id}_{\mathcal C’}$，所以 $\kappa$ 是 $\iota$ 的拟逆函子。$\square$</p>
+<p><strong>引理 3-2.</strong> 骨架范畴间的全忠实、本质满函子都是同构。</p>
+<p><strong>定理 4.</strong> 对于函子 $F:\mathcal C_1\to\mathcal C_2$，$F$ 是范畴等价 $\iff$ $F$ 是全忠实、本质满函子。</p>
+<p><strong>证明.</strong> $\implies$：设拟逆函子为 $G:\mathcal C_2\to\mathcal C_1$ 以及自然同构 $\psi:GF\to\text{id}_{\mathcal C_1}$ 和 $\varphi:FG\to\text{id}_{\mathcal C_2}$。</p>
+<p>对任意 $Z\in\text{Ob}(\mathcal C_2)$ 都有同构 $\varphi_Z:F(GZ)\to Z$ 故 $F$ 本质满，同理 $G$ 本质满。</p>
+<p>因为 $f\mapsto Ff\mapsto GF(f)\mapsto\psi_YGF(f)\psi_X^{-1}$ 合成为恒等映射，所以 $F$ 左可逆，同理可知当 $X,Y\in\text{Ob}(\mathcal C_1)$ 属于 $G$ 的像时 $\text{Hom}(X,Y)\xrightarrow F\text{Hom}(FX,FY)$ 右可逆，而 $\mathcal C_1$ 中每个对象都同构于 $G$ 的某个像，所以 $F$ 全忠实。</p>
+<p>$\impliedby$：由引理 3-1 取骨架 $\iota_i:\mathcal C_i’\to\mathcal C_i$ 及其拟逆函子 $\kappa_i\ (i=1,2)$，$F’:=\kappa_2\circ F\circ \iota_1:\mathcal C_1’\to\mathcal C_2’$ 也是全忠实、本质满函子，所以 $F’$ 是范畴同构。设 $G:=\iota_1\circ F’^{-1}\circ\kappa_2$，则由自然变换的横合成知：</p>
+<p>$$<br>\begin{aligned}<br>GF&amp;=\iota_1F’^{-1}\kappa_2F\cong\iota_1F’^{-1}\kappa_2F\iota_1\kappa_1=\iota_1\kappa_1\cong\text{id}_{\mathcal C_1}, \\<br>FG&amp;=F\iota_1F’^{-1}\kappa_2\cong\iota_2\kappa_2\iota_1F’^{-1}\kappa_2F=\iota_2\kappa_2\cong\text{id}_{\mathcal C_2}.\square<br>\end{aligned}<br>$$</p>
+<p><strong>例 2.</strong> 给定域 $\mathbb K$，定义范畴 $\textsf{Mat}$ 如下：对象是 $\mathbb Z_{\ge 0}$，$\text{Hom}(n,m):=M_{m\times n}(\mathbb K)$，态射的合成定义为矩阵乘法。定义函子 $F:\textsf{Mat}\to\text{Vect}_f(\mathbb K)$，$F(n)=\mathbb K^{\oplus n}:=M_{n\times 1}(\mathbb K)$，而对 $A\in\text{Hom}(n,m)$，线性映射 $FA:\mathbb K^{\oplus n}\to\mathbb K^{\oplus m}$ 是矩阵乘法 $v\mapsto Av$，则 $F$ 是范畴等价。</p>
+<hr>
+<p>设 $I$ 是 $\mathcal U$-集，$\{\mathcal C_i:i\in I\}$ 是一族范畴。积范畴 $\prod_{i\in I}\mathcal C_i$ 定义为：</p>
+<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\prod_{i\in I}\mathcal C_i\right)&amp;:=\prod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\prod_{i\in I}\mathcal C_i}((X_i)_i,(Y_i)_i)&amp;:=\prod_{i\in I}\text{Hom}_{\mathcal C_i}(X_i,Y_i).<br>\end{aligned}<br>$$</p>
+<p>其中 $(X_i)_i$ 表示 $\prod_{i\in I}\text{Ob}(\mathcal C_i)$ 的元素。余积（无交并）范畴 $\coprod_{i\in I}\mathcal C_i$ 定义为：</p>
+<p>$$<br>\begin{aligned}<br>\text{Ob}\left(\coprod_{i\in I}\mathcal C_i\right)&amp;:=\coprod_{i\in I}\text{Ob}(\mathcal C_i), \\<br>\text{Hom}_{\coprod_{i\in I}\mathcal C}(X_j,X_k)&amp;:=\begin{cases}\text{Hom}_{\mathcal C_j}(X_j,X_k),&amp;j=k, \\ \varnothing,&amp;j\ne k.\end{cases}<br>\end{aligned}<br>$$</p>
+<p>其中对每个 $j\in I$，$X_j\in\mathcal C_j$。</p>
+<p>定义投射函子 $\mathbf{pr}_j:\prod_{i\in I}\mathcal C_i\to\mathcal C_j$ 和包含函子 $\iota_j:\mathcal C_j\to\coprod_{i\in I}\mathcal C_i$。</p>
+<p>形如 $F:\mathcal C_1\times\cdots\times\mathcal C_n\to\mathcal C$ 的函子称为 <strong>$n$ 元函子</strong>。 </p>
+<p><strong>例 3 (Hom 函子).</strong> 给定范畴 $\mathcal C$，因为 $\mathcal C$ 中的每一对态射 $f:X’\to X$ 和 $g:Y\to Y’$ 诱导出<br>$$<br>\begin{aligned}<br>\text{Hom}_\mathcal C(X,Y)&amp;\to\text{Hom}_\mathcal C(X’,Y’), \\<br>\varphi&amp;\mapsto g\varphi f.<br>\end{aligned}<br>$$<br>称为态射 $\varphi$ 对 $f$ 作<strong>拉回</strong>，对 $g$ 作<strong>推出</strong>。拉回记为 $f^\star\varphi=\varphi f$，推出记为 $g_\star\varphi=g\varphi$，易知 $(f_1f_2)^\star=f_2^\star f_1^\star$ 且 $(f_1f_2)_\star=(f_1)_\star(f_2)_\star$。</p>
+<p>所以 $(X,Y)\mapsto\text{Hom}_\mathcal C(X,Y)$ 定义了二元函子 $\text{Hom}_\mathcal C:\mathcal C^{\text{op}}\times\mathcal C\to\textsf{Set}$。</p>
+<p>设 $\mathcal C_1,\mathcal C_2$ 是 $\mathcal U$-范畴，定义<strong>函子范畴</strong>：对象是 $\mathcal C_1$ 到 $\mathcal C_2$ 的函子，$F,G$ 之间的态射是自然变换 $\theta:F\to G$，合成是自然变换的纵合成。记作 $\text{Fct}(\mathcal C_1,\mathcal C_2)$ 或 $\mathcal C_2^{\mathcal C_1}$。</p>
+<p>若 $\mathcal C_1$ 是 $\mathcal U$-小范畴，则 $\text{Fct}(\mathcal C_1,\mathcal C_2)$ 的每个态射是<br>$$<br>\prod_{X\in\text{Ob}(\mathcal C_1)}\text{Hom}_{\mathcal C_2}(FX,GX)<br>$$<br>的子集，此时 $\text{Fct}(\mathcal C_1,\mathcal C_2)$ 是 $\mathcal U$-范畴。</p>
+<p><strong>命题 5.</strong> 存在自然同构 $\text{Fct}(\mathcal C_1,\mathcal C_2)^{\text{op}}\to\text{Fct}(\mathcal C_1^{\text{op}},\mathcal C_2^{\text{op}})$，它将 $\varphi$ 映至 $\varphi^{\text{op}}$。</p>
+<p><strong>证明.</strong> 对函子 $F,G:\mathcal C_1\to\mathcal C_2$，在反范畴中相应地有 $F^{\text{op}},G^{\text{op}}:\mathcal C_1^{\text{op}}\to\mathcal C_2^{\text{op}}$，而自然变换 $\varphi:F\to G$ 在反范畴中被倒转为 $\varphi^{\text{op}}:G^{\text{op}}\to F^{\text{op}}$。$\square$</p>
+<p><strong>例 4.</strong> 对于集合 $I\in\mathcal U$，取 $\mathcal I:=\textsf{Disc}(I)$ 为相应的离散范畴，则对每个范畴 $\mathcal C$ 皆有范畴同构 $\mathcal C^{\mathcal I}\cong\prod_{i\in I}\mathcal C$。</p>
+<p>定义范畴 $\mathcal C$ 的<strong>中心</strong>为 $Z(\mathcal C)=\text{End}(\text{id}_{\mathcal C})$，其元素即为一族自同态 $\psi_X:X\to X$ 使得对每个 $f:X\to Y$ 都有 $f\circ\psi_X=\psi_Y\circ f$。</p>
+<p><strong>命题 6.</strong> 中心 $Z(\mathcal C)$ 对二元运算 $\circ$ 交换。</p>
+<p><strong>证明.</strong> 对于 $X\in\text{Ob}(\mathcal C)$，$\varphi,\psi\in Z(\mathcal C)$，在定义中取 $X=Y$，$f=\varphi_X$ 即可。$\square$</p>
+<p><strong>命题 7.</strong> 范畴等价 $F:\mathcal C_1\to\mathcal C_2$ 诱导中心的同构 $Z(\mathcal C_1)\cong Z(\mathcal C_2)$。</p>
+<p><strong>证明.</strong> 对于同构的对象 $X,Y$，设 $f:X\to Y$ 可逆，则对 $\psi\in Z(\mathcal C)$ 有 $f\circ\psi_X\circ f^{-1}=\psi_Y$。所以 $\psi$ 在 $\mathcal C$ 上的取值被其在骨架范畴的限制确定。$\square$</p>
+<hr>
+<p>对于范畴 $\mathcal C$ 的对象 $X$，若对所有对象 $Y$，$\text{Hom}_{\mathcal C}(X,Y)$ 都恰有一个元素，则称 $X$ 为<strong>始对象</strong>；若对所有对象 $Y$，$\text{Hom}_{\mathcal C}(Y,X)$ 都恰有一个元素，则称 $X$ 为<strong>终对象</strong>。如果 $X$ 既是始对象又是终对象，则称 $X$ 为<strong>零对象</strong>。始/终对象间存在唯一同构。</p>
+<p>若 $\mathcal C$ 中有零对象（记作 $0$），则对 $X,Y\in\text{Ob}(\mathcal C)$ 定义<strong>零态射</strong> $0:X\to Y$ 为 $X\to 0\to Y$ 的合成。零态射左右合成任何态射都是零态射，且其定义与零对象的选取无关。</p>
+<p><strong>例 5</strong>：一般来说，始/终对象未必存在。</p>
+<ul>
+<li>$\mathsf{Set}$ 的始对象是 $\varnothing$，终对象是 ${\text{pt}}$；</li>
+<li>$\textsf{Set}_\bullet$ 的零对象是 $({\text{pt}},\text{pt})$；</li>
+<li>$\textsf{Grp}$ 的零对象是平凡群 ${1}$，取常值 $1$ 的同态是零态射；</li>
+<li>域 $\mathbb k$ 上的向量空间范畴 $\mathsf{Vect}(\mathbb k)$ 的零对象是零空间，零态射是零映射；</li>
+</ul>
+<p>对于函子 $\mathcal A\xrightarrow S\mathcal C\xleftarrow T\mathcal B$，定义<strong>逗号范畴</strong> $(S/T)$ 如下：</p>
+<ul>
+<li>对象：$(A,B,f)$，其中 $A\in\text{Ob}(\mathcal A)$，$B\in\text{Ob}(\mathcal B)$，$f:SA\to TB$；</li>
+<li>态射：从 $(A,B,f)$ 到 $(A’,B’,f’)$ 的态射形如 $(g,h)$，其中 $g:A\to A’$ 和 $h:B\to B’$ 分别是 $\mathcal A$ 和 $\mathcal B$ 中的态射，使得 $f’\circ Sg=Th\circ f$。态射的合成是 $(g_1,h_1)\circ(g_2,h_2)=(g_1\circ g_2,h_1\circ h_2)$，而 $(A,B,f)$ 到自身的恒等态射是 $(\text{id}_A,\text{id}_B)$。</li>
+</ul>
+<p>定义左、右投影函子 $P:(S/T)\to\mathcal A$ 和 $Q:(S/T)\to\mathcal B$。</p>
+<p>设 $\mathbf 1$ 是仅含一个对象及其恒等态射的范畴，则指定 $\mathcal C$ 中的一个对象相当于指定一个函子 $j_X:\mathbf 1\to\mathcal C$。</p>
+<p>考虑函子 $T:\mathcal C’\to\mathcal C$ 及 $X\in\text{Ob}(\mathcal C)$，对应于 $\mathbf 1\xrightarrow{j_X}\mathcal C\xleftarrow T\mathcal C’$ 的逗号范畴 $(X/T):=(j_X/T)$ 的对象形如 $(W,X\xrightarrow i TW)$，其中 $W\in\text{Ob}(\mathcal C’)$，而 $(W_1,i_1)$ 与 $(W_2,i_2)$ 间的态射是使得 $Th\circ i_1=i_2$ 的 $h:W_1\to W_2$。</p>
+<p>反过来考虑 $\mathcal C’\xrightarrow T\mathcal C\xleftarrow{j_X}\mathbf 1$，逗号范畴 $(T/X)$ 的对象形如 $(W,TW\xrightarrow pX)$，其中 $W\in\text{Ob}(\mathcal C’)$，而 $(W_1,p_1)$ 与 $(W_2,p_2)$ 间的态射是使得 $p_2\circ Tf=p_1$ 的 $f:W_1\to W_2$。</p>
+<p>逗号范畴 $(\text{id}_\mathcal C,\text{id}_\mathcal C)$ 的对象是 $\mathcal C$ 中所有态射 $X\xrightarrow f Y$，两个对象 $X\xrightarrow f Y$ 和 $X’\xrightarrow{f’}Y’$ 之间的态射是其交换图表。$(\text{id}_\mathcal C,\text{id}_\mathcal C)$ 也称为 $\mathcal C$ 的箭头范畴。</p>
+<p><strong>例 6.</strong> 给定域 $\mathbb k$，定义函子 $V:\mathsf{Set}\to\mathsf{Vect}(\mathbb k)$ 如下：对于集合 $X$，$V(X):=\bigoplus_{x\in X}\mathbb kx$ 是以 $X$ 为基的 $\mathbb k$-向量空间，映射 $f:X\to Y$ 诱导出线性映射 $V(f):V(X)\to V(Y)$；令 $U:\mathsf{Vect}(\mathbb k)\to\mathsf{Set}$ 为忘却函子，则 $x\mapsto x\in V(X)$ 给出态射 $\iota:X\to UV(X)$。</p>
+<p>$(V(X),\iota)$ 是 $(X/U)$ 的始对象，因为对任意 $(W,i)\in\text{Ob}(X/U)$，由 $X$ 是 $V(X)$ 的基知存在唯一的态射 $h:V(X)\to W$ 使得 $U(h)\circ\iota=i$。此即为 $V(X)$ 的<strong>泛性质</strong>。</p>
+<p><strong>例 7.</strong> 考虑度量空间 $(X,d)$ 构成的范畴 $\mathsf{Metr}$，态射定义为保距映射；完备度量空间构成的全子范畴记作 $\mathsf{ComMetr}$。熟知的完备化构造给出函子 $C:\mathsf{Metr}\to\mathsf{ComMetr}$，其中 $(X,d)\mapsto(\hat X,\hat d)$。令 $I:\mathsf{ComMetr}\to\mathsf{Metr}$ 为包含函子，而对给定的度量空间 $X$，对角嵌入 $x\mapsto(x_n:=x)_{n\ge 1}$ 给出态射 $\iota:X\to I(\hat X)$。</p>
+<p>$(\hat X,\iota)$ 是 $(X/I)$ 的始对象，因为对任意 $(Y,i)\in\text{Ob}(X/I)$，由 $X$ 在 $\hat X$ 的稠密性知存在唯一的态射 $h:\hat X\to Y$ 使得 $I(h)\circ\iota=i$。此即为完备化的泛性质。</p>
 ]]></content>
       <categories>
         <category>学习笔记</category>
