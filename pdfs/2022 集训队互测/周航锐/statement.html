@@ -1,0 +1,83 @@
+<h1 id="djq-学生物"><a href="#djq-学生物" class="headerlink" title="djq 学生物"></a>djq 学生物</h1><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>djq 在学生物，他学习到基因是 DNA 片段。现在他得到了一个长度为 $3n$ 的碱基对序列 <code>ACTACT...ACT</code>，这个片段实际上由 $n$ 个密码子 <code>ACT</code> 构成。</p>
+<p>邪恶博士 ffffxk 带着他的突变枪来捣乱了。这把突变枪非常强大，并且内置了 $m$ 个程序，其中一个是故障程序，一旦运行就会让突变枪损坏。其他的程序作用到碱基对序列上就会打乱这个序列。具体来说，程序包含 $n$ 个长度为 $3$ 的排列，第 $i$ 个排列会作用在第 $i$ 个密码子上，使得 $s_1s_2s_3$ 变成 $s_{p_1}s_{p_2}s_{p_3}$。</p>
+<p>突变枪每次运行都会独立等概率随机选取一个程序执行。</p>
+<p>ffffxk 疯狂使用他的突变枪直到它坏了为止。djq 很好奇最后碱基对序列变成每种样子的概率，答案对 $998244353$ 取模。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>第一行一个整数 $n$ 表示密码子个数。</p>
+<p>第二行 $6^n$ 个整数 $c_i$，表示某一种程序的个数，程序如下</p>
+<p>把 $i-1$ 表示为 $n$ 位 $6$ 进制数 $\overline{a_na_{n-1}a_{n-2}\cdots a_1}$，$a_j$ 表示对第 $j$ 个密码子的排列是字典序第 $a_j+1$ 大的长为 $3$ 的排列。</p>
+<p>即 $0\cdots 5$ 分别表示 $(1,2,3),(1,3,2),(2,1,3),(2,3,1),(3,1,2),(3,2,1)$。</p>
+<p>$m=\sum c_i+1$。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>为了减少输出量，你只需要输出所有答案的异或和即可。</p>
+<p>如果存在一个答案在 $\bmod 998244353$ 意义下不收敛，输出 <code>-1</code>。</p>
+<p>否则输出一行一个整数表示最后碱基对序列变成每种样子的概率对 $998244353$ 取模后的结果的异或和。</p>
+<h3 id="样例一"><a href="#样例一" class="headerlink" title="样例一"></a>样例一</h3><h4 id="input"><a href="#input" class="headerlink" title="input"></a>input</h4><pre>
+1
+0 0 0 1 0 0
+
+</pre>
+
+<h4 id="output"><a href="#output" class="headerlink" title="output"></a>output</h4><pre>
+1
+
+</pre>
+
+<h4 id="explanation"><a href="#explanation" class="headerlink" title="explanation"></a>explanation</h4><p>突变枪内置了两种程序，一种是故障程序，一种对应排列 $(2,3,1)$。</p>
+<p>最后序列为 <code>ACT</code> 的概率为 $\frac 47$，取模后为 $427819009$。</p>
+<p>最后序列为 <code>CTA</code> 的概率为 $\frac 27$，取模后为 $713031681$。</p>
+<p>最后序列为 <code>TAC</code> 的概率为 $\frac 17$，取模后为 $855638017$。</p>
+<p>三者异或和为 $1$。</p>
+<h3 id="样例二"><a href="#样例二" class="headerlink" title="样例二"></a>样例二</h3><h4 id="input-1"><a href="#input-1" class="headerlink" title="input"></a>input</h4><pre>
+2
+806045030 846930886 683448424 716392562 959503440 424238335 719885386 651516139 596516649 191397068 26958009 352245674 783368690 104275706 48409057 969269573 366936187 542139073 304089172 305211383 35005211 521595368 294702567 728712076 336465782 861021530 278722862 233665123 148685361 468703135 103269576 803735449 317389669 635723058 370888716 127653814
+
+</pre>
+
+<h4 id="output-1"><a href="#output-1" class="headerlink" title="output"></a>output</h4><pre>
+271035623
+
+</pre>
+
+<h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>对于所有数据保证 $1\leq n\leq 8, 998244353\nmid m, c_i\in[0, 998244353)$。</p>
+<table>
+<thead>
+<tr>
+<th align="center">子任务编号</th>
+<th align="center">$n\leq$</th>
+<th align="center">特殊性质</th>
+<th align="center">分值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">无</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">无</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">8</td>
+<td align="center">A</td>
+<td align="center">15</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">无</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">8</td>
+<td align="center">无</td>
+<td align="center">35</td>
+</tr>
+</tbody></table>
+<p>A: 如果 $c_i\neq 0$，则 $i$ 的 $6$ 进制表示只包含 $0,3,4$。</p>
+<p><strong>时间限制：$\texttt{2s}$</strong></p>
+<p><strong>空间限制：$\texttt{512MB}$</strong></p>

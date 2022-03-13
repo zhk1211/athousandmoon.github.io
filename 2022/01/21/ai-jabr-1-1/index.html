@@ -28,7 +28,7 @@
 <meta property="og:description" content="Zermelo-Fraenkel Set Theory (ZFC) 构筑于：  一阶逻辑：$\land,\neg,\implies,\forall,\exists$ 等逻辑连词和量词，括号 $(\ )$，变元 $x,y,z,\cdots$ 和等号 $&#x3D;$，以及判定公式是否合法的规则。 集合论所需的二元谓词 $\in$ 及下述的九条公理。ZFC 处理的所有对象均为集合。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-21T12:21:30.000Z">
-<meta property="article:modified_time" content="2022-01-21T12:24:49.855Z">
+<meta property="article:modified_time" content="2022-03-13T03:55:27.660Z">
 <meta property="article:author" content="Catcats555">
 <meta property="article:tag" content="抽象代数">
 <meta name="twitter:card" content="summary">
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-21 20:21:30 / 修改时间：20:24:49" itemprop="dateCreated datePublished" datetime="2022-01-21T20:21:30+08:00">2022-01-21</time>
+              <time title="创建时间：2022-01-21 20:21:30" itemprop="dateCreated datePublished" datetime="2022-01-21T20:21:30+08:00">2022-01-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-13 11:55:27" itemprop="dateModified" datetime="2022-03-13T11:55:27+08:00">2022-03-13</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,12 +259,12 @@
 <span id="more"></span>
 
 <p><strong>外延公理 (<em>Extensionality</em>).</strong> 若两集合有相同元素，则两者相等。</p>
-<p><strong>配对公理 (<em>Pair</em>).</strong> 对任意 $x,y$，存在 ${x,y}$。</p>
-<p><strong>分离公理模式 (<em>Separation</em>).</strong> 设 $P$ 为关于集合的一个性质，以 $P(u)$ 表示集合 $u$ 满足性质 $P$，则对任意集合 $X$ 存在 ${u\in X:P(u)}$。</p>
-<p><strong>并集公理 (<em>Union</em>).</strong> 对任意集合 $X$，存在相应的并集 $\bigcup X:={u:\exists x\in X,u\in x}$。</p>
-<p><strong>幂集公理 (<em>Power Set</em>).</strong> 对任意集合 $X$，其子集构成集合 $\mathcal P(X):={u:u\subset X}$。</p>
-<p><strong>无穷公理 (<em>Infinity</em>).</strong> 存在集合 $X$ 使得 $\varnothing\in X$ 且 $x\in X\implies x\cup{x}\in X$。</p>
-<p><strong>替换公理模式 (<em>Replacement</em>).</strong> 设 $F$ 为以一个集合 $X$ 为定义域的函数，则存在集合 $F(X):={F(x):x\in X}$。</p>
+<p><strong>配对公理 (<em>Pair</em>).</strong> 对任意 $x,y$，存在 $\{x,y\}$。</p>
+<p><strong>分离公理模式 (<em>Separation</em>).</strong> 设 $P$ 为关于集合的一个性质，以 $P(u)$ 表示集合 $u$ 满足性质 $P$，则对任意集合 $X$ 存在 $\{u\in X:P(u)\}$。</p>
+<p><strong>并集公理 (<em>Union</em>).</strong> 对任意集合 $X$，存在相应的并集 $\bigcup X:=\{u:\exists x\in X,u\in x\}$。</p>
+<p><strong>幂集公理 (<em>Power Set</em>).</strong> 对任意集合 $X$，其子集构成集合 $\mathcal P(X):=\{u:u\subset X\}$。</p>
+<p><strong>无穷公理 (<em>Infinity</em>).</strong> 存在集合 $X$ 使得 $\varnothing\in X$ 且 $x\in X\implies x\cup\{x\}\in X$。</p>
+<p><strong>替换公理模式 (<em>Replacement</em>).</strong> 设 $F$ 为以一个集合 $X$ 为定义域的函数，则存在集合 $F(X):=\{F(x):x\in X\}$。</p>
 <p><strong>正则公理 (<em>Foundation</em>).</strong> 对任意非空集 $X$，存在 $x\in X$ 使得对所有 $y\in X$ 都有 $y\notin x$。</p>
 <p><strong>选择公理 (<em>Choice</em>).</strong> 对任意集合 $X$，若 $\forall x\in X$ 都有 $x\ne\varnothing$，则存在函数 $g:X\to\bigcup X$ 使得 $\forall x\in X$ 都有 $g(x)\in X$。</p>
 <p>由此定义集合的并、交、差、积和子集等运算，以及元组、函数、$n$ 元关系等概念。</p>
@@ -283,7 +289,7 @@
 <p>若全序集 $P$ 满足每个非空子集都有极小元则称为<strong>良序集</strong>。</p>
 <p><strong>例 1.</strong> 对任意集合 $X$，则幂集 $\mathcal P(X)$ 对包含关系 $\subset$ 构成滤过偏序集。</p>
 <p><strong>引理 1.</strong> 设 $P$ 为良序集，映射 $\varphi:P\to P$ 严格增，则 $\forall x\in P$ 都有 $\varphi(x)\ge x$。</p>
-<p><strong>证明.</strong> 反证法，不妨设 $P_0={x\in P:\varphi(x)&lt;x}$ 非空，极小元为 $z$，则 $\varphi(z)\in P_0$ 而 $\varphi(z)&lt;z$，矛盾。$\square$</p>
+<p><strong>证明.</strong> 反证法，不妨设 $P_0=\{x\in P:\varphi(x)&lt;x\}$ 非空，极小元为 $z$，则 $\varphi(z)\in P_0$ 而 $\varphi(z)&lt;z$，矛盾。$\square$</p>
 <p><strong>推论 1.</strong> $P$ 没有非平凡的自同构。</p>
 <p><strong>推论 2.</strong> 对任意 $x\in P$，不存在从 $P$ 到 $P_{&lt;x}$ 的同构。</p>
 <p>若集合 $\alpha$ 的每个元素都是它的子集，则称 $\alpha$ 是<strong>传递</strong>的。</p>
@@ -292,17 +298,17 @@
 <p><strong>证明.</strong> 由 $\alpha$ 的传递性知 $\beta\subset\alpha$，则 $(\beta,\in)$ 是良序集。</p>
 <p>若 $\tau\in\beta\subset\alpha$，因为 $(\alpha,\in)$ 是序结构所以 $x\in\tau\in\beta\implies x\in\beta$，也即 $\tau\subset\beta$，所以 $\beta$ 是序数。$\square$</p>
 <p><strong>引理 2-2.</strong> 对任意两个序数 $\alpha,\beta$，若 $\alpha\subsetneq\beta$，则 $\alpha\in\beta$。</p>
-<p><strong>证明.</strong> 设 $\gamma$ 为 $(\beta\backslash\alpha,\in)$ 的极小元，则 $\gamma={x\in\beta:x\in\gamma}$，显然 $\gamma\subset\alpha$。</p>
+<p><strong>证明.</strong> 设 $\gamma$ 为 $(\beta\backslash\alpha,\in)$ 的极小元，则 $\gamma=\{x\in\beta:x\in\gamma\}$，显然 $\gamma\subset\alpha$。</p>
 <p>对所有 $y\in\alpha\subset\beta$，显然 $\gamma\ne y$，若 $\gamma\in y$，又因为 $y\subset\alpha$ 所以 $\gamma\in\alpha$，矛盾；所以 $y\in\gamma$，即 $\alpha\subset\gamma$，所以 $\alpha=\gamma\in\beta$。$\square$</p>
 <p><strong>引理 2-3.</strong> 对任意两个序数 $\alpha,\beta$，必有 $\alpha\subset\beta$ 或 $\beta\subset\alpha$。</p>
 <p><strong>证明.</strong> 设 $\gamma=\alpha\cap\beta$，则 $\gamma$ 也是序数，由引理 2-2 得证。$\square$</p>
 <p><strong>定理 3.</strong> 定义 $\mathbf{On}$ 为全体序数构成的真类，则：</p>
 <ul>
-<li>$(\mathbf{On},\in)$ 构成全序，且对任意序数 $\alpha$ 都有 $\alpha={\beta:\beta&lt;\alpha}$；</li>
-<li>设 $C$ 是由序数构成的非空类，则 $\inf C:=\bigcap C$ 也是序数，且 $\inf C\in C$，且 $\alpha\sqcup{\alpha}=\inf{\beta:\alpha&lt;\beta}$。</li>
+<li>$(\mathbf{On},\in)$ 构成全序，且对任意序数 $\alpha$ 都有 $\alpha=\{\beta:\beta&lt;\alpha\}$；</li>
+<li>设 $C$ 是由序数构成的非空类，则 $\inf C:=\bigcap C$ 也是序数，且 $\inf C\in C$，且 $\alpha\sqcup{\alpha}=\inf\{\beta:\alpha&lt;\beta\}$。</li>
 <li>设 $S$ 是由序数构成的集合，则 $\sup S:=\bigcup S$ 也是序数。</li>
 </ul>
-<p>给定序数 $\alpha$，定义 $\alpha+1:=\alpha\sqcup{\alpha}$，称为 $\alpha$ 的<strong>后继</strong>。若 $\alpha$ 不是任何序数的后继，则称为<strong>极限序数</strong>。</p>
+<p>给定序数 $\alpha$，定义 $\alpha+1:=\alpha\sqcup\{\alpha\}$，称为 $\alpha$ 的<strong>后继</strong>。若 $\alpha$ 不是任何序数的后继，则称为<strong>极限序数</strong>。</p>
 <p>定义无穷序数 $\omega=\mathbb Z_{\ge 0}$，则 $\omega$ 也是极限序数。</p>
 <p><strong>定理 4 (超穷归纳法).</strong> 设 $C$ 是由序数构成的类，若</p>
 <ul>
@@ -313,16 +319,16 @@
 <p>则 $C=\mathbf{On}$。若仅考虑小于 $\theta$ 的序数则仍然成立。</p>
 <p><strong>定理 5 (超穷递归原理).</strong> 设 $\mathbf{V}$ 表示所有集合构成的类，$G:\mathbf V\to\mathbf V$，则：</p>
 <ul>
-<li>对任意序数 $\theta$，称函数 $a:\theta\to V$ 为 $\theta$-列，则存在唯一的 $\theta$-列 $a$ 使得 $a&lt;\theta\implies a(\alpha)=G(a|_\alpha)$，其中 $a|_\alpha$ 表示函数限制 ${(\beta,a(\beta)):\beta&lt;\alpha}$。</li>
+<li>对任意序数 $\theta$，称函数 $a:\theta\to V$ 为 $\theta$-列，则存在唯一的 $\theta$-列 $a$ 使得 $a&lt;\theta\implies a(\alpha)=G(a|_\alpha)$，其中 $a|_\alpha$ 表示函数限制 $\{(\beta,a(\beta)):\beta&lt;\alpha\}$。</li>
 <li>存在唯一的函数 $a:\mathbf{On}\to V$ 使得对每个序数 $\alpha$ 都有 $a(\alpha)=G(a|_\alpha)$。</li>
 </ul>
 <p>利用超穷递归原理可以对序数定义加法、乘法和指数。</p>
 <p><strong>定理 6.</strong> 对任意良序集 $P$，存在唯一的序数 $\alpha$ 和良序集之间的同构 $\varphi:P\xrightarrow{\sim}\alpha$。</p>
-<p><strong>证明.</strong> 不妨设 $P\ne\varnothing$，并选取 $\mho\notin P$，设 $a_0:=\min(P)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}\min(P\backslash{a_\beta:\beta&lt;\alpha}),&amp;{a_\beta:\beta&lt;\alpha}\subsetneq P, \ \mho,&amp;{a_\beta:\beta&lt;\alpha}=P.\end{cases}<br>$$<br>因为 $P$ 是集合，所以存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了偏序集的同构 $P\to\theta$。$\square$</p>
+<p><strong>证明.</strong> 不妨设 $P\ne\varnothing$，并选取 $\mho\notin P$，设 $a_0:=\min(P)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}\min(P\backslash{a_\beta:\beta&lt;\alpha}),&amp;\{a_\beta:\beta&lt;\alpha\}\subsetneq P, \ \mho,&amp;\{a_\beta:\beta&lt;\alpha\}=P.\end{cases}<br>$$<br>因为 $P$ 是集合，所以存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了偏序集的同构 $P\to\theta$。$\square$</p>
 <p><strong>定理 7 (良序公理).</strong> 任意集合 $S$ 都能被赋予良序。</p>
-<p><strong>证明.</strong> 选取 $\mho\notin S$ 如上。根据选择公理，对 $S$ 的每个子集 $S’$ 选择其元素 $g(S’)$。设 $a_0=g(S)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}g(S\backslash{a_\beta:\beta&lt;\alpha}),&amp; S\ne{a_\beta:\beta&lt;\alpha}, \<br>\mho,&amp;S={a_\beta:\beta&lt;\alpha}.\end{cases}<br>$$<br>同理可得存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了 $S$ 与 $\theta$ 的同构，于是导出 $S$ 上的良序。$\square$</p>
+<p><strong>证明.</strong> 选取 $\mho\notin S$ 如上。根据选择公理，对 $S$ 的每个子集 $S’$ 选择其元素 $g(S’)$。设 $a_0=g(S)$，利用超穷递归定义<br>$$<br>a_\alpha:=\begin{cases}g(S\backslash{a_\beta:\beta&lt;\alpha}),&amp; S\ne\{a_\beta:\beta&lt;\alpha\}, \<br>\mho,&amp;S=\{a_\beta:\beta&lt;\alpha\}.\end{cases}<br>$$<br>同理可得存在最小的序数 $\theta$ 使得 $a_\theta=\mho$，此时 $a_\alpha\mapsto\alpha$ 定义了 $S$ 与 $\theta$ 的同构，于是导出 $S$ 上的良序。$\square$</p>
 <p><strong>定理 8 (Zorn 引理).</strong> 设 $P$ 为非空偏序集，并且 $P$ 中每个链都有上界，则 $P$ 含有极大元。</p>
-<p><strong>证明.</strong> 反证法，假设没有极大元，根据选择公理，对 $P$ 的每个链 $P’$ 选择比它的上界大的元素 $g(P’)$。任取 $a_0\in P$，利用超穷递归定义 $a_\alpha:=g({a_\beta:\beta&lt;\alpha})$，得出 $\mathbf{On}$ 到 $P$ 的单射，矛盾。$\square$</p>
+<p><strong>证明.</strong> 反证法，假设没有极大元，根据选择公理，对 $P$ 的每个链 $P’$ 选择比它的上界大的元素 $g(P’)$。任取 $a_0\in P$，利用超穷递归定义 $a_\alpha:=g(\{a_\beta:\beta&lt;\alpha\})$，得出 $\mathbf{On}$ 到 $P$ 的单射，矛盾。$\square$</p>
 <hr>
 <p>若两集合 $X,Y$ 之间存在双射 $\varphi:X\to Y$，则称 $X,Y$ <strong>等势</strong>。集合 $X$ 的等势类记作 $|X|$，若存在单射 $\varphi:X\to Y$ 则记作 $|X|\le|Y|$。</p>
 <p><strong>定理 9 (Schröder–Bernstein).</strong> 若两集合 $X,Y$ 满足 $|X|\le |Y|$ 且 $|Y|\le |X|$，则 $|X|=|Y|$。</p>
@@ -349,13 +355,13 @@
 <p><strong>定理 13.</strong> 对任意序数 $\alpha$ 都有 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的序型为 $\aleph_\alpha$。</p>
 <p><strong>证明.</strong> 反证法，设 $\alpha$ 为不满足命题的最小序数，显然 $\alpha&gt;0$，设 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的序型为 $\gamma$，取同构 $f:\gamma\to(\aleph_\alpha\times\aleph_\alpha,\prec)$，则由基数性质知 $\gamma\ge|\gamma|=|\aleph_\alpha\times\aleph_\alpha|\ge\aleph_\alpha$，又因为 $\gamma\ne\aleph_\alpha$，所以 $\gamma&gt;\aleph_\alpha$，因为 $\aleph_\alpha$ 是 $\gamma$ 的真前段，所以限制 $f$ 得到 $\aleph_\alpha$ 到 $(\aleph_\alpha\times\aleph_\alpha,\prec)$ 的某个真前段的同构，而 $\mathbf{On}^2_{\prec(0,\aleph_\alpha)}$ 的真前段必定包含于 $\sigma\times\sigma$，其中 $\sigma&lt;\aleph_\alpha$，由基数性质知存在 $\beta&lt;\alpha$ 使得 $|\sigma|=\aleph_\beta$，所以由 $\alpha$ 的最小性得 $\aleph_\alpha=|f(\aleph_\alpha)|\le|\sigma|^2=\aleph_\beta$，矛盾。$\square$</p>
 <p><strong>推论 14.</strong> 对于至少一个无穷的非零基数 $\kappa,\lambda$，$\kappa+\lambda=\kappa\cdot\lambda=\max(\kappa,\lambda)$，且若 $2\le\kappa\le\lambda$ 则 $\kappa^\lambda=2^\lambda$。</p>
-<p>对于基数 $\alpha$，若不存在极限序数 $\beta&lt;\alpha$ 和严格增的序数列 ${a_\xi:\xi&lt;\beta}$ 使得 $\sup{a_\xi:\xi&lt;\beta}=\alpha$，则称 $\alpha$ 为<strong>正则基数</strong>。</p>
+<p>对于基数 $\alpha$，若不存在极限序数 $\beta&lt;\alpha$ 和严格增的序数列 $\{a_\xi:\xi&lt;\beta\}$ 使得 $\sup\{a_\xi:\xi&lt;\beta\}=\alpha$，则称 $\alpha$ 为<strong>正则基数</strong>。</p>
 <p><strong>例 3.</strong> 对于任意序数 $\gamma$，$\aleph_{\gamma+\omega}$ 都不是正则基数：取 $\beta=\gamma+\omega$，$a_\xi=\aleph_\xi$ 即可。</p>
 <hr>
 <p>若集合 $\mathcal U$ 满足以下条件则称为<strong>宇宙</strong>：</p>
 <ul>
 <li>$\mathcal U$ 是传递集：$u\in\mathcal U\implies u\subset\mathcal U$；</li>
-<li>$u,v\in\mathcal U\implies{u,v}\in\mathcal U$；</li>
+<li>$u,v\in\mathcal U\implies\{u,v\}\in\mathcal U$；</li>
 <li>$u\in\mathcal U\implies\mathcal P(u)\in\mathcal U$；</li>
 <li>若 $I\subset\mathcal U$，则一族集合 ${u_i:i\in I}\subset\mathcal U$ 的并 $\bigcup_{i\in I}u_i\in\mathcal U$；</li>
 <li>$\varnothing\in\mathcal U$。</li>
@@ -365,7 +371,7 @@
 <p><strong>定理 15-1.</strong> 任何非空的类 $C$ 都有相对于 $\in$ 的极小元 $x$。</p>
 <p><strong>证明.</strong> 任取 $S\in C$，若 $S\cap C=\varnothing$ 则 $S$ 即为所求，否则令 $S_0:=S$，$S_{n+1}:=\bigcup S_n$，$T:=\bigcup_{n\in\mathbb N}S_n$ 可得传递集 $T\supset S$，令 $X:=T\cap C$，由正则公理知 $X$ 中有相对于 $\in$ 的极小元 $x$。下证 $x$ 是 $(C,\in)$ 的极小元：否则存在 $y\in x\cap C$，因为 $T$ 是传递集且 $x\in T$，所以 $y\in T\cap C=X$，矛盾。$\square$</p>
 <p><strong>定理 15-2.</strong> 任意集合都属于某个 $V_\alpha$，其中 $\alpha$ 是序数。</p>
-<p><strong>证明.</strong> 反证法，取 $C$ 为所有不在任一个 $V_\alpha$ 内的集合构成的类，$x$ 为 $C$ 相对于 $\in$ 的极小元，所以 $\forall z\in x,z\in V_{\alpha(z)}$，由替换公理模式知 $\mathcal O:={\alpha(z):z\in x}$ 是序数构成的集合，取 $\theta:=\sup\mathcal O$，则 $x\subset V_\mathcal\theta$，也即 $x\in V_{\theta+1}$，矛盾。$\square$</p>
+<p><strong>证明.</strong> 反证法，取 $C$ 为所有不在任一个 $V_\alpha$ 内的集合构成的类，$x$ 为 $C$ 相对于 $\in$ 的极小元，所以 $\forall z\in x,z\in V_{\alpha(z)}$，由替换公理模式知 $\mathcal O:=\{\alpha(z):z\in x\}$ 是序数构成的集合，取 $\theta:=\sup\mathcal O$，则 $x\subset V_\mathcal\theta$，也即 $x\in V_{\theta+1}$，矛盾。$\square$</p>
 <p>对于基数 $\kappa$，若 $\kappa$ 不可数，是正则基数，且对任意基数 $\lambda&lt;\kappa$ 都有 $2^\lambda&lt;\kappa$，则称 $\kappa$ 为<strong>强不可达基数</strong>。</p>
 <p><strong>推论 3.</strong> 宇宙即为层叠谱系中形如 $V_\kappa$ 的成员，其中 $\kappa$ 是一个强不可达基数。</p>
 <p><strong>Grothendieck 假设.</strong> 对任意基数 $\lambda$，存在强不可达基数 $\kappa$ 使得 $\lambda&lt;\kappa$。或者说，每个集合都属于宇宙。</p>
@@ -391,8 +397,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/01/21/analysis-21/" rel="prev" title="「数学分析习题课讲义」第 21 章学习笔记">
-      <i class="fa fa-chevron-left"></i> 「数学分析习题课讲义」第 21 章学习笔记
+    <a href="/2021/10/06/XVIII-Open-Cup-GP-of-Khamovniki/" rel="prev" title="XVIII Open Cup, GP of Khamovniki">
+      <i class="fa fa-chevron-left"></i> XVIII Open Cup, GP of Khamovniki
     </a></div>
       <div class="post-nav-item">
     <a href="/2022/01/21/ai-jabr-1-2/" rel="next" title="「代数学方法：第一卷」第 2 章学习笔记">
@@ -471,7 +477,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -484,7 +490,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

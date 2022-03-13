@@ -1,0 +1,60 @@
+### 题目描述
+
+定义一个 01 串是平衡的当且仅当它的 01 个数相同。
+
+现在给定 $n,k$ 和一个长度为 $m$ 的 01 串 $S$，求有多少长度为 $n$ 且以 $S$ 为前缀的 01 串满足其不存在长度为 $k$ 的平衡子串，对 $998244353$ 取模。
+
+### 输入格式
+
+一行，两个整数 $n$，$k$ 和 $m$ 表示串的长度，平衡串的限制和 $S$ 的长度。
+
+接下来一行一个长度为 $m$ 的 01 串表示 $S$。
+
+### 输出格式
+
+一行一个整数，表示答案模 $998244353$ 后的结果。
+
+### 样例一
+
+#### input
+
+```plain
+5 4 2
+01
+```
+
+#### output
+
+```plain
+3
+```
+
+
+### 样例二
+
+#### input
+
+```plain
+13 6 0
+(此处一个空行)
+```
+
+#### output
+
+```plain
+996
+```
+
+### 数据规模与约定
+
+对于 $100\%$ 的数据，保证 $1\le m+1\le k\le n\le 114$ 且 $k$ 是偶数。
+
+<table class="table table-bordered table-text-center table-vertical-middle"><thead><tr><th>子任务编号</th><th>$n\le$</th><th>特殊性质</th><th>分值</th><th>子任务依赖</th></tr></thead><tbody><tr><td>$1$</td><td>$20$</td><td></td><td>$10$</td><td></td></tr><tr><td>$2$</td><td>$114$</td><td>$k\le 20$</td><td>$10$</td><td>$1$</td></tr><tr><td>$3$</td><td>$66$</td><td></td><td>$30$</td><td>$1$</td></tr><tr><td>$4$</td><td>$114$</td><td>$m=0$</td><td>$20$</td><td></td></tr><tr><td>$5$</td><td>$114$</td><td></td><td>$30$</td><td>$2,3,4$</td></tr></tbody></table>
+
+<strong>时间限制：</strong>$\rm 2s$
+
+<strong>空间限制：</strong>$\rm 1GB$
+
+### 下载
+
+[样例数据下载](https://ioihw21.duck-ac.cn/download.php?type=problem&id=120)

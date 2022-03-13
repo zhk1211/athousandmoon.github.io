@@ -1,0 +1,33 @@
+<h1 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h1><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>有一个长度为 $n$ 的序列 $a_1, a_2, \dots, a_n$，序列里的每个元素都是 $[1,10^9]$ 内的正整数。</p>
+<p>现在已知了 $m$ 条信息，每条信息形如 $i, j, k, x$，表示这个序列满足 $a_i+a_j+a_k-\max(a_i, a_j, a_k)-\min(a_i, a_j, a_k)=x$。</p>
+<p>请构造一个满足条件的序列。</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>第一行两个正整数 $n, m$。</p>
+<p>接下来 $m$ 行，每行四个正整数 $i, j, k, x$，表示一条信息。</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>如果无解，第一行输出 <code>NO</code>。</p>
+<p>如果有解，第一行输出 <code>YES</code>。第二行输出 $n$ 个正整数 $a_1, a_2, \dots, a_n$，表示你构造的满足条件的序列 $a$，你需要保证每个 $a_i$ 都是 $[1,10^9]$ 内的正整数。</p>
+<h3 id="样例-1"><a href="#样例-1" class="headerlink" title="样例 1"></a>样例 1</h3><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><pre><code>6 4
+1 3 4 2
+1 2 5 6
+3 6 6 7
+2 4 5 3
+</code></pre>
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><pre><code>YES
+6 8 2 2 3 7
+</code></pre>
+<h3 id="样例-2"><a href="#样例-2" class="headerlink" title="样例 2"></a>样例 2</h3><h4 id="输入-1"><a href="#输入-1" class="headerlink" title="输入"></a>输入</h4><pre><code>5 4
+1 2 3 4
+2 3 4 5
+3 4 5 3
+1 3 4 6
+</code></pre>
+<h4 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h4><pre><code>NO
+</code></pre>
+<h3 id="数据规模与约定"><a href="#数据规模与约定" class="headerlink" title="数据规模与约定"></a>数据规模与约定</h3><p>对于全部数据，$1\leq n,m\leq 10^5,1\leq i,j,k\leq n,1\leq x\leq 10^9$。</p>
+<ul>
+<li>子任务 1（20 分）：$n,m\leq 10$。</li>
+<li>子任务 2（10 分）：$m=\binom{n}{3}$，且对于任意一条信息，$i\neq j, j\neq k, k\neq i$，对于任意一个满足条件的集合 ${i,j,k}$，在信息中恰好出现一条。</li>
+<li>子任务 3（30 分）：$n,m\leq 1000$。</li>
+<li>子任务 4（40 分）：无特殊限制。</li>
+</ul>
+<p><strong>时间限制</strong>：$1\texttt{s}$</p>
+<p><strong>空间限制</strong>：$512\texttt{MB}$</p>

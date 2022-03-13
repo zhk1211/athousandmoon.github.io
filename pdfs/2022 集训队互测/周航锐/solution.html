@@ -1,0 +1,35 @@
+<h2 id="djq-学生物-解题报告"><a href="#djq-学生物-解题报告" class="headerlink" title="djq 学生物 解题报告"></a>djq 学生物 解题报告</h2><h3 id="题意"><a href="#题意" class="headerlink" title="题意"></a>题意</h3><p>初始有 $n$ 个排列 $(1)$。</p>
+<p>每次以固定分布随机选出 $n$ 个排列的组合，并将 $n$ 个排列复合上选出的排列。</p>
+<p>每次还有一个固定概率 $p$ 结束。</p>
+<p>求结束时 $6^n$ 种局面的概率。</p>
+<h3 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h3><p>对于全部数据，$1\leq n \leq 8$。</p>
+<p>Subtask 1（10pts）: $n=1$。</p>
+<p>Subtask 2（20pts）: $n\leq 3$。</p>
+<p>Subtask 3（15pts）: 排列只包含 $(1), (123), (132)$。</p>
+<p>Subtask 4（20pts）: $n\leq 4$。</p>
+<p>Subtask 5（35pts）: $n\leq 8$。</p>
+<h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><h4 id="算法一"><a href="#算法一" class="headerlink" title="算法一"></a>算法一</h4><p>通过较为精细的手玩可以发现当 $n=1$ 时的计算过程。可以通过第一个测试点。</p>
+<h4 id="算法二"><a href="#算法二" class="headerlink" title="算法二"></a>算法二</h4><p>定义运算符 $a\oplus b$ 表示把 $a$ 对应的 $n$ 个排列分别复合上 $b$ 对应的排列。</p>
+<p>设 $k_i$ 表示选中排列组 $i$ 的概率，$f_i$ 表示局面 $i$ 期望被经过几次，则答案就是 $pf_i$。</p>
+<p>可以列出方程<br>$$f_i=\sum_{j\oplus t=i} f_jk_t+[i=1]$$</p>
+<p>使用高斯消元即可求出所有结果。时间复杂度 $O(216^n)$ 或 $O(T^3)(T=6^n)$，可以通过前两个测试点。</p>
+<h4 id="算法三"><a href="#算法三" class="headerlink" title="算法三"></a>算法三</h4><p>定义卷积 $H=FG$，满足<br>$$h_t=\sum_{i\oplus j=t}f_ig_j$$</p>
+<p>则 $F=FK+I$，因此 $F=\frac{I}{1-K}$。</p>
+<p>对于特殊性质，我们发现排列只会变成 $(1,2,3),(2,3,1),(3,1,2)$，且三种排列可以用 $0,1,2$ 表示，复合关系和模 $3$ 意义下的加法相同。</p>
+<p>即此时一组排列复合等价于三进制数不进位加法，卷积等价于三进制异或卷积。</p>
+<p>此时可以使用高维 DFT 求出点值形式，求逆后逆 DFT 即可。</p>
+<p>复杂度 $O(n3^n)$ (不计输入复杂度)，可以通过测试点 3。</p>
+<h4 id="算法四"><a href="#算法四" class="headerlink" title="算法四"></a>算法四</h4><p>考虑排列复合构成了群 $S_3$，特殊性质即为只考虑 $S_3$ 的一个子群 ${(1),(123),(132)}$，那么我们考虑对 $S_3$ 找出类似点值的构造。</p>
+<p>由于没有交换律，考虑构造点值形式为一个三元组 $(A,B,C)$，其中 $A$ 是一个 $2\times 2$ 的矩阵， $B,C$ 均为 $1\times 1$ 的矩阵。</p>
+<p>一种可行的构造如下：</p>
+<p>$$(1): \left(\begin{bmatrix}1&amp;0\0&amp;1\\end{bmatrix},\begin{bmatrix}1\end{bmatrix},\begin{bmatrix}1\end{bmatrix}\right)$$<br>$$(23): \left(\begin{bmatrix}1&amp;-1\0&amp;-1\\end{bmatrix},\begin{bmatrix}1\end{bmatrix},\begin{bmatrix}-1\end{bmatrix}\right)$$<br>$$(12): \left(\begin{bmatrix}0&amp;1\1&amp;0\\end{bmatrix},\begin{bmatrix}1\end{bmatrix},\begin{bmatrix}-1\end{bmatrix}\right)$$<br>$$(123): \left(\begin{bmatrix}-1&amp;1\-1&amp;0\\end{bmatrix},\begin{bmatrix}1\end{bmatrix},\begin{bmatrix}1\end{bmatrix}\right)$$<br>$$(132): \left(\begin{bmatrix}0&amp;-1\1&amp;-1\\end{bmatrix},\begin{bmatrix}1\end{bmatrix},\begin{bmatrix}1\end{bmatrix}\right)$$<br>$$(13): \left(\begin{bmatrix}-1&amp;0\-1&amp;1\\end{bmatrix},\begin{bmatrix}1\end{bmatrix},\begin{bmatrix}-1\end{bmatrix}\right)$$</p>
+<p>当然也可以使用单位根或几何意义得到其他构造。</p>
+<p>每次考虑最高维，可以做线性变换后变为 $6$ 个维数减一的问题递归，这部分复杂度为 $O(n6^n)$ 或 $O(T\log T)$。</p>
+<p>如此一来，我们就可以将原系数转化为 $3^n$ 个大小不一的矩阵。那么卷积只需做矩阵乘法，求逆只需要对每个矩阵求逆即可。</p>
+<p>假设对边长为 $n$ 的矩阵做乘法的复杂度为 $O(n^w)$。</p>
+<p>显然边长为 $2^i$ 的矩阵一共有 $\binom{n}{i}2^{n-i}$ 个。</p>
+<p>那么复杂度即为 $O(\sum_{i=0}^n \binom ni 2^{n-i} 2^{iw})=O\left((2^w+2)^n\right)$。</p>
+<p>若 $w=3$，复杂度即为 $O(10^n)$ 或 $O(T^{1.29})$。</p>
+<p>若 $w=2.373$，复杂度即为 $O(7.19^n)$ 或 $O(T^{1.101})$。</p>
+<p>实际上这个点值的构造可以推广到更多的群，具体理论可以查看群表示论相关资料。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>[1] Yurii I. Lyubich. Introduction to the Theory of Banach Representations of Groups [M], 1988</p>
